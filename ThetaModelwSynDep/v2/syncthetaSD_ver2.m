@@ -4,6 +4,12 @@
 %
 % Version 2 - no longer going to store massive theta and y array
 % just a few key neurons and spike average
+% Changed theta(j,:) and theta(j+1,:) to thetaNOW and thetaNEXT
+% respectively. To try and save time. Didn't help much...
+% Also changed the way spikes is calculated. Before ss would compute how
+% many spikes all the neurons RECEIEVED at that time step. However, I think
+% it's better to have ss calculate all the spikes the neurons SENT in that
+% time step. This will always be less than n, unlike before.
 %
 % Version 1 - including synaptic depression
 % 
@@ -17,7 +23,7 @@
 % hint: positive I is instrinicly rhymic
 
 clc
-clear all
+clear
 close all
 tic
 
@@ -31,11 +37,11 @@ set(0,'defaultlinemarkersize',10);
 n1 = 600;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.01;   % time step
-tmax = 2e3;
+tmax = 2e3;   % maximum time for simulation
 iu1 = 0.001;  % mean I parameter for first population
 isig1 = 0.001;  % std of I parameter for first population
-iu2 = 0.001;  % mean I parameter for second population# 
-isig2=0.0001;    % std of I parameter for second population
+iu2 = 0.0001;  % mean I parameter for second population# 
+isig2=0.00001;    % std of I parameter for second population
 prob = 0.85; % E-R graph, prob is prob of connection.
 D=1;      % Strength of networkness
 tauavg=1;   % Relaxation of network excitement
@@ -50,7 +56,6 @@ impNeu = [1, 3, 5];
 
 % % % Script Settings % % %
 
-nplot=5;   % How long to wait before plotting gif
 DoDBPlot = 1; % Should we make the graph dan made?
 
 % % % % Script % % % %
