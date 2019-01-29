@@ -37,7 +37,7 @@ set(0,'defaultlinemarkersize',10);
 n1 = 600;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.01;   % time step
-tmax = 2e3;   % maximum time for simulation
+tmax = 5e2;   % maximum time for simulation
 iu1 = 0.001;  % mean I parameter for first population
 isig1 = 0.001;  % std of I parameter for first population
 iu2 = 0.0001;  % mean I parameter for second population# 
