@@ -38,12 +38,12 @@ n1 = 600;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.01;   % time step
 tmax = 5e2;   % maximum time for simulation
-iu1 = 0.001;  % mean I parameter for first population
+iu1 = 0.005;  % mean I parameter for first population
 isig1 = 0.001;  % std of I parameter for first population
 iu2 = 0.0001;  % mean I parameter for second population# 
 isig2=0.00001;    % std of I parameter for second population
 prob = 0.85; % E-R graph, prob is prob of connection.
-D=1;      % Strength of networkness
+D=3;      % Strength of networkness
 tauavg=1;   % Relaxation of network excitement
 
 ydrop = .2; % How much of an effect firing has on synaptic depression
