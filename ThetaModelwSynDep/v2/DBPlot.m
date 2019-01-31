@@ -24,3 +24,6 @@ str = ['D = ' mat2str(D) '. isig1 = ' mat2str(isig1) '. iu1 = ' mat2str(iu1) ...
 annotation('textbox',[.1 .1 .1 .1],'String',str,'FitBoxToText','on');
 
 axis off
+
+
+% Ron wuz here
