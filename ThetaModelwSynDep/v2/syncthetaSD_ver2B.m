@@ -38,8 +38,8 @@ n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.01;   % time step
 tmax = 5e2;   % maximum time for simulation
-iu1 = .001;  % mean I parameter for first population
-isig1 = .0001;  % std of I parameter for first population
+iu1 = 0;  % mean I parameter for first population
+isig1 = 0.1;  % std of I parameter for first population
 iu2 = 0.0001;  % mean I parameter for second population# 
 isig2=0.00001;    % std of I parameter for second population
 prob = 0.85; % E-R graph, prob is prob of connection.
@@ -48,7 +48,7 @@ tauavg=1;   % Relaxation of network excitement
 
 ydrop = .2; % How much of an effect firing has on synaptic depression
             % (should be between 0 and 1)!!!
-tauy  =  8; % Char time for return to ss for y (synap depress)         
+tauy  =  10; % Char time for return to ss for y (synap depress)         
 
 % Which neurons to save
 impNeu = [1, 3, 5];
@@ -87,7 +87,7 @@ spikes = NaN*ones(tnum,1); spikes(1)=0;
 %rplot = NaN*ones(tnum,1); rplot(1)=0;   % initialize the raster plot?
 
 % initialize I vector recall, it should be length of n1+n2
-I = [ iu1+isig1*randn(1,n1) iu2+isig1*randn(1,n2) ]; 
+I = [ iu1+isig1*randn(1,n1) iu2+isig1*randn(1,n2) ] 
 
 % strength of connections (total excitability of network 
 % divided by the number of connections)
@@ -95,6 +95,7 @@ delta = D/n;
 
 % creates connectivity matrix, damn that's savy
 A=(rand(n,n)<prob);
+Atrans = A'; % time saving thing
 
 % makes sure no neuron is connected to itself. Again, quite savy
 for m=1:n, A(m,m)=0; end
@@ -128,7 +129,7 @@ for j = 1:tnum-1
     % of each neuron, before multiplying by A
     e_power = e.*yNOW;
     
-    s = e_power*A;
+    s = (Atrans*e_power')';
     
     % Calculate and add the pulse
     thetaNEXT = thetaNEXT+delta*s;
