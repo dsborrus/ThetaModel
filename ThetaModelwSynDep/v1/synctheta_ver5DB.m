@@ -25,7 +25,7 @@ set(0,'defaultlinemarkersize',10);
 
 % % % User Params % % %
 
-n1 = 500;   % number of neurons in the first population
+n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.01;   % time step
 tmax = 500;
@@ -101,7 +101,7 @@ for j = 1:tnum-1
     % augment the synpatic depression term for next y
     y(j+1,a) = y(j+1,a) - ydrop;
     % calculate the number of pulses the downstream neuron receives
-    % s=e*A; no get deeper....
+    %s_old=e*A; % but now get deeper....
     % calculate the strength + number of the pulses (1 is max strength), though 
     % HERE'S A QUESTION THAT NEEDS TO BE RESOLVED
     % SHOULD I MULTIPLY BY y(j) OR y(j+1)??? I THINK y(j). Because it is
@@ -109,14 +109,16 @@ for j = 1:tnum-1
     % matters?
     % anyways, first I multiple e element wise with the synaptic strength
     % of each neuron, before multiplying by A
-    s = (e.*y(j,:))  *  A;
+    e_power = e.*y(j,:);
+    
+    s = e_power*A;
     
     % Calculate and add the pulse
     theta(j+1,:) = theta(j+1,:)+delta*s;
     
     % Sum up number of spikes in this step
-    ss = ss+sum(s);
-    
+    %ss = ss+sum(s_old);
+    ss = ss+sum(length(a));
     % little check for sanity %
     if any(delta*s>2*pi)
         error('I think this means we pushed a neuron up 2pi, it missed a phase')
