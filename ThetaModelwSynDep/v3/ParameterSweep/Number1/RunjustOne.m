@@ -1,5 +1,7 @@
 % Run just one simulation with plots
 
+% good if you want to see the actual output of a simulation
+
 close all;
 clear;
 clc
@@ -9,22 +11,33 @@ set(0,'defaultlinelinewidth',1.5);
 set(0,'defaultlinemarkersize',10);
 tic
 
-ydrop = 0.1;
+% % % % % % % %  Params % % % % % % % % 
+ydrop = 0;
 tauy = 8;
+n1 = 180;
+n2 = 20;
 iu1 = -0.01;
-isig1 = 0.0;
+isig1 = 0.000;
+iu2 = 0.01;
+isig2 = 0;
 
 tmax = 1000;
 
-istate = 2; % state to start in (1 = low, 2 = high)
-bumpit = 1; % should we perturb system during simulation? (give it a kick)
+% WHICH STATE TO START IN?
+istate = 1; % state to start in (1 = low, 2 = high)
+% SHOULD WE PERTURB SYSTEM?
+bumpit = 0; % should we perturb system during simulation? (give it a kick)
+
+% plotting? Probably.
 doplots = 1;% want to plot anything?
 
-D = [2.71794871794872];
+% % % %  important param % % % % 
+D = 2.6;
 %D = 3;
 
+% % % %  RUN % % % % % % % % 
 
-synctheta_v3PS(D,ydrop,tauy,iu1,isig1,istate,bumpit,doplots,tmax);
+synctheta_v4PS(D,ydrop,tauy,n1,n2,iu1,isig1,iu2,isig2,istate,bumpit,doplots,tmax);
 
 
 
