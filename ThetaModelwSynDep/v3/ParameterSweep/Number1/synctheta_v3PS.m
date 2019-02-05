@@ -53,21 +53,21 @@ dur = 30; % seconds
 % Analysis parameters
 %tmax = 1e3;
 
-tstart = tmax/2;
+tstart_an = tmax/2;
 
-tend = tmax-1;
+tend_an = tmax-1;
 % % % % % % % % % % % %
 
 % % % Other User Params % % %
 
-n1 = 250;   % number of neurons in the first population
+n1 = 200;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.01;   % time step
 %iu1 = -0.01;  % mean I parameter for first population
 %isig1 = 0.00;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population# 
 isig2 = 0.0001;    % std of I parameter for second population
-prob = 0.85; % E-R graph, prob is prob of connection.
+prob = 0.50; % E-R graph, prob is prob of connection.
 %D = 3.1;      % Strength of networkness
 tauavg=1;   % Relaxation of network excitement
 
@@ -192,36 +192,39 @@ toc
 %% DB plot %%
 
 if DoDBPlot
+    
+    tstart_pl = dt;
+    tend_pl = tmax;
 
 
-if tstart>=tmax
-    tstart = dt;
+if tstart_pl>=tmax
+    tstart_pl = dt;
 end
 
-if tend>tmax
-    tend = tmax;
+if tend_pl>tmax
+    tend_pl = tmax;
 end
 
-tw = tstart/dt:tend/dt;
+tw_pl = tstart_pl/dt:tend_pl/dt;
 
 figure('Position',[800 500 1300 800])
 
 ax1 = subplot(4,1,1);
 hold on
-plot(t(tw),spikes(tw))
+plot(t(tw_pl),spikes(tw_pl))
 title('Network Activity')
 
 
 ax2 = subplot(4,1,2);
 temp = dt:dt:tmax;
 for i = 1:n
-    plot(temp(tw),raster((tw),i)*i,'k.'); hold on;
+    plot(temp(tw_pl),raster((tw_pl),i)*i,'k.'); hold on;
 end
 title('Raster Plot')
 
 ax3 = subplot(4,1,3);
 rr = randi(n);
-plot(t(tw),y(tw,rr))
+plot(t(tw_pl),y(tw_pl,rr))
 title(['One random neuron`s synaptic depression (n=' mat2str(rr) ')'])
 
 linkaxes([ax1 ax2 ax3],'x')
@@ -240,9 +243,9 @@ end
 
 %% Analysis %%
 
-tw = tstart/dt:tend/dt;
+tw_an = tstart_an/dt:tend_an/dt;
 
-spf_insidewindow = spf(tw);
+spf_insidewindow = spf(tw_an);
 
 sps = sum(spf_insidewindow)/tmax;
 %% Other functions
