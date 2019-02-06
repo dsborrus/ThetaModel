@@ -83,10 +83,10 @@ spikes = NaN*ones(tnum,1); spikes(1)=0; % initialize the spike array
 raster = NaN(tnum,n); % initialize the raster plot
 
 % initialize I vector recall, it should be length of n1+n2
-I = [ iu1+isig1*randn(1,n1) iu2+isig1*randn(1,n2) ]; 
+I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ]; 
 
 % strength of connections (total excitability of network 
-% divided by the number of neurons ( minus 1) and divided by number
+% divided by the number of neurons (minus 1) and divided by probability
 % of connections)
 delta = D/((n-1)*prob); 
 
