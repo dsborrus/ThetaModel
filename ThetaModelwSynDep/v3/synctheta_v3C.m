@@ -43,21 +43,21 @@ set(0,'defaultlinemarkersize',10);
 
 % % % User Params % % %
 
-n1 = 100;   % number of neurons in the first population
-n2 = 0;     % number of neurons in the second population
+n1 = 180;   % number of neurons in the first population
+n2 = 20;     % number of neurons in the second population
 dt = 0.01;   % time step
-tmax = 1e3;     % maximum time of simulation
+tmax = 2e3;     % maximum time of simulation
 iu1 = -0.01;  % mean I parameter for first population
-isig1 = 0.07;  % std of I parameter for first population
+isig1 = 0.00;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population# 
-isig2 = 0.0001;    % std of I parameter for second population
-prob = 0.85; % E-R graph, prob is prob of connection.
-D = 3.1;      % Strength of networkness
+isig2 = 0.000;    % std of I parameter for second population
+prob = 0.5; % E-R graph, prob is prob of connection.
+D = 3.05;      % Strength of networkness
 tauavg=1;   % Relaxation of network excitement
 
-ydrop = .2; % How much of an effect firing has on synaptic depression
+ydrop = .1; % How much of an effect firing has on synaptic depression
             % (should be between 0 and 1)!!!
-tauy  =  6; % Char time for return to ss for y (synap depress)           
+tauy  =  15; % Char time for return to ss for y (synap depress)           
            
 
 % % % Script Settings % % %
@@ -80,7 +80,7 @@ y = zeros(tnum,n);
 
 spikes = NaN*ones(tnum,1); spikes(1)=0; % initialize the spike array
 
-raster = NaN(tnum,n); % initialize the raster plot
+raster = zeros(tnum,n); % initialize the raster plot
 
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ]; 
@@ -124,6 +124,7 @@ for j = 1:tnum-1
     % associated synaptic depression. Then sum them along columns
     % We only grab the rows and columns we need (to speed up code)
     s = sum(A(e,:).*y(j,e)',1);
+    %s = sum(A(e,:),1);
     
     % Calculate and add the pulse
     theta(j+1,:) = theta(j+1,:)+delta*s;
@@ -133,7 +134,9 @@ for j = 1:tnum-1
     
     % catalouge for raster plot
     if DoDBPlot
-        raster(j,a) = 1;
+        
+        raster(j,a) = raster(j,a) + 1;
+
     end
     
     % little check for sanity %

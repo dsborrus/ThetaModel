@@ -36,7 +36,7 @@
 % hint: positive I is instrinicly rhymic
 
 
-function [sps] = synctheta_v3PS(D,ydrop,tauy,n1,n2,iu1,isig1,iu2,isig2,istate,bumpit,DoDBPlot,tmax)
+function [sps] = synctheta_v4PS(D,ydrop,tauy,n1,n2,iu1,isig1,iu2,isig2,istate,bumpit,DoDBPlot,tmax,prob)
 % D is strength of pulse
 % ydrop is the drop of synaptic depression after a spike
 % tauy is the recovery of synaptic depression
@@ -70,9 +70,9 @@ dt = 0.01;   % time step
 %isig1 = 0.00;  % std of I parameter for first population
 %iu2 = 0.01;  % mean I parameter for second population# 
 %isig2 = 0.0001;    % std of I parameter for second population
-prob = 0.50; % E-R graph, prob is prob of connection.
+%prob = 0.50; % E-R graph, prob is prob of connection.
 %D = 3.1;      % Strength of networkness
-tauavg=1;   % Relaxation of network excitement
+tauavg = 1;   % Relaxation of network excitement
 
 %ydrop = .2; % How much of an effect firing has on synaptic depression
             % (should be between 0 and 1)!!!
@@ -104,7 +104,7 @@ raster = NaN(tnum,n); % initialize the raster plot
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
 
-disp(['The fraction of toniclly spiking neurons is ' mat2str((length(find(I>0))/n)*100) '%.'])
+%disp(['The fraction of toniclly spiking neurons is ' mat2str((length(find(I>0))/n)*100) '%.'])
 
 % strength of connections (total excitability of network 
 % divided by the number of neurons ( minus 1) and divided by number
@@ -179,7 +179,7 @@ for j = 1:tnum-1
     
     % little check for sanity %
     if any(delta*s>2*pi)
-        warning('I think this means we pushed a neuron up 2pi, it missed a phase')
+        %warning('I think this means we pushed a neuron up 2pi, it missed a phase')
     end
     
     end
@@ -190,7 +190,7 @@ for j = 1:tnum-1
     
 end
 
-toc
+%toc
 
 %% DB plot %%
 

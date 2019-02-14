@@ -23,7 +23,7 @@ plot(t(tw),spikes(tw))
 title('Network Activity')
 
 
-ax2 = subplot(4,1,2);
+ax2 = subplot(4,1,2); hold on; ylim([1 n]);
 temp = dt:dt:tmax;
 for i = 1:n
     plot(temp(tw),raster((tw),i)*i,'k.'); hold on;
@@ -31,7 +31,7 @@ end
 title('Raster Plot')
 
 ax3 = subplot(4,1,3);
-rr = randi(n);
+rr = randi(n1);
 plot(t(tw),y(tw,rr))
 title(['One random neuron`s synaptic depression (n=' mat2str(rr) ')'])
 
@@ -40,6 +40,7 @@ linkaxes([ax1 ax2 ax3],'x')
 subplot(4,1,4)
 hold on
 str = ['D = ' mat2str(D) '. isig1 = ' mat2str(isig1) '. iu1 = ' mat2str(iu1) ...
+    '. isig2 = ' mat2str(isig2) '. iu2 = ' mat2str(iu2) ...
     '. n = ' mat2str(n) '. prob = ' mat2str(prob) '. tauavg = ' mat2str(tauavg) ...
     '. tauy = ' mat2str(tauy) '. ydrop = ' mat2str(ydrop)];
 annotation('textbox',[.1 .1 .1 .1],'String',str,'FitBoxToText','on');
