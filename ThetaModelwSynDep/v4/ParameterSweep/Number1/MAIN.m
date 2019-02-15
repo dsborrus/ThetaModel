@@ -53,9 +53,9 @@ doplots = 0; % want to plot simulations? Probably not for a param sweep
 % each D value twice. Once with low initial state and no bump. and again
 % with high initial state and bumps. See if we can find a bistable range of
 % values.
-Dstart = 2.25;
-Dend = 3;
-nD = 300;
+Dstart = 1.6;
+Dend = 3.3;
+nD = 2000;
 D = linspace(Dstart,Dend,nD);
 
 % % % % Script really starts here % % % % 
