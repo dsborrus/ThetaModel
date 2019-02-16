@@ -12,22 +12,23 @@ tic
 
 % % % % Params % % % % % % % % 
 
+%load HighResData_Results8.mat
 load HighResData_Results8.mat
 
-ydrop = .1;
+ydrop = .01;
 tauy = 15;
 
 tmax = 1e3; % maximum time for simulation. Below 1000 you might start 
             % analysing too early (we analyse last half of the simulation)
             
-resolution = 20;            
+resolution = 25;            
              
 plotit=0;
 
 % DMax would be the parameter to set D, if s = Dmax*y was the pulse.
 % However right now it just changes hte position of the y-nulcline in the
 % bifurcation figure
-DMax = 3;
+DMax = 2.9;
 % range of Ds             
 % loaded in Dstart and Dend
 nD = resolution;

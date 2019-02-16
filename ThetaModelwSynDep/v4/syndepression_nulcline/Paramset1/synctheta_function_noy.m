@@ -144,7 +144,10 @@ for j = 1:tnum-1
     % reset that neuron back 2pi
     theta(j+1,a)=theta(j+1,a)-2*pi;
     % augment the synpatic depression term for next y
-    y(j+1,a) = y(j+1,a) - ydrop;
+    %y(j+1,a) = y(j+1,a) - ydrop;
+    % y drops by a fraction (alpha)
+    y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
+    %y(j+1,a) = y(j+1,a) .* (1 - ydrop);
     
     % I grab rows from A and multiply them by 
     % associated synaptic depression. Then sum them along columns

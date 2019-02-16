@@ -53,11 +53,11 @@ iu1 = -0.01;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population# 
 isig2 = 0.000;    % std of I parameter for second population
-prob = 0.5; % E-R graph, prob is prob of connection.
+prob = 0.2; % E-R graph, prob is prob of connection.
 D = 3;      % Strength of networkness
 tauavg=1;   % Relaxation of network excitement
 
-ydrop = .1; % How much of an effect firing has on synaptic depression
+ydrop = .2; % How much of an effect firing has on synaptic depression
             % (should be between 0 and 1)!!!
 tauy  =  15; % Char time for return to ss for y (synap depress)           
            
@@ -129,7 +129,8 @@ for j = 1:tnum-1
     % reset that neuron back 2pi
     theta(j+1,a)=theta(j+1,a)-2*pi;
     % augment the synpatic depression term for next y
-    y(j+1,a) = y(j+1,a) - ydrop;
+    %y(j+1,a) = y(j+1,a) - ydrop;
+    y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
     
     % I grab rows from A and multiply them by 
     % associated synaptic depression. Then sum them along columns

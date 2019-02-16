@@ -22,7 +22,7 @@ tmax = 2e3; % maximum time for simulation. Below 1000 you might start
             
 plotit = 1;
             
-D = 3.1;
+D = 3;
 
 
 istate = 1;
