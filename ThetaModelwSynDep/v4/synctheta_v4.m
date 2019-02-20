@@ -33,8 +33,6 @@
 
 % % % Begin % % %
 
-% HEELLLLLOOOOOOOOOOOOOOOooooopoooooooopppppppp
-
 clc
 clear
 close all
