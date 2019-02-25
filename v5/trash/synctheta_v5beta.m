@@ -41,25 +41,23 @@ function synctheta_v5beta(tmax,istate)
 
 % % % Begin % % %
 
-% unit for time is ms
-
 % % % User Params % % %
 
 n1 = 90;   % number of neurons in the first population
 n2 = 10;     % number of neurons in the second population
-dt = 0.05;   % time step
-%tmax = 1e4;     % maximum time of simulation
+dt = 0.01;   % time step
+%tmax = 1e2;     % maximum time of simulation
 iu1 = -0.1;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
-iu2 = 0.0;  % mean I parameter for second population#
+iu2 = 0.00;  % mean I parameter for second population#
 isig2 = 0.000;    % std of I parameter for second population
-prob = 0.75; % E-R graph, prob is prob of connection.
-D = 20;      % Strength of networkness
-tauavg=1e2;   % Relaxation of network excitement
+prob = 0.5; % E-R graph, prob is prob of connection.
+D = .2;      % Strength of networkness
+tauavg=1;   % Relaxation of network excitement
 
-ydrop = .1; % How much of an affect firing has on synaptic depression
+ydrop = .2; % How much of an effect firing has on synaptic depression
 % (should be between 0 and 1)!!!
-tauy  =  5e3; % Char time for return to ss for y (synap depress)
+tauy  =  15; % Char time for return to ss for y (synap depress)
 
 
 % % % Script Settings % % %

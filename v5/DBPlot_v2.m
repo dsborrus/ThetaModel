@@ -1,9 +1,11 @@
-function DBPlot_v2(dt,tmax,t,n,n1,y,spikes,raster,vin)
+function DBPlot_v2(dt,tmax,t,n,y,sij,spikes,raster,rr,Ihistory,sijhistory,vin)
 
 set(0,'defaultaxesfontsize',20);
 set(0,'defaulttextfontsize',20);
 set(0,'defaultlinelinewidth',1.5);
 set(0,'defaultlinemarkersize',10);
+
+nplots = 7;
 
 tstart = dt;
 tend = tmax;
@@ -12,27 +14,38 @@ tw = tstart/dt:tend/dt;
 
 figure('Position',[800 500 1300 800])
 
-ax1 = subplot(4,1,1);
+ax1 = subplot(nplots,1,1);
 hold on
-plot(t(tw),spikes(tw))
+plot(t(tw)/1000,spikes(tw))
 title('Network Activity')
 
 
-ax2 = subplot(4,1,2); hold on;
+ax2 = subplot(nplots,1,2); hold on;
 for i = 1:n
-    plot(t(tw),raster((tw),i)*i,'.k'); hold on;
+    plot(t(tw)/1000,raster((tw),i)*i,'.k'); hold on;
 end
 
 title('Raster Plot')
 
-ax3 = subplot(4,1,3);
-rr = randi(n1);
-plot(t(tw),y(tw,rr))
+ax3 = subplot(nplots,1,3);
+plot(t(tw)/1000,y(tw,rr))
 title(['One random neuron`s synaptic depression (n=' mat2str(rr) ')'])
 
-linkaxes([ax1 ax2 ax3],'x')
+ax4 = subplot(nplots,1,4);
+plot(t(tw)/1000,sij(tw,rr))
+title(['One random neuron`s synaptic current output (n=' mat2str(rr) ')'])
 
-subplot(4,1,4)
+ax5 = subplot(nplots,1,5);
+plot(t(tw)/1000,sijhistory(tw))
+title(['One random neuron`s synaptic current input (n=' mat2str(rr) ')'])
+
+ax6 = subplot(nplots,1,6);
+plot(t(tw)/1000,Ihistory(tw))
+title(['One random neuron`s total applied current (I+delta*syncurrent*syndepression) (n=' mat2str(rr) ')'])
+
+linkaxes([ax1 ax2 ax3 ax4 ax5 ax6],'x')
+
+subplot(nplots,1,nplots)
 hold on
 
 D = vin(1);

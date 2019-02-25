@@ -1,4 +1,4 @@
-function synctheta_v5beta(tmax,istate)
+function synctheta_v5alpha(tmax,istate)
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -41,25 +41,23 @@ function synctheta_v5beta(tmax,istate)
 
 % % % Begin % % %
 
-% unit for time is ms
-
 % % % User Params % % %
 
-n1 = 90;   % number of neurons in the first population
-n2 = 10;     % number of neurons in the second population
-dt = 0.05;   % time step
-%tmax = 1e4;     % maximum time of simulation
-iu1 = -0.1;  % mean I parameter for first population
+n1 = 180;   % number of neurons in the first population
+n2 = 20;     % number of neurons in the second population
+dt = 0.01;   % time step
+%tmax = 1e2;     % maximum time of simulation
+iu1 = -0.01;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
-iu2 = 0.0;  % mean I parameter for second population#
+iu2 = 0.01;  % mean I parameter for second population#
 isig2 = 0.000;    % std of I parameter for second population
-prob = 0.75; % E-R graph, prob is prob of connection.
-D = 20;      % Strength of networkness
-tauavg=1e2;   % Relaxation of network excitement
+prob = 0.2; % E-R graph, prob is prob of connection.
+D = 3;      % Strength of networkness
+tauavg=1;   % Relaxation of network excitement
 
-ydrop = .1; % How much of an affect firing has on synaptic depression
+ydrop = .2; % How much of an effect firing has on synaptic depression
 % (should be between 0 and 1)!!!
-tauy  =  5e3; % Char time for return to ss for y (synap depress)
+tauy  =  15; % Char time for return to ss for y (synap depress)
 
 
 % % % Script Settings % % %
@@ -73,19 +71,16 @@ pmin = -pi; % domain min
 pmax = pi;  % domain max
 tnum = tmax/dt; % the nummber of time steps
 t=dt*(1:tnum); % sneaky way to make the time array, with correct t steps
+phase = pmin:0.01:pmax;
+wewarned=0;
 
 % initialize the ODE output arrays(theta array and y array)
 theta = zeros(tnum,n);
-y     = zeros(tnum,n);
-sij   = zeros(tnum,n);
+y = zeros(tnum,n);
 
-% initialize auxiallry outputs
 spikes = NaN(tnum,1); spikes(1)=0; % initialize the spike array
+
 raster = NaN(tnum,n); % initialize the raster plot
-Ihistory = NaN(tnum,1);
-sijhistory = NaN(tnum,1);
-% random neuron to track
-rr = randi(n1);
 
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
@@ -104,39 +99,22 @@ for m=1:n, A(m,m)=0; end
 % Set initial values for theta and y
 switch istate
     case 1 %low state
-        theta(1,:) = pmin+randn(1,n) * .01;
-        y(1,:)     = (randn(1,n)*.01) + 0.1;
-        %sij(1,:)
+        theta(1,:) = pmin+randn(1,n)*.01;
+        y(1,:) = (randn(1,n)*.01)+0.1;
     case 2 %high state
         theta(1,:) = pmax.*rand(1,n);
-        y(1,:)     = (randn(1,n)*.01) + 0.97;
-        sij(1,:)   = (randn(1,n)*.01) + 0.5;
+        y(1,:) = (randn(1,n)*.01)+.97;
     case 3 %med state
         theta(1,:) = pmin + (pmax-pmin).*rand(1,n);
         y(1,:) = (randn(1,n)*.07)+.8;
-        sij(1,:)   = (randn(1,n)*.2) + 0.5;
 end
 
 % Begin simulation loop
 for j = 1:tnum-1
     
-    % calculate synaptic strengths
-    % Sum of incoming current is = 
-    % instrinsic current (I) +
-    % strength of connections (delta) *
-    % synaptic depression (y) *
-    % synaptic current generated (sij) matrix mulitplied by
-    % connectivity matrix (A)
-    Isummed = I + (delta*y(j,:).*sij(j,:)) * A; 
-    %Isummed = I + ( sum(A(e,:).*(delta*y(j,e).*sij(j,:))',1));
-    %Isummed = I + ( sum(A(e,:).*y(j,e)',1).*sij(j,:));
-    Ihistory(j) = Isummed(rr);
-    sijhistory(j) = sij(j,:) * A(:,rr);
-
     % Calculate ODEs next step (Euler's method)
-    theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed);
+    theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),I);
     y(j+1,:)     = y(j,:)     + dt * yODE(y(j,:),tauy);
-    sij(j+1,:)   = sij(j,:)   + dt * sijODE(sij(j,:),theta(j,:));
     
     e=1; ss=0;
     while any(e)
@@ -147,11 +125,26 @@ for j = 1:tnum-1
         % augment the synpatic depression term for next y
         y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
         
-        % count spikes
+        % I grab rows from A and multiply them by
+        % associated synaptic depression. Then sum them along columns
+        % We only grab the rows and columns we need (to speed up code)
+        s = sum(A(e,:).*y(j,e)',1);
+        %s = sum(A(e,:),1);
+        
+        % Calculate and add the pulse
+        theta(j+1,:) = theta(j+1,:)+delta*s;
+        
+        % Sum up number of spikes in this step
         ss = ss+length(a);
         
         % catalouge for raster plot
         raster(j,a) = 1;
+        
+        % little check for sanity %
+        if any(delta*s>2*pi) && wewarned == 0
+            wewarned = 1;
+            warning('I think this means we pushed a neuron up 2pi, it missed a phase')
+        end
         
     end
     
@@ -174,7 +167,7 @@ if DoDBPlot
     vin(9) = tauy;
     vin(10) = ydrop;
     
-    DBPlot_v2(dt,tmax,t,n,y,sij,spikes,raster,rr,Ihistory,sijhistory,vin)
+    DBPlot_v2(dt,tmax,t,n,n1,y,spikes,raster,vin)
 end
 
 % ODE functions
@@ -185,15 +178,6 @@ end
 
     function dy = yODE(y,tauy)
         dy = (1 - y)/tauy;
-    end
-
-    function dsij = sijODE(sij,thetai)
-        tauR = 0.1;
-        nu = 5;
-        tauij = 5;
-        
-        dsij = -(sij/tauij)+exp(-nu * (1+cos(thetai)) ) .* (1-sij)/tauR;
-        
     end
 
 end
