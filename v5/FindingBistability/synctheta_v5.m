@@ -1,4 +1,7 @@
-function synctheta_v5(tmax,istate)
+function synctheta_v5(tmax,D,h)
+%
+% code for parameter sweep. Taking out synaptice depression.
+%
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -45,26 +48,45 @@ function synctheta_v5(tmax,istate)
 
 % % % User Params % % %
 
+% duration of bump (if we are doing one)
+% dur = 30;
+
 n1 = 90;   % number of neurons in the first population
 n2 = 10;     % number of neurons in the second population
 dt = 0.05;   % time step
 %tmax = 1e4;     % maximum time of simulation
-iu1 = -0.4;  % mean I parameter for first population
+iu1 = -0.01;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population#
 isig2 = 0.000;    % std of I parameter for second population
 prob = 0.75; % E-R graph, prob is prob of connection.
-D = 20;      % Strength of networkness
+%D = 20;      % Strength of networkness
 tauavg=1e2;   % Relaxation of network excitement
+silence=0;
+bumpit=0;
+istate=3;
 
 ydrop = .1; % How much of an affect firing has on synaptic depression
 % (should be between 0 and 1)!!!
 tauy  =  5e3; % Char time for return to ss for y (synap depress)
 
+subplot(5,3,[7 8]);
+pl1 = plot(0,0);
+pl2 = plot(0,0);
+pl3 = plot(0,0);
+ylim([0 1]);
+axis off
+subplot(5,3,[10 11]);
+ylim([1 n1+n2]);
+wind = 100;
+
+temp = length(dir('*.gif'));
+filename = (['AnimatedGIF' mat2str(temp) '.gif']);
 
 % % % Script Settings % % %
 
-DoDBPlot = 1; % Should we make the graph dan made?
+DoDBPlot = 0; % Should we make the graph dan made?
+dogif = 0;
 
 % % % % Script Stuff % % (No need to edit below this line if casual user)
 
@@ -84,9 +106,13 @@ spikes = NaN(tnum,1); spikes(1)=0; % initialize the spike array
 raster = NaN(tnum,n); % initialize the raster plot
 Ihistory = NaN(tnum,1);
 sijhistory = NaN(tnum,1);
+ysstarray = zeros(tnum,1);
+spstarray = zeros(tnum,1);
 % random neuron to track
 rr = randi(n1);
-
+rc = 0;
+yssprev = [NaN NaN NaN];
+spsprev = [NaN NaN NaN];
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
 
@@ -117,8 +143,19 @@ switch istate
         sij(1,:)   = (randn(1,n)*.2) + 0.5;
 end
 
+% initialize spike counter
+% spikes per frame
+spf = zeros(tnum,1);
+
 % Begin simulation loop
 for j = 1:tnum-1
+    
+    % enforce silent period to allow equillibrium
+	if silence
+       if t(j) < 1000
+          sij(j,:) = 0; 
+       end
+    end
     
     % calculate synaptic strengths
     % Sum of incoming current is = 
@@ -128,8 +165,21 @@ for j = 1:tnum-1
     % synaptic current generated (sij) matrix mulitplied by
     % connectivity matrix (A)
     Isummed = I + (delta*y(j,:).*sij(j,:)) * A; 
-    %Isummed = I + ( sum(A(e,:).*(delta*y(j,e).*sij(j,:))',1));
-    %Isummed = I + ( sum(A(e,:).*y(j,e)',1).*sij(j,:));
+    %Isummed = I + (delta*sij(j,:)) * A; 
+    
+    % bumping system to boot start it
+    if bumpit
+        if t(j) > 500 && t(j) < 1000
+                Isummed = Isummed + 0.5;
+        elseif t(j) > 1500 && t(j) < 2000
+                Isummed = Isummed + 0.5;
+        elseif t(j) > 2500 && t(j) < 3000
+                Isummed = Isummed + 0.5;
+        end
+    end
+    
+    
+    % record keeping
     Ihistory(j) = Isummed(rr);
     sijhistory(j) = sij(j,:) * A(:,rr);
 
@@ -157,11 +207,77 @@ for j = 1:tnum-1
     
     spikes(j+1) = spikes(j)+dt*(ss/n-spikes(j)/tauavg);
     
+    spf(j) = ss;
+    
+
+    
+if t(j) >= 2e3
+if mod(t(j),1000) == 0
+    
+    %rc = mod(rc,3)+1;
+    
+    yss = mean(mean(y(j-1000/dt:j,:)));
+    yssprev(end+1) = yss;
+    yssprev(1) = [];
+    
+    sps = sum(spf(j-1000/dt:j));
+    spsprev(end+1) = sps;
+    spsprev(1) = [];
+    
+    subplot(5,3,[1 6]); hold on;
+    delete(pl1);
+    delete(pl3)
+%     pl1 = plot(yss_tarray(i)*DMax,sps_tarray(i),'ro');
+%     pl3 = plot(yss_tarray(i-2:i)*DMax,sps_tarray(i-2:i),'r');
+     pl1 = plot(yss,sps,'ro');
+     pl3 = plot(yssprev,spsprev,'r');
+     legend('Low init state','High init state + mid simulation bump','y_{ss}','','');
+
+        
+     subplot(5,3,[7 8]); hold on;
+     delete(pl2)
+     pl2 = plot(j/dt-wind:j/dt,spikes((j-wind):j),'b');
+    
+    subplot(5,3,[10 11]); hold off;
+    for k = 1:(n1+n2)
+        plot(j/dt-wind:j/dt,raster(j-wind:j,k)*k,'k.'); hold on;
+    end
+    
+    subplot(5,3,[13 15])
+    
+    delete(findall(gcf,'Tag','somethingUnique'))
+    str = ['t = ' mat2str(t(j))];
+    annotation('textbox',[.7 .4 .1 .1],'String',str,'FitBoxToText','on'...
+        ,'Tag' , 'somethingUnique');
+    
+    drawnow
+    
+
+    %pause(1)
+    
+        if 1
+        % capture the plot as an image
+        frame = getframe(h);
+        im = frame2im(frame);
+        [imind,cm] = rgb2ind(im,256);
+        
+        % Write the GIF File
+        if t(j) == 2e3
+            imwrite(imind,cm,filename,'gif','Loopcount',inf);
+        else
+            imwrite(imind,cm,filename,'gif','WriteMode','append')
+        end
+        end
+end  
+end
+    
+    
+    
 end
 
 % plotting
 
-if DoDBPlot
+if 0
     
     vin(1) = D;
     vin(2) = isig1;
@@ -174,10 +290,27 @@ if DoDBPlot
     vin(9) = tauy;
     vin(10) = ydrop;
     
-    DBPlot_v2(dt,tmax,t,n,y,sij,spikes,raster,rr,Ihistory,sijhistory,vin)
+    DBPlot_gif(dt,tmax,t,n,y,sij,spikes,raster,rr,Ihistory,sijhistory,vin)
 end
 
-% ODE functions
+%% Analysis %%
+
+% time for analysis window
+tstart_an = tmax/2;
+tend_an = tmax-1;
+
+tw_an = tstart_an/dt:tend_an/dt;
+
+spf_insidewindow = spf(tw_an);
+
+sps = sum(spf_insidewindow)/(length(spf_insidewindow)*dt/1000);
+
+
+%%%%
+
+yss = mean(mean(y(:,end-end/2)));
+
+%% ODE functions
 
     function dtheta = thetaODE(theta,I)
         dtheta = 1-cos(theta) + (1+cos(theta)).*I;

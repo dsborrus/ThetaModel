@@ -1,4 +1,6 @@
-function synctheta_v5(tmax,istate)
+% single one off run of
+% code for parameter sweep. Taking out synaptice depression.
+%
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -40,24 +42,31 @@ function synctheta_v5(tmax,istate)
 % hint: positive I is instrinicly rhymic
 
 % % % Begin % % %
-
+tic
 % unit for time is ms
 
 % % % User Params % % %
 
+% duration of bump (if we are doing one)
+% dur = 30;
+
+
 n1 = 90;   % number of neurons in the first population
 n2 = 10;     % number of neurons in the second population
 dt = 0.05;   % time step
-%tmax = 1e4;     % maximum time of simulation
-iu1 = -0.4;  % mean I parameter for first population
+tmax = 1e4;     % maximum time of simulation
+iu1 = -0.5;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population#
 isig2 = 0.000;    % std of I parameter for second population
 prob = 0.75; % E-R graph, prob is prob of connection.
 D = 20;      % Strength of networkness
 tauavg=1e2;   % Relaxation of network excitement
+bumpit = 0;
+istate = 3;
+silence = 0;
 
-ydrop = .1; % How much of an affect firing has on synaptic depression
+ydrop = 0; % How much of an affect firing has on synaptic depression
 % (should be between 0 and 1)!!!
 tauy  =  5e3; % Char time for return to ss for y (synap depress)
 
@@ -76,7 +85,7 @@ t=dt*(1:tnum); % sneaky way to make the time array, with correct t steps
 
 % initialize the ODE output arrays(theta array and y array)
 theta = zeros(tnum,n);
-y     = zeros(tnum,n);
+y     = ones(tnum,n);
 sij   = zeros(tnum,n);
 
 % initialize auxiallry outputs
@@ -104,21 +113,31 @@ for m=1:n, A(m,m)=0; end
 % Set initial values for theta and y
 switch istate
     case 1 %low state
-        theta(1,:) = pmin+randn(1,n) * .01;
-        y(1,:)     = (randn(1,n)*.01) + 0.1;
+        theta(1,:) = 1+pmin+randn(1,n) * .01;
+        %y(1,:)     = (randn(1,n)*.01) + 0.1;
         %sij(1,:)
     case 2 %high state
         theta(1,:) = pmax.*rand(1,n);
-        y(1,:)     = (randn(1,n)*.01) + 0.97;
+        %y(1,:)     = (randn(1,n)*.01) + 0.97;
         sij(1,:)   = (randn(1,n)*.01) + 0.5;
     case 3 %med state
         theta(1,:) = pmin + (pmax-pmin).*rand(1,n);
-        y(1,:) = (randn(1,n)*.07)+.8;
+        %y(1,:) = (randn(1,n)*.07)+.8;
         sij(1,:)   = (randn(1,n)*.2) + 0.5;
 end
 
+% initialize spike counter
+% spikes per frame
+spf = zeros(tnum,1);
+
 % Begin simulation loop
 for j = 1:tnum-1
+    
+    if silence
+       if t(j) < 1000
+          sij(j,:) = 0; 
+       end
+    end
     
     % calculate synaptic strengths
     % Sum of incoming current is = 
@@ -127,15 +146,28 @@ for j = 1:tnum-1
     % synaptic depression (y) *
     % synaptic current generated (sij) matrix mulitplied by
     % connectivity matrix (A)
-    Isummed = I + (delta*y(j,:).*sij(j,:)) * A; 
-    %Isummed = I + ( sum(A(e,:).*(delta*y(j,e).*sij(j,:))',1));
-    %Isummed = I + ( sum(A(e,:).*y(j,e)',1).*sij(j,:));
+    %Isummed = I + (delta*y(j,:).*sij(j,:)) * A; 
+    Isummed = I + (delta*sij(j,:)) * A; 
+    
+    % bumping
+    if bumpit
+        if t(j) > 500 && t(j) < 1000
+                Isummed = Isummed + 0.5;
+        elseif t(j) > 1500 && t(j) < 2000
+                Isummed = Isummed + 0.5;
+        elseif t(j) > 2500 && t(j) < 3000
+                Isummed = Isummed + 0.5;
+        end
+    end
+    
+    
+    % record keeping
     Ihistory(j) = Isummed(rr);
     sijhistory(j) = sij(j,:) * A(:,rr);
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed);
-    y(j+1,:)     = y(j,:)     + dt * yODE(y(j,:),tauy);
+    %y(j+1,:)     = y(j,:)     + dt * yODE(y(j,:),tauy);
     sij(j+1,:)   = sij(j,:)   + dt * sijODE(sij(j,:),theta(j,:));
     
     e=1; ss=0;
@@ -145,7 +177,7 @@ for j = 1:tnum-1
         % reset that neuron back 2pi
         theta(j+1,a)=theta(j+1,a)-2*pi;
         % augment the synpatic depression term for next y
-        y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
+        %y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
         
         % count spikes
         ss = ss+length(a);
@@ -157,6 +189,7 @@ for j = 1:tnum-1
     
     spikes(j+1) = spikes(j)+dt*(ss/n-spikes(j)/tauavg);
     
+    spf(j) = ss;
 end
 
 % plotting
@@ -177,7 +210,23 @@ if DoDBPlot
     DBPlot_v2(dt,tmax,t,n,y,sij,spikes,raster,rr,Ihistory,sijhistory,vin)
 end
 
-% ODE functions
+%% Analysis %%
+
+% time for analysis window
+tstart_an = tmax/2;
+tend_an = tmax-1;
+
+tw_an = tstart_an/dt:tend_an/dt;
+
+spf_insidewindow = spf(tw_an);
+
+sps = sum(spf_insidewindow)/(length(spf_insidewindow)*dt/1000);
+
+disp(['sps = ' mat2str(round(sps,2))])
+
+toc
+
+%% ODE functions
 
     function dtheta = thetaODE(theta,I)
         dtheta = 1-cos(theta) + (1+cos(theta)).*I;
@@ -195,5 +244,3 @@ end
         dsij = -(sij/tauij)+exp(-nu * (1+cos(thetai)) ) .* (1-sij)/tauR;
         
     end
-
-end
