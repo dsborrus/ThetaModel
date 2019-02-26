@@ -2,10 +2,9 @@
 disp('Beginning parameter sweep of D to find bistability')
 t1 = tic;
 
-Dresolution = 10;
-Dlow = .5;
-Dhigh = 1;
-tmax = 1e4;
+Dresolution = 59;
+Dlow = 0.01;
+Dhigh = 2.5;
 
 Darray = linspace(Dlow,Dhigh,Dresolution);
 Lowsps = zeros(Dresolution,1);
@@ -16,16 +15,16 @@ for i = 1:length(Darray)
     t2 = tic;
     
     % low state
-    istate = 1;
-    bumpit = 0;
-    silence = 1;
-    Lowsps(i) = synctheta_v5_PS(tmax,istate,bumpit,silence,Darray(i));
+    params.istate = 1;
+    params.bumpit = 0;
+    params.silence = 1;
+    Lowsps(i) = synctheta_v5_PS(Darray(i),params);
 
     % high state
-    istate = 2;
-    bumpit = 1;
-    silence = 0;    
-    Highsps(i) = synctheta_v5_PS(tmax,istate,bumpit,silence,Darray(i));
+    params.istate = 2;
+    params.bumpit = 1;
+    params.silence = 0;    
+    Highsps(i) = synctheta_v5_PS(Darray(i),params);
     
     if i~=Dresolution
         disp(['We have finished ' mat2str(i) ' out of ' mat2str(Dresolution) ...
@@ -37,10 +36,18 @@ for i = 1:length(Darray)
 end
 
 f = figure;
+subplot(3,3,[1 6])
 plot(Darray,Lowsps,'b'); hold on;
 plot(Darray,Highsps,'r');
 xlabel('D')
 ylabel('Spikes per second')
+
+subplot(3,3,[7 9]); hold on;
+str = ['isig1 = ' mat2str(params.isig1) '. iu1 = ' mat2str(params.iu1) ...
+    '. isig2 = ' mat2str(params.isig2) '. iu2 = ' mat2str(params.iu2) ...
+    '. n1 = ' mat2str(params.n1) '. n2 = ' mat2str(params.n2) '. prob = ' mat2str(params.prob) ...
+    ];
+annotation('textbox',[.2 .08 .1 .1],'String',str,'FitBoxToText','on');
 
 save PSresults.mat
 

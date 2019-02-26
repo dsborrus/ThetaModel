@@ -4,16 +4,15 @@ clear; close all; clc
 
 % Params %
 
-params.n1 = 90;   % number of neurons in the first population
-params.n2 = 10;     % number of neurons in the second population
+params.n1 = 135;   % number of neurons in the first population
+params.n2 = 15;     % number of neurons in the second population
 params.dt = 0.05;   % time step
 params.tmax = 1e4;     % maximum time of simulation
-params.iu1 = -0.01;  % mean I parameter for first population
+params.iu1 = -0.15;  % mean I parameter for first population
 params.isig1 = 0.000;  % std of I parameter for first population
 params.iu2 = 0.01;  % mean I parameter for second population#
 params.isig2 = 0.000;    % std of I parameter for second population
-params.prob = 0.75; % E-R graph, prob is prob of connection.
-params.MaxD = 0.7;
+params.prob = 0.5; % E-R graph, prob is prob of connection.
 params.tauavg=1e2;   % Relaxation of network excitement
 
 params.ydrop = .1; % How much of an affect firing has on synaptic depression
@@ -29,15 +28,16 @@ params.istate=3;
 if 0
     ParamsweepMain
 else
-    load PSresults2
+    load PSresults7b
 end
 
 %% Get synaptic depression nulcline
 
-if 0
+if 1
+    params.MaxD = 0.7;
     syndepresnulc_main
 else
-    load SDn_results2.mat
+    %load SDn_results2.mat
 end
 
 %% Simulate full system (w/ syn dep back in)
@@ -65,6 +65,6 @@ annotation('textbox',[.2 .03 .1 .1],'String',str,'FitBoxToText','on');
 
 axis off
 
-synctheta_v5(2e4,MaxD,h)
+synctheta_v5(params,h)
 
 end

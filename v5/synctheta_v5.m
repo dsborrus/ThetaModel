@@ -49,12 +49,12 @@ n1 = 90;   % number of neurons in the first population
 n2 = 10;     % number of neurons in the second population
 dt = 0.05;   % time step
 %tmax = 1e4;     % maximum time of simulation
-iu1 = -0.4;  % mean I parameter for first population
+iu1 = -0.01;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population#
 isig2 = 0.000;    % std of I parameter for second population
 prob = 0.75; % E-R graph, prob is prob of connection.
-D = 20;      % Strength of networkness
+D = 1;      % Strength of networkness
 tauavg=1e2;   % Relaxation of network excitement
 
 ydrop = .1; % How much of an affect firing has on synaptic depression
@@ -128,7 +128,7 @@ for j = 1:tnum-1
     % synaptic current generated (sij) matrix mulitplied by
     % connectivity matrix (A)
     Isummed = I + (delta*y(j,:).*sij(j,:)) * A; 
-    %Isummed = I + ( sum(A(e,:).*(delta*y(j,e).*sij(j,:))',1));
+    %Isummed2 = I + ( sum(A(e,:).*(delta*y(j,e).*sij(j,:))',1));
     %Isummed = I + ( sum(A(e,:).*y(j,e)',1).*sij(j,:));
     Ihistory(j) = Isummed(rr);
     sijhistory(j) = sij(j,:) * A(:,rr);

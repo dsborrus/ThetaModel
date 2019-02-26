@@ -1,4 +1,4 @@
-function synctheta_v5(tmax,D,h)
+function synctheta_v5(params,h)
 %
 % code for parameter sweep. Taking out synaptice depression.
 %
@@ -48,27 +48,27 @@ function synctheta_v5(tmax,D,h)
 
 % % % User Params % % %
 
-% duration of bump (if we are doing one)
-% dur = 30;
+n1 = params.n1;   % number of neurons in the first population
+n2 = params.n2;     % number of neurons in the second population
+dt = params.dt;   % time step
+tmax = params.tmax; % maximum time of simulation
+iu1 = params.iu1;  % mean I parameter for first population
+isig1 = params.isig1;  % std of I parameter for first population
+iu2 = params.iu2;  % mean I parameter for second population#
+isig2 = params.isig2;    % std of I parameter for second population
+prob = params.prob; % E-R graph, prob is prob of connection.
+D = params.MaxD;      % Strength of networkness
+tauavg=params.tauavg;   % Relaxation of network excitement
 
-n1 = 90;   % number of neurons in the first population
-n2 = 10;     % number of neurons in the second population
-dt = 0.05;   % time step
-%tmax = 1e4;     % maximum time of simulation
-iu1 = -0.01;  % mean I parameter for first population
-isig1 = 0.000;  % std of I parameter for first population
-iu2 = 0.01;  % mean I parameter for second population#
-isig2 = 0.000;    % std of I parameter for second population
-prob = 0.75; % E-R graph, prob is prob of connection.
-%D = 20;      % Strength of networkness
-tauavg=1e2;   % Relaxation of network excitement
-silence=0;
-bumpit=0;
-istate=3;
+ydrop = params.ydrop; % How much of an affect firing has on synaptic depression
+% % (should be between 0 and 1)!!!
+tauy = params.tauy; % Char time for return to ss for y (synap depress)
 
-ydrop = .1; % How much of an affect firing has on synaptic depression
-% (should be between 0 and 1)!!!
-tauy  =  5e3; % Char time for return to ss for y (synap depress)
+silence = params.silence;
+bumpit = params.bumpit;
+istate = params.istate;
+
+% plot stuff
 
 subplot(5,3,[7 8]);
 pl1 = plot(0,0);
