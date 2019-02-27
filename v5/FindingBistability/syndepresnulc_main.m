@@ -5,7 +5,7 @@ params.istate = 3;
 params.silence = 0;
 params.bumpit = 0;
 
-Dresolution = 25;
+Dresolution = 33;
 Darray2 = linspace(Dlow,Dhigh,Dresolution);
 
 spsarray = zeros(Dresolution,1);
@@ -23,7 +23,7 @@ f2 = figure; subplot(3,3,[1 6])
 hold on;
 plot(Darray/params.MaxD,Lowsps,'b'); hold on;
 plot(Darray/params.MaxD,Highsps,'r');
-plot(yssarray*params.MaxD,spsarray,'xg');
+plot(yssarray,spsarray,'xg');
 xlabel('y')
 ylabel('Spikes per second')
 

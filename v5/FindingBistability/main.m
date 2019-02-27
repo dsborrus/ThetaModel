@@ -34,7 +34,7 @@ end
 %% Get synaptic depression nulcline
 
 if 1
-    params.MaxD = 0.7;
+    params.MaxD = 3;
     syndepresnulc_main
 else
     %load SDn_results2.mat
