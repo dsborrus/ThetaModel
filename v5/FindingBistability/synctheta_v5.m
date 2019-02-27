@@ -70,13 +70,13 @@ istate = params.istate;
 
 % plot stuff
 
-subplot(5,3,[7 8]);
+subplot(5,3,[7 8]); hold on;
 pl1 = plot(0,0);
 pl2 = plot(0,0);
 pl3 = plot(0,0);
 ylim([0 1]);
 axis off
-subplot(5,3,[10 11]);
+subplot(5,3,[10 11]); hold on;
 ylim([1 n1+n2]);
 wind = 100;
 
@@ -85,7 +85,7 @@ filename = (['AnimatedGIF' mat2str(temp) '.gif']);
 
 % % % Script Settings % % %
 
-DoDBPlot = 0; % Should we make the graph dan made?
+DoDBPlot = 1; % Should we make the graph dan made?
 dogif = 0;
 
 % % % % Script Stuff % % (No need to edit below this line if casual user)

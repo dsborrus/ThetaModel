@@ -5,18 +5,18 @@ params.istate = 3;
 params.silence = 0;
 params.bumpit = 0;
 
-Dresolution = 33;
+Dresolution = 15;
 Darray2 = linspace(Dlow,Dhigh,Dresolution);
 
 spsarray = zeros(Dresolution,1);
 yssarray = spsarray;
 
-for i = 1:Dresolution
-    t1 = tic;
+parfor i = 1:Dresolution
+    %t1 = tic;
     [spsarray(i),yssarray(i)] = synctheta_v5_ynulcline(params,Darray2(i)); 
     disp([mat2str(i) ' of ' mat2str(Dresolution) ' done.'])
-    disp(['Estimated time remaining = ' mat2str(round(toc(t1)*(Dresolution-1),2)) ' seconds. Or '...
-        mat2str(round(toc(t1)*(Dresolution-1)/60)) ' minutes.'])
+    %disp(['Estimated time remaining = ' mat2str(round(toc(t1)*(Dresolution-1),2)) ' seconds. Or '...
+    %    mat2str(round(toc(t1)*(Dresolution-1)/60)) ' minutes.'])
 end
 
 f2 = figure; subplot(3,3,[1 6])

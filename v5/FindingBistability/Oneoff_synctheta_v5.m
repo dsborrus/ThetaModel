@@ -51,24 +51,24 @@ tic
 % dur = 30;
 
 
-n1 = 90;   % number of neurons in the first population
-n2 = 10;     % number of neurons in the second population
+n1 = 135;   % number of neurons in the first population
+n2 = 15;     % number of neurons in the second population
 dt = 0.05;   % time step
 tmax = 1e4;     % maximum time of simulation
-iu1 = -0.1;  % mean I parameter for first population
+iu1 = -0.15;  % mean I parameter for first population
 isig1 = 0.000;  % std of I parameter for first population
 iu2 = 0.01;  % mean I parameter for second population#
 isig2 = 0.000;    % std of I parameter for second population
 prob = 0.5; % E-R graph, prob is prob of connection.
-D = 1;      % Strength of networkness
+D = 2.1;      % Strength of networkness
 tauavg = 1e2;   % Relaxation of network excitement
-bumpit = 1;
-istate = 2;
-silence = 0;
+bumpit = 0;
+istate = 3;
+silence = 1;
 
-ydrop = 0; % How much of an affect firing has on synaptic depression
+ydrop = 0.1; % How much of an affect firing has on synaptic depression
 % (should be between 0 and 1)!!!
-tauy  =  51e3; % Char time for return to ss for y (synap depress)
+tauy  =  5e3; % Char time for return to ss for y (synap depress)
 
 
 % % % Script Settings % % %
@@ -94,7 +94,7 @@ raster = NaN(tnum,n); % initialize the raster plot
 Ihistory = NaN(tnum,1);
 sijhistory = NaN(tnum,1);
 % random neuron to track
-rr = randi(n1);
+rr = randi(n2)+n1;
 
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
@@ -114,15 +114,15 @@ for m=1:n, A(m,m)=0; end
 switch istate
     case 1 %low state
         theta(1,:) = 1+pmin+randn(1,n) * .01;
-        %y(1,:)     = (randn(1,n)*.01) + 0.1;
+        y(1,:)     = (randn(1,n)*.01) + 0.1;
         %sij(1,:)
     case 2 %high state
         theta(1,:) = pmax.*rand(1,n);
-        %y(1,:)     = (randn(1,n)*.01) + 0.97;
+        y(1,:)     = (randn(1,n)*.01) + 0.97;
         sij(1,:)   = (randn(1,n)*.01) + 0.5;
     case 3 %med state
         theta(1,:) = pmin + (pmax-pmin).*rand(1,n);
-        %y(1,:) = (randn(1,n)*.07)+.8;
+        y(1,:) = (randn(1,n)*.07)+.8;
         sij(1,:)   = (randn(1,n)*.2) + 0.5;
 end
 
@@ -167,7 +167,7 @@ for j = 1:tnum-1
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed);
-    %y(j+1,:)     = y(j,:)     + dt * yODE(y(j,:),tauy);
+    y(j+1,:)     = y(j,:)     + dt * yODE(y(j,:),tauy);
     sij(j+1,:)   = sij(j,:)   + dt * sijODE(sij(j,:),theta(j,:));
     
     e=1; ss=0;
@@ -177,7 +177,7 @@ for j = 1:tnum-1
         % reset that neuron back 2pi
         theta(j+1,a)=theta(j+1,a)-2*pi;
         % augment the synpatic depression term for next y
-        %y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
+        y(j+1,a) = y(j+1,a) - ydrop*y(j+1,a);
         
         % count spikes
         ss = ss+length(a);

@@ -8,9 +8,16 @@ function synctheta_v5(tmax,istate)
 % istate is initial condition (1-low, 2-high, 3-random spread)
 %
 % % % % Update History % % % %
+% 
 %
 % Version 5 - updating pulses, no longe rpulse coupled, but upstream
 % neurons create synaptic current in downstream neuron
+% Notes on v5: it is trash. Could never get it to oscillate correctly :(
+% v6 will drop the continous synaptic current and use discontinous
+% like synaptic depression is
+% I think the problem was in the histerises loop? See FindingBistability
+% folder (that's actually the only folder that got changed along with main
+% directoty.
 %
 % Version 4 - allowing for multiple spikes in one time "frame"
 %

@@ -1,4 +1,4 @@
-function [sps,yss] = synctheta_v5_ynulcline(params,D)
+function [sps,yss,yss_n2] = synctheta_v5_ynulcline(params,D)
 %
 % code for parameter sweep. Taking out synaptice depression.
 %
@@ -227,6 +227,7 @@ sps = sum(spf_insidewindow)/(length(spf_insidewindow)*dt/1000);
 %%%%
 
 yss = mean(mean(y(:,end-end/2)));
+y
 
 %% ODE functions
 
