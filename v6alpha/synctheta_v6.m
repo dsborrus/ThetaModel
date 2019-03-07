@@ -1,4 +1,4 @@
-function synctheta_v5(tmax,istate)
+function synctheta_v6(tmax,istate)
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -55,24 +55,24 @@ function synctheta_v5(tmax,istate)
 
 % % % User Params % % %
 
-n1 = 200;   % number of neurons in the first population
+n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.05;   % time step
 %tmax = 1e4;     % maximum time of simulation
-iu1 = -0.1;  % mean I parameter for first population
-isig1 = 0.07804;  % std of I parameter for first population
-iu2 = 0.01;  % mean I parameter for second population#
-isig2 = 0.000;    % std of I parameter for second population
-prob = 0.5; % E-R graph, prob is prob of connection.
-D = 1;      % Strength of networkness
+iu1 = -1e7;  % mean I parameter for first population
+isig1 = 5e-8;  % std of I parameter for first population
+iu2 = 0;  % mean I parameter for second population#
+isig2 = 1e-6;    % std of I parameter for second population
+prob = 1.0; % E-R graph, prob is prob of connection.
+D = .0009;      % Strength of networkness
 tauavg = 1e2;   % Relaxation of network excitement
 
 ydrop = .05; % How much of an affect firing has on synaptic depression
 % (should be between 0 and 1)!!!
 tauy  =  5e3; % Char time for return to ss for y (synap depress)
 
-sigain = .5;
-tausi = 5;
+sigain = 1.0;
+tausi = 10;
 
 
 % % % Script Settings % % %
@@ -130,10 +130,20 @@ switch istate
         theta(1,:) = pmin + (pmax-pmin).*rand(1,n);
         y(1,:) = (randn(1,n)*.07)+.8;
         si(1,:)   = (randn(1,n)*.2) + 0.5;
+    case 4
+        theta(1,:) = pmin + (pmax-pmin).*rand(1,n);
+        y(1,:) = ones(n,1);
+        si(1,:)   = (randn(1,n)*.2) + 0.5;
 end
+
+wb = waitbar(0,'Simulating Simulation');
 
 % Begin simulation loop
 for j = 1:tnum-1
+    
+    if mod(j,2000) == 0
+        waitbar(j/tnum,wb)
+    end
     
     % calculate synaptic strengths
     % Sum of incoming current is = 
@@ -171,7 +181,7 @@ for j = 1:tnum-1
         
     end
     
-    spikes(j+1) = spikes(j)+dt*(ss/n-spikes(j)/tauavg);
+    spikes(j+1) = spikes(j)+ss/n+dt*(-spikes(j)/tauavg);
     
 end
 
@@ -189,9 +199,14 @@ if DoDBPlot
     vin(8) = tauavg;
     vin(9) = tauy;
     vin(10) = ydrop;
+    vin(11) = sigain;
+    vin(12) = tausi;
     
-    DBPlot_v2(dt,tmax,t,n,y,si,spikes,raster,rr,Ihistory,sihistory,vin)
+    DBPlot_v2(dt,tmax,t,n,y,si,spikes,raster,rr,Ihistory,sihistory,vin,tauavg,istate)
 end
+
+close(wb)
+
 
 % ODE functions
 
