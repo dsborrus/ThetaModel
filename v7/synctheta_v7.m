@@ -1,4 +1,4 @@
-function spikes = synctheta_v7(tmax,istate)
+function synctheta_v7(tmax,istate)
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan

@@ -4,6 +4,6 @@ clear; close all; clc
 
 tic
 
-spikes = synctheta_v7(2e4,4);
+synctheta_v7(2e4,4);
 
 toc
