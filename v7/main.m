@@ -4,6 +4,6 @@ clear; close all; clc
 
 tic
 
-synctheta_v7(2e4,4);
+synctheta_v7(3e4,4,1,0);
 
 toc

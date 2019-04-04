@@ -15,6 +15,7 @@ taun = vin(12);
 sigain = vin(13);
 tausi = vin(14);
 tautheta=vin(15);
+noisesigma=vin(16);
 
 set(0,'defaultaxesfontsize',20);
 set(0,'defaulttextfontsize',20);
@@ -75,7 +76,7 @@ title(['One random neuron`s total applied current (I+delta*syncurrent*syndepress
 
 linkaxes([ax1 ax2 ax3 ax4 ax5 ax6 ax7 ax8],'x')
 
-subplot(nplots,1,nplots)
+subplot(nplots,1,nplots);
 hold on
 
 str = ['D = ' mat2str(D) '. isig1 = ' mat2str(isig1) '. iu1 = ' mat2str(iu1) ...
@@ -86,7 +87,7 @@ str = ['D = ' mat2str(D) '. isig1 = ' mat2str(isig1) '. iu1 = ' mat2str(iu1) ...
 annotation('textbox',[.1 .08 .1 .1],'String',str,'FitBoxToText','on');
 
 str = ['nrise = ' mat2str(nrise) '. taun = ' mat2str(taun) ...
-       '. tautheta = ' mat2str(tautheta) ...
+       '. tautheta = ' mat2str(tautheta) '. noisesigma = ' mat2str(noisesigma)...
        '. istate = ' mat2str(istate)];
 annotation('textbox',[.1 .03 .1 .1],'String',str,'FitBoxToText','on');
 
