@@ -62,7 +62,7 @@ function synctheta_v7(tmax,istate,p1,p2)
 
 % % % User Params % % %
 
-n1 = 100;   % number of neurons in the first population
+n1 = 500;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
 dt = 0.05;   % time step
 %tmax = 1e4;     % maximum time of simulation
@@ -70,8 +70,8 @@ iu1 = -.0009;  % mean I parameter for first population
 isig1 = 1e-7;  % std of I parameter for first population
 iu2 = 0;  % mean I parameter for second population#
 isig2 = 0;    % std of I parameter for second population
-prob = 1.0; % E-R graph, prob is prob of connection.
-D = 0.03;      % Strength of networkness
+prob = 1; % E-R graph, prob is prob of connection.
+D = 0.04;      % Strength of networkness
 tauavg = 1e2;   % Relaxation of network excitement
 
 tautheta = 1;
@@ -80,12 +80,12 @@ mgain = .2; % How much of an affect firing has on synaptic depression
 taum  =  300; % Char time for return to ss for m (synap depress)
 
 nrise = 0.011;
-taun  = 1500;
+taun  = 1300;
 
 sigain = 1;
 tausi = 15;
 
-noisesigma=.009;
+noisesigma=.0090;
 
 % % % Script Settings % % %
 

@@ -38,9 +38,9 @@ title('Network Activity')
 
 
 ax2 = subplot(nplots,1,2); hold on;
-for i = 1:N
-    plot(t(tw)/1000,raster((tw),i)*i,'.k'); hold on;
-end
+% for i = 1:N
+%     plot(t(tw)/1000,raster((tw),i)*i,'.k'); hold on;
+% end
 
 title('Raster Plot')
 
