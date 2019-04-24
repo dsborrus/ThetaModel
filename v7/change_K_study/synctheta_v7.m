@@ -1,4 +1,4 @@
-function synctheta_v7(tmax,istate,p1,p2)
+function [spikes,dt] = synctheta_v7(tmax,iu1,istate,p1,p2)
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -64,10 +64,10 @@ function synctheta_v7(tmax,istate,p1,p2)
 
 n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
-dt = 0.2;   % time step
+dt = 0.5;   % time step
 %tmax = 1e4;     % maximum time of simulation
-iu1 = -.0009;  % mean I parameter for first population
-isig1 = 1e-7;  % std of I parameter for first population
+ %iu1 = -.00097;  % mean I parameter for first population
+isig1 = 0;  % std of I parameter for first population
 iu2 = 0;  % mean I parameter for second population#
 isig2 = 0;    % std of I parameter for second population
 prob = .5; % E-R graph, prob is prob of connection.
@@ -85,7 +85,7 @@ taun  = 1300;
 sigain = 1;
 tausi = 15;
 
-noisesigma=.0090;
+noisesigma=.0095;
 
 % % % Script Settings % % %
 
@@ -118,7 +118,7 @@ rr = randi(n1);
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
 
-disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length(I)) '%'])
+%disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length(I)) '%'])
 
 % strength of connections (total excitability of network
 % divided by the number of neurons (minus 1) and divided by probability
@@ -270,7 +270,7 @@ end
 % plotting
 
 if DoDBPlot
-    DBPlot_v2(dt,tmax,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory,vin,istate)
+    DBPlot_v3(dt,tmax,t,y,m,n,si,spikes,raster,vin,istate)
 end
 
 close(wb)
@@ -284,10 +284,6 @@ lc.si = si(end,:);
 lc.N = N;
 
 save('lastconditions.mat','lc')
-
-
-% save (send) output
-%thetas = theta;
 
 
 % ODE functions

@@ -1,4 +1,4 @@
-function DBPlot_v2(dt,tmax,t,y,m,n,sij,spikes,raster,rr,Ihistory,sijhistory,vin,istate)
+function DBPlot_v2(dt,tmax,t,y,m,n,sij,spikes,raster,vin)
 
 D = vin(1);
 isig1 = vin(2);
@@ -94,3 +94,5 @@ annotation('textbox',[.1 .03 .1 .1],'String',str,'FitBoxToText','on');
 axis off
 
 saveas(fig,['dataset' mat2str(length(dir('*.png'))+1) '.png'])
+
+save(['dataset' mat2str(length(dir('*.png'))+1) '.mat'],'spikes','y','vin')

@@ -1,4 +1,4 @@
-function synctheta_v7(tmax,istate,p1,p2)
+function synctheta_v7_edit(tmax,istate,p1,p2,conmat,doablate)
 %
 % Sync Theta Model with synaptic depression - Version 5 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -11,6 +11,7 @@ function synctheta_v7(tmax,istate,p1,p2)
 % p2 is the gif-animated plot (1 for yes. 0 for no) recommend most users
 % for p2 = 0
 %
+% A is connectivity matrix (1-ER, 2-small world, 3-scale free, 4-hierarchy)
 %
 % % % % Update History % % % %
 %
@@ -64,15 +65,17 @@ function synctheta_v7(tmax,istate,p1,p2)
 
 n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
-dt = 0.2;   % time step
+dt = 0.05;   % time step
 %tmax = 1e4;     % maximum time of simulation
 iu1 = -.0009;  % mean I parameter for first population
 isig1 = 1e-7;  % std of I parameter for first population
 iu2 = 0;  % mean I parameter for second population#
 isig2 = 0;    % std of I parameter for second population
-prob = .5; % E-R graph, prob is prob of connection.
-D = 0.03;      % Strength of networkness
+prob = .1; % E-R graph, prob is prob of connection.
+D = 0.04;      % Strength of networkness
 tauavg = 1e2;   % Relaxation of network excitement
+t2ablat = 20; %ablating 1 neuron every t2ablat seconds
+numN2kill_wonepulse = 10;
 
 tautheta = 1;
 
@@ -89,7 +92,7 @@ noisesigma=.0090;
 
 % % % Script Settings % % %
 
-DoDBPlot = p1; % Should we make the graph dan made?
+DoDBPlot_v2 = p1; % Should we make the graph dan made?
 DoPDPlot = p2; % Should we make the gif of the Phase Diagrams of all neurons?
 
 % % % % Script Stuff % % (No need to edit below this line if casual user)
@@ -120,16 +123,60 @@ I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
 
 disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length(I)) '%'])
 
+
+%connectivity matrix
+switch conmat
+    case 1 %ER network
+        A=(rand(N,N)<prob);
+        for i=1:N, A(i,i)=0; end %makes sure no neuron is connected to itself
+    case 2 %small world network
+        %network parameters - include them in the parameters section 
+        M = 3; %number of Ns on each side
+        p = .2;%probability of "short cut"
+        X = p*N; %number of "short cuts" 
+
+        A = gallery('circul', N);
+
+        val = zeros(1,N);
+        val(2:M+1) = 1;
+        val(N-M+1:N) = 1;
+        A = val(A);
+
+        for i=1:X
+            row = randi(N);
+            col = randi(N);
+            a = find(A(row,:));
+            A(row,a(randi(length(a)))) = 0;
+            if row ~= col
+                A(row, col) = 1;
+                A(col, row) = 1;
+            end
+        end
+    case 3 %scale free network
+        % Generates a scale-free directed adjacency matrix using Barabasi and Albert algorithm
+        % A = BAgraph_dir(N,mo,m)
+        % Input: N = number of nodes in the network, 
+        %       mo = size of seed, 
+        %       m = average degree. Use mo=m or m<mo.
+        
+        %network parameters - again need to include these up top
+        mo = 5
+        m = 3
+        A = BAgraph_dir(N,mo,m) %do I need to include entire BAgraph_dir file? Wouldn't that just slow things down?
+    case 4 %hierarchy network (*rename)
+        A = tril(ones(N), -1)
+end
+
+        
+%initializing ablation scheme
+killlist = randperm(100);
+k_indx = 0;
+
 % strength of connections (total excitability of network
 % divided by the number of neurons (minus 1) and divided by probability
 % of connections)
-delta = D/((N-1)*prob);
-
-% creates connectivity matrix, damn that's savy
-A=(rand(N,N)<prob);
-
-% makes sure no neuron is connected to itself. Again, quite savy
-for i=1:N, A(i,i)=0; end
+delta = D * N/sum(sum(A)); %where does D param come into play??
+%delta2 = D/((N-1)*prob)
 
 % Set initial values for theta and y
 switch istate
@@ -197,6 +244,17 @@ if DoPDPlot
     axis off
 end
 
+%matrix visualization
+figure
+G = digraph(A);
+H = plot(G);
+layout(H,'force3')
+title('Network connectivity', 'FontSize', 15)
+
+figure
+spy(A)
+title('Adjacency matrix', 'FontSize', 15)
+
 vin(1) = D;
 vin(2) = isig1;
 vin(3) = iu1;
@@ -213,6 +271,10 @@ vin(13) = sigain;
 vin(14) = tausi;
 vin(15) = tautheta;
 vin(16) = noisesigma;
+vin(17) = conmat;
+vin(18) = doablate;
+vin(19) = t2ablat;
+vin(20) = numN2kill_wonepulse;
 
 %% Begin simulation loop, come back now
 for j = 1:tnum-1
@@ -220,6 +282,17 @@ for j = 1:tnum-1
     if mod(j,2000) == 0
         waitbar(j/tnum,wb)
     end
+    
+    %laser ablation
+    if mod(j, t2ablat * 1000/dt) == 0 && doablate
+        for lala = 1:numN2kill_wonepulse
+            k_indx = k_indx + 1;
+            deadN = killlist(k_indx);
+            A(deadN, :) = 0;
+            A(:, deadN) = 0;
+        end
+    end
+ 
     
     % calculate synaptic strengths
     Isummed = I + ( (delta*y(j,:).*si(j,:)) * A); 
@@ -230,7 +303,7 @@ for j = 1:tnum-1
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed,tautheta)...
-                   + noise(dt,N,noisesigma)';
+                   + noise(dt,N,noisesigma,killlist,k_indx)';
     m(j+1,:) = m(j,:) + dt * mODE(m(j,:),taum);
     n(j+1,:) = n(j,:) + dt * nODE(n(j,:),m(j,:),nrise,taun);
     si(j+1,:)   = si(j,:)   + dt * siODE(si(j,:),tausi);
@@ -269,7 +342,7 @@ end
 
 % plotting
 
-if DoDBPlot
+if DoDBPlot_v2
     DBPlot_v2(dt,tmax,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory,vin,istate)
 end
 
@@ -309,9 +382,13 @@ save('lastconditions.mat','lc')
         dsi = (siss-si)/tausi;
     end
 
-    function noiseout = noise(deltat,NumNeurons,sigma)
+    function noiseout = noise(deltat,NumNeurons,sigma, killlist,k_indx)
     
         noiseout = sigma * sqrt(deltat) * randn(NumNeurons,1);
+        
+        if k_indx > 0
+        noiseout(killlist(1:k_indx)) = 0;
+        end
         
     end
 

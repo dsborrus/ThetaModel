@@ -16,6 +16,10 @@ sigain = vin(13);
 tausi = vin(14);
 tautheta=vin(15);
 noisesigma=vin(16);
+conmat = vin(17);
+doablate = vin(18);
+t2ablat = vin(19);
+numN2kill_wonepulse = vin(20);
 
 set(0,'defaultaxesfontsize',20);
 set(0,'defaulttextfontsize',20);
@@ -34,6 +38,7 @@ fig = figure('Position',[800 500 1500 1200]);
 ax1 = subplot(nplots,1,1);
 hold on
 plot(t(tw)/1000,(spikes(tw)./tauavg)*1000)
+plot(t2ablat:t2ablat:tmax/1000,zeros(length(t2ablat:t2ablat:tmax/1000),1)+10,'ro')
 title('Network Activity')
 
 
@@ -88,9 +93,14 @@ annotation('textbox',[.1 .08 .1 .1],'String',str,'FitBoxToText','on');
 
 str = ['nrise = ' mat2str(nrise) '. taun = ' mat2str(taun) ...
        '. tautheta = ' mat2str(tautheta) '. noisesigma = ' mat2str(noisesigma)...
-       '. istate = ' mat2str(istate)];
+       '. istate = ' mat2str(istate) '. conmat = ' mat2str(conmat) '. doablate = ' mat2str(doablate)...
+       '. t2ablat = ' mat2str(t2ablat) '. numN2kill_wonepulse = ' mat2str(numN2kill_wonepulse)];
 annotation('textbox',[.1 .03 .1 .1],'String',str,'FitBoxToText','on');
 
 axis off
 
-saveas(fig,['dataset' mat2str(length(dir('*.png'))+1) '.png'])
+pngindx = length(dir('*.png'))+1;
+
+saveas(fig,['dataset' mat2str(pngindx) '.png'])
+
+save(['dataset' mat2str(pngindx) '.mat'],'spikes')
