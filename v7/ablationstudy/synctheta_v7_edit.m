@@ -63,20 +63,33 @@ function synctheta_v7_edit(tmax,istate,p1,p2,conmat,doablate)
 
 % % % User Params % % %
 
+% % neuron params
 n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
-dt = 0.05;   % time step
+dt = 0.2;   % time step
 %tmax = 1e4;     % maximum time of simulation
 iu1 = -.0009;  % mean I parameter for first population
 isig1 = 1e-7;  % std of I parameter for first population
 iu2 = 0;  % mean I parameter for second population#
 isig2 = 0;    % std of I parameter for second population
-prob = .1; % E-R graph, prob is prob of connection.
-D = 0.04;      % Strength of networkness
-tauavg = 1e2;   % Relaxation of network excitement
-t2ablat = 20; %ablating 1 neuron every t2ablat seconds
-numN2kill_wonepulse = 10;
 
+% % network params
+    % case 1 E-R
+     prob = 1; % prob of connection
+    
+    % case 2 small world
+     sw_M = 3; %number of Ns on each side
+     sw_p = .3; %probability of "short cut" 
+
+    % case 3 scale-free
+     sf_mo = 5; %size of seed
+     sf_m = 3; % average degree (use mo=m or m<mo)
+     
+    % case 4 directed clique
+     %no additional params
+
+D = 0.03;      % Strength of networkness
+tauavg = 1e2;   % Relaxation of network excitement
 tautheta = 1;
 
 mgain = .2; % How much of an affect firing has on synaptic depression
@@ -90,6 +103,11 @@ tausi = 15;
 
 noisesigma=.0090;
 
+% % ablation params
+t2ablat = 10; %ablating 1 neuron every t2ablat seconds
+numN2kill_wonepulse = 5;
+
+
 % % % Script Settings % % %
 
 DoDBPlot_v2 = p1; % Should we make the graph dan made?
@@ -102,6 +120,7 @@ pmin = -pi; % domain min
 pmax = pi;  % domain max
 tnum = tmax/dt; % the nummber of time steps
 t=dt*(1:tnum); % sneaky way to make the time array, with correct t steps
+sw_X = sw_p*N; %number of "short cuts" in small world network
 
 % initialize the ODE output arrays(theta array and y array)
 theta = zeros(tnum,N);
@@ -126,23 +145,18 @@ disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length
 
 %connectivity matrix
 switch conmat
-    case 1 %ER network
+    case 1 %E-R network
         A=(rand(N,N)<prob);
         for i=1:N, A(i,i)=0; end %makes sure no neuron is connected to itself
-    case 2 %small world network
-        %network parameters - include them in the parameters section 
-        M = 3; %number of Ns on each side
-        p = .2;%probability of "short cut"
-        X = p*N; %number of "short cuts" 
-
+    case 2 %small world 
         A = gallery('circul', N);
 
         val = zeros(1,N);
-        val(2:M+1) = 1;
-        val(N-M+1:N) = 1;
+        val(2:sw_M+1) = 1;
+        val(N-sw_M+1:N) = 1;
         A = val(A);
 
-        for i=1:X
+        for i=1:sw_X
             row = randi(N);
             col = randi(N);
             a = find(A(row,:));
@@ -152,19 +166,11 @@ switch conmat
                 A(col, row) = 1;
             end
         end
-    case 3 %scale free network
+    case 3 %scale free 
         % Generates a scale-free directed adjacency matrix using Barabasi and Albert algorithm
-        % A = BAgraph_dir(N,mo,m)
-        % Input: N = number of nodes in the network, 
-        %       mo = size of seed, 
-        %       m = average degree. Use mo=m or m<mo.
-        
-        %network parameters - again need to include these up top
-        mo = 5
-        m = 3
-        A = BAgraph_dir(N,mo,m) %do I need to include entire BAgraph_dir file? Wouldn't that just slow things down?
-    case 4 %hierarchy network (*rename)
-        A = tril(ones(N), -1)
+        A = BAgraph_dir(N,sf_mo,sf_m);
+    case 4 %directed clique
+        A = tril(ones(N), -1);
 end
 
         
@@ -172,11 +178,14 @@ end
 killlist = randperm(100);
 k_indx = 0;
 
-% strength of connections (total excitability of network
+% strength of connections (total excitability of network)
 % divided by the number of neurons (minus 1) and divided by probability
 % of connections)
-delta = D * N/sum(sum(A)); %where does D param come into play??
+delta = D * N/sum(sum(A));
 %delta2 = D/((N-1)*prob)
+
+% what about scaling synpatic strength for EACH neuron? -db edits 4/24/19
+%delta = D./sum(A,1);
 
 % Set initial values for theta and y
 switch istate
@@ -343,7 +352,7 @@ end
 % plotting
 
 if DoDBPlot_v2
-    DBPlot_v2(dt,tmax,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory,vin,istate)
+    DBPlot_v3(dt,tmax,t,y,m,n,si,spikes,raster,vin,istate)
 end
 
 close(wb)
