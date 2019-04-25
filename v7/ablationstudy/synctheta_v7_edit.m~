@@ -82,8 +82,8 @@ isig2 = 0;    % std of I parameter for second population
      sw_p = .3; %probability of "short cut" 
 
     % case 3 scale-free
-     sf_mo = 30; %size of seed
-     sf_m = 28; % average degree (use mo=m or m<mo)
+     sf_mo = 5; %size of seed
+     sf_m = 3; % average degree (use mo=m or m<mo)
      
     % case 4 directed clique
      %no additional params
@@ -173,11 +173,7 @@ switch conmat
         [r,c] = find(A== 1);
         
         for in = 1:length(r)
-            if rand<=0.5
-               holder = A(r(in),c(in));
-               A(r(in),c(in)) = A(c(in),r(in));
-               A(c(in),r(in)) = holder;
-            end
+            
         end
         
         
