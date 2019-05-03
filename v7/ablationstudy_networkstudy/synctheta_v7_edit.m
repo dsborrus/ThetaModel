@@ -83,7 +83,11 @@ isig2 = 0;    % std of I parameter for second population
 
     % case 3 scale-free
      sf_mo = 30; %size of seed
+<<<<<<< HEAD:v7/ablationstudy/synctheta_v7_edit.m
      sf_m = 30; % average degree (use mo=m or m<mo)
+=======
+     sf_m = 28; % average degree (use mo=m or m<mo)
+>>>>>>> 3bb8e1c918cc3939724943d01d1e4ff33bf16595:v7/ablationstudy_networkstudy/synctheta_v7_edit.m
      
     % case 4 directed clique
      %no additional params
@@ -169,6 +173,7 @@ switch conmat
     case 3 %scale free 
         % Generates a scale-free directed adjacency matrix using Barabasi and Albert algorithm
         A = BAgraph_dir(N,sf_mo,sf_m);
+<<<<<<< HEAD:v7/ablationstudy/synctheta_v7_edit.m
         %A = A'; % dan edit!!! just checking
         
         for r = 1:size(A,1)
@@ -180,6 +185,21 @@ switch conmat
             end
         end
         
+=======
+        
+        [r,c] = find(A== 1);
+        
+        for in = 1:length(r)
+            if rand<=0.5
+               holder = A(r(in),c(in));
+               A(r(in),c(in)) = A(c(in),r(in));
+               A(c(in),r(in)) = holder;
+            end
+        end
+        
+        
+        1;
+>>>>>>> 3bb8e1c918cc3939724943d01d1e4ff33bf16595:v7/ablationstudy_networkstudy/synctheta_v7_edit.m
     case 4 %directed clique
         A = tril(ones(N), -1);
         A = A';
