@@ -3,6 +3,8 @@
 
 clear; close all; clc; tic;
 
+addpath('..')
+
 %% Set parameters 
 
 % System params %
@@ -34,7 +36,7 @@ Parameters.n1       = 100;     % number of neurons in the first population
 Parameters.n2       = 0;       % number of neurons in the second population
 Parameters.D        = 0.03;    % Strength of networkness
 Parameters.tauavg   = 1e2;     % Relaxation of network excitement
-Parameters.istate   = 1;
+Parameters.istate   = 4;
 Options.conmat      = 1;
     % case 1 - ER
 Parameters.prob     = 0.8;     % prob of connection

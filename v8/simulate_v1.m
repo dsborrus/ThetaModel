@@ -1,4 +1,4 @@
-function simulate_v1(Parameters,Options)
+function outputs = simulate_v1(Parameters,Options)
 %
 % Sync Theta Model with synaptic depression - Version 8 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
@@ -95,9 +95,6 @@ rr = randi(n1);
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
 
-%disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length(I)) '%'])
-
-
 %% Set initial values for theta and y
 switch istate
     case 1 %low state
@@ -174,12 +171,13 @@ switch conmat
         A = A';
 end
 
+%% more pre-sim stuff
 % strength of connections (total excitability of network
 % divided by the number of neurons (minus 1) and divided by probability
 % of connections)
 delta = D * N/sum(sum(A));
 
-%initializing ablation scheme
+%initializing ablation scheme (if doing it)
 killlist = randperm(100);
 k_indx = 0;
 
@@ -196,8 +194,7 @@ spy(A)
 title('Adjacency matrix', 'FontSize', 15)
 end
 
-
-%% graphics stuff please skip
+%% gif graphics stuff (and waitbar) 
 wb = waitbar(0,'Simulating Simulation');
 gifresolution = 10; %ms
 if dogifplot
@@ -247,7 +244,7 @@ vin(14) = tausi;
 vin(15) = tautheta;
 vin(16) = noisesig;
 
-%% Begin simulation loop, come back now
+%% Begin simulation loop
 disp('Beginning simulation')
 for j = 1:tnum-1
     
@@ -334,9 +331,9 @@ lc.N = N;
 
 save('lastconditions.mat','lc')
 
-
-% save (send) output
-%thetas = theta;
+%% generate outputs
+outputs = [];
+outputs.spikes = spikes;
 
 
 %% ODE functions
