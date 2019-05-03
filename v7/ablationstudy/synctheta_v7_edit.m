@@ -11,7 +11,7 @@ function synctheta_v7_edit(tmax,istate,p1,p2,conmat,doablate)
 % p2 is the gif-animated plot (1 for yes. 0 for no) recommend most users
 % for p2 = 0
 %
-% A is connectivity matrix (1-ER, 2-small world, 3-scale free, 4-hierarchy)
+% conmat (A) is connectivity matrix (1-ER, 2-small world, 3-scale free, 4-hierarchy)
 %
 % % % % Update History % % % %
 %
@@ -66,7 +66,7 @@ function synctheta_v7_edit(tmax,istate,p1,p2,conmat,doablate)
 % % neuron params
 n1 = 100;   % number of neurons in the first population
 n2 = 0;     % number of neurons in the second population
-dt = 0.2;   % time step
+dt = 0.5;   % time step
 %tmax = 1e4;     % maximum time of simulation
 iu1 = -.0009;  % mean I parameter for first population
 isig1 = 1e-7;  % std of I parameter for first population
@@ -75,15 +75,15 @@ isig2 = 0;    % std of I parameter for second population
 
 % % network params
     % case 1 E-R
-     prob = 1; % prob of connection
+     prob = 0.5; % prob of connection
     
     % case 2 small world
      sw_M = 3; %number of Ns on each side
      sw_p = .3; %probability of "short cut" 
 
     % case 3 scale-free
-     sf_mo = 5; %size of seed
-     sf_m = 3; % average degree (use mo=m or m<mo)
+     sf_mo = 30; %size of seed
+     sf_m = 30; % average degree (use mo=m or m<mo)
      
     % case 4 directed clique
      %no additional params
@@ -101,7 +101,7 @@ taun  = 1300;
 sigain = 1;
 tausi = 15;
 
-noisesigma=.0090;
+noisesigma=.009;
 
 % % ablation params
 t2ablat = 10; %ablating 1 neuron every t2ablat seconds
@@ -169,8 +169,20 @@ switch conmat
     case 3 %scale free 
         % Generates a scale-free directed adjacency matrix using Barabasi and Albert algorithm
         A = BAgraph_dir(N,sf_mo,sf_m);
+        %A = A'; % dan edit!!! just checking
+        
+        for r = 1:size(A,1)
+            for c = 1:size(A,2)
+                if A(r,c) == 1 && rand <= 0.5
+                    A(r,c) = A(c,r);
+                    A(c,r) = 1;
+                end
+            end
+        end
+        
     case 4 %directed clique
         A = tril(ones(N), -1);
+        A = A';
 end
 
         
@@ -186,6 +198,7 @@ delta = D * N/sum(sum(A));
 
 % what about scaling synpatic strength for EACH neuron? -db edits 4/24/19
 %delta = D./sum(A,1);
+%delta(delta==inf)=0;
 
 % Set initial values for theta and y
 switch istate
@@ -253,7 +266,7 @@ if DoPDPlot
     axis off
 end
 
-%matrix visualization
+%% connmatrix visualization
 figure
 G = digraph(A);
 H = plot(G);
@@ -304,7 +317,7 @@ for j = 1:tnum-1
  
     
     % calculate synaptic strengths
-    Isummed = I + ( (delta*y(j,:).*si(j,:)) * A); 
+    Isummed = I + ( (delta.*y(j,:).*si(j,:)) * A); 
     
     % Record this
     Ihistory(j) = Isummed(rr);

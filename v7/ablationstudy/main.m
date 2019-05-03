@@ -5,9 +5,9 @@ clear; close all; clc
 tic
 
 % A is connectivity matrix (1-ER, 2-small world, 3-scale free, 4-hierarchy)
-A = 1;
-ablate = 0;
+A = 3;
+ablate = 1;
 
-synctheta_v7_edit(2e4,1,1,0,A,ablate);
+synctheta_v7_edit(6e4,1,1,0,A,ablate);
 
 toc
