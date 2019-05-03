@@ -1,98 +1,75 @@
-function synctheta_v7(tmax,istate,p1,p2)
+function simulate_v1(Parameters,Options)
 %
-% Sync Theta Model with synaptic depression - Version 5 DB version
+% Sync Theta Model with synaptic depression - Version 8 DB version
 % Orignal ode written by Greg, commented by Dan, further edits by Dan
-% Original ode was simple theta model This now has synaptic depresseion
+% ConMat matrix done by Rachel Smith
 %
 % tmax is maximum time to run simulation
 % istate is initial condition (1-low, 2-high, 3-random spread, 4 - previous state)
 %
-% p1 is the main plot (1 for yes. 0 for no)
-% p2 is the gif-animated plot (1 for yes. 0 for no) recommend most users
-% for p2 = 0
 %
+% This is the function, run the a main* script to call this function
 %
-% % % % Update History % % % %
+% Update history moved to README
 %
-% Version 7 - delaying synaptic depression
-% 
-% Version 6 - removing continous synaptic current, replacing it with
-% discontinous jumps, super similar to synpatic depression
-%
-%
-% Version 5 - updating pulses, no longe rpulse coupled, but upstream
-% neurons create synaptic current in downstream neuron
-% Notes on v5: it is trash. Could never get it to oscillate correctly :(
-% v6 will drop the continous synaptic current and use discontinous
-% like synaptic depression is
-% I think the problem was in the histerises loop? See FindingBistability
-% folder (that's actually the only folder that got changed along with main
-% directoty.
-%
-% Version 4 - allowing for multiple spikes in one time "frame"
-%
-% Miniupdate C - Increase speed of simulation by removing the large matrix
-% multiplication for connectivity matrix. Now picks and chooses only
-% neurons it needs!
-%
-% Version 3-  Update name: Restore.
-% Now, changing the theta pulse. Before it was D/n.
-% But we must also accoount for the connectivity of the network
-% D/((N-1)P).
-% Also graphics are getting an update. Need raster plot (DB plot)
-%
-%
-% Version 2 - Tried to speed up code, it failed. Restored back to version 1
-%
-%
-% Version 1 - including synaptic depression
-%
-% System of linked theta neurons, maybe with two populations of different
-% intrinsic frequency
-% Also there is a synaptic depression
-%
-% Function is
-% d theta/ d time = 1 - cos(theta) + [1 + cos(theta)] * I
-% d y / d t = (y - 1)/tau where on every burst, y = y-ydrop
-% hint: positive I is instrinicly rhymic
-
-% % % Begin % % %
-
 % unit for time is ms
 
-% % % User Params % % %
+%% Load Parameters
+disp('Loading parameters')
 
-n1 = 100;   % number of neurons in the first population
-n2 = 0;     % number of neurons in the second population
-dt = 0.2;   % time step
-%tmax = 1e4;     % maximum time of simulation
-iu1 = -.0009;  % mean I parameter for first population
-isig1 = 1e-7;  % std of I parameter for first population
-iu2 = 0;  % mean I parameter for second population#
-isig2 = 0;    % std of I parameter for second population
-prob = .5; % E-R graph, prob is prob of connection.
-D = 0.03;      % Strength of networkness
-tauavg = 1e2;   % Relaxation of network excitement
+% System params %
+tmax     = Parameters.tmax;    % maximum time of simulation
+dt       = Parameters.dt;      % time step
 
-tautheta = 1;
+% Neurons params %
 
-mgain = .2; % How much of an affect firing has on synaptic depression
-taum  =  300; % Char time for return to ss for m (synap depress)
+iu1      = Parameters.iu1;     % mean I parameter for first population
+isig1    = Parameters.isig1;   % std of I parameter for first population
+iu2      = Parameters.iu2;     % mean I parameter for second population#
+isig2    = Parameters.isig2;   % std of I parameter for second population
+tautheta = Parameters.tautheta;% relaxation of neuron's theta
+    % synaptic depression 1
+mgain    = Parameters.mgain;   % How much of an affect firing has on synaptic depression
+taum     = Parameters.taum;    % Char time for return to ss for m (synap depress)
+    % synaptic depression 2
+nrise    = Parameters.nrise;   % Rate of rise for synaptic depression based on n
+taun     = Parameters.taun;    % Char time for return to ss for n (synap depress)
+    % snynaptic conductance
+sigain   = Parameters.sigain;  % How much of a gain firing has on synaptic conductance
+tausi    = Parameters.tausi;   % Char time for return to ss for n (synap depress)
+    % noise
+noisesig = Parameters.noisesig;% Variance of noise
 
-nrise = 0.011;
-taun  = 1300;
+% Network params %
 
-sigain = 1;
-tausi = 15;
+n1       = Parameters.n1;      % number of neurons in the first population
+n2       = Parameters.n2;      % number of neurons in the second population
+D        = Parameters.D;       % Strength of networkness
+tauavg   = Parameters.tauavg;  % Relaxation of network excitement
+istate   = Parameters.istate;  % initial state to use
+conmat   = Options.conmat;     % network architecture to use
+    % case 1 - ER
+prob     = Parameters.prob;    % prob of connection
+    % case 2 - small world
+sw_M     = Parameters.sw_M;    % number of Ns on each side
+sw_p     = Parameters.sw_p;    % probability of "short cut" 
+    % case 3 - scale-free
+sf_mo   = Parameters.sf_mo;    % size of seed
+sf_m    = Parameters.sf_m;     % average degree (use mo=m or m<mo)
 
-noisesigma=.0090;
+% ablation params %
+Doablate = Options.Doablate;
+t2ablat = Parameters.t2ablat;  % When to ablate neurons (every XXX seconds)
+N2k_w1p = Parameters.N2k_w1p;  % number of neurons to kill with one pulse
 
-% % % Script Settings % % %
+% Script params %
+doAplot = Options.doAplot;
+doplot1 = Options.doplot1;
+doplot2 = Options.doplot2;
+dogifplot = Options.dogifplot;
 
-DoDBPlot = p1; % Should we make the graph dan made?
-DoPDPlot = p2; % Should we make the gif of the Phase Diagrams of all neurons?
-
-% % % % Script Stuff % % (No need to edit below this line if casual user)
+%% Script Stuff (No need to edit below this line if casual user)
+disp('Pre-sim stuff...')
 
 N=n1+n2;    % total pop number
 pmin = -pi; % domain min
@@ -118,20 +95,10 @@ rr = randi(n1);
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
 
-disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length(I)) '%'])
+%disp(['Intrinsic freq that are positive = ' mat2str(length(find(I>0))*100/length(I)) '%'])
 
-% strength of connections (total excitability of network
-% divided by the number of neurons (minus 1) and divided by probability
-% of connections)
-delta = D/((N-1)*prob);
 
-% creates connectivity matrix, damn that's savy
-A=(rand(N,N)<prob);
-
-% makes sure no neuron is connected to itself. Again, quite savy
-for i=1:N, A(i,i)=0; end
-
-% Set initial values for theta and y
+%% Set initial values for theta and y
 switch istate
     case 1 %low state
         theta(1,:) = pmin+randn(1,N) * .01;
@@ -164,10 +131,76 @@ switch istate
         end
 end
 
+%%  make connectivity matrix
+disp('Making connectivity matrix')
+switch conmat
+    case 1 %E-R network
+        A=(rand(N,N)<prob);
+        for i=1:N, A(i,i)=0; end %makes sure no neuron is connected to itself
+    case 2 %small world 
+        A = gallery('circul', N);
+
+        val = zeros(1,N);
+        val(2:sw_M+1) = 1;
+        val(N-sw_M+1:N) = 1;
+        A = val(A);
+
+        for i=1:sw_X
+            row = randi(N);
+            col = randi(N);
+            a = find(A(row,:));
+            A(row,a(randi(length(a)))) = 0;
+            if row ~= col
+                A(row, col) = 1;
+                A(col, row) = 1;
+            end
+        end
+    case 3 %scale free 
+        % Generates a scale-free directed adjacency matrix using Barabasi and Albert algorithm
+        A = BAgraph_dir(N,sf_mo,sf_m);
+        
+        [r,c] = find(A== 1);
+        
+        for in = 1:length(r)
+            if rand<=0.5
+               holder = A(r(in),c(in));
+               A(r(in),c(in)) = A(c(in),r(in));
+               A(c(in),r(in)) = holder;
+            end
+        end
+        
+    case 4 %directed clique
+        A = tril(ones(N), -1);
+        A = A';
+end
+
+% strength of connections (total excitability of network
+% divided by the number of neurons (minus 1) and divided by probability
+% of connections)
+delta = D * N/sum(sum(A));
+
+%initializing ablation scheme
+killlist = randperm(100);
+k_indx = 0;
+
+%% connmatrix visualization
+if doAplot
+% figure
+% G = digraph(A);
+% H = plot(G);
+% layout(H,'force3')
+% title('Network connectivity', 'FontSize', 15)
+
+figure
+spy(A)
+title('Adjacency matrix', 'FontSize', 15)
+end
+
+
 %% graphics stuff please skip
 wb = waitbar(0,'Simulating Simulation');
 gifresolution = 10; %ms
-if DoPDPlot
+if dogifplot
     gf = figure('position',[10 100 2200 1100]);
     subplot(6,6,[1 21]); hold on;
     axis tight manual; hold on
@@ -189,7 +222,7 @@ if DoPDPlot
     annotation('textbox',[.1 .08 .1 .1],'String',str1,'FitBoxToText','on');
 
     str2 = ['nrise = ' mat2str(nrise) '. taun = ' mat2str(taun) ...
-           '. tautheta = ' mat2str(tautheta) '. noisesigma = ' mat2str(noisesigma)...
+           '. tautheta = ' mat2str(tautheta) '. noisesigma = ' mat2str(noisesig)...
            '. istate = ' mat2str(istate)];
     annotation('textbox',[.1 .03 .1 .1],'String',str2,'FitBoxToText','on');
 
@@ -212,13 +245,24 @@ vin(12) = taun;
 vin(13) = sigain;
 vin(14) = tausi;
 vin(15) = tautheta;
-vin(16) = noisesigma;
+vin(16) = noisesig;
 
 %% Begin simulation loop, come back now
+disp('Beginning simulation')
 for j = 1:tnum-1
     
     if mod(j,2000) == 0
         waitbar(j/tnum,wb)
+    end
+    
+    %laser ablation
+    if mod(j, t2ablat * 1000/dt) == 0 && Doablate
+        for lala = 1:N2k_w1p
+            k_indx = k_indx + 1;
+            deadN = killlist(k_indx);
+            A(deadN, :) = 0;
+            A(:, deadN) = 0;
+        end
     end
     
     % calculate synaptic strengths
@@ -230,7 +274,7 @@ for j = 1:tnum-1
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed,tautheta)...
-                   + noise(dt,N,noisesigma)';
+                   + noise(dt,N,noisesig)';
     m(j+1,:) = m(j,:) + dt * mODE(m(j,:),taum);
     n(j+1,:) = n(j,:) + dt * nODE(n(j,:),m(j,:),nrise,taun);
     si(j+1,:)   = si(j,:)   + dt * siODE(si(j,:),tausi);
@@ -259,7 +303,7 @@ for j = 1:tnum-1
     
     
     %%% giffing %%%%
-    if mod(j-1,20*gifresolution) == 0 && DoPDPlot
+    if mod(j-1,20*gifresolution) == 0 && dogifplot
         if j > 20*3000 % over 2 seconds
             [P,P2,P3] = updategif(theta(j,:),pmin,pmax,Isummed,gf,gffilename,j,P,P2,P3,raster,spikes,t,vin,istate);
         end
@@ -267,15 +311,20 @@ for j = 1:tnum-1
     
 end
 
-% plotting
+%% plotting
+disp('Plotting....')
 
-if DoDBPlot
-    DBPlot_v2(dt,tmax,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory,vin,istate)
+if doplot1
+    plot1(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory)
+end
+
+if doplot2
+    plot2(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory)
 end
 
 close(wb)
 
-% save last conditions
+%% save last conditions
 lc.theta = theta(end,:);
 lc.y = y(end,:);
 lc.m = m(end,:);
@@ -290,7 +339,7 @@ save('lastconditions.mat','lc')
 %thetas = theta;
 
 
-% ODE functions
+%% ODE functions
 
     function dtheta = thetaODE(theta,I,tautheta)
         dtheta = (1/tautheta)* (1-cos(theta)) + (1+cos(theta)).*I;

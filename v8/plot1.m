@@ -1,56 +1,50 @@
-function DBPlot_v3(dt,tmax,t,y,m,n,sij,spikes,raster,vin,istate)
+function plot1(Parameters,Options,t,y,m,n,sij,spikes,raster,rr,Ihistory,sijhistory)
 
-disp('Entering plotting function')
-
-doraster = 1; % 2 colord, 1 no color, 0 no raster
-
-D = vin(1);
-isig1 = vin(2);
-iu1 = vin(3);
-isig2 = vin(4);
-iu2 = vin(5);
-N = vin(6);
-prob = vin(7);
-tauavg = vin(8);
-mgain = vin(9);
-taum = vin(10);
-nrise = vin(11);
-taun = vin(12);
-sigain = vin(13);
-tausi = vin(14);
-tautheta=vin(15);
-noisesigma=vin(16);
-conmat = vin(17);
-doablate = vin(18);
-t2ablat = vin(19);
-numN2kill_wonepulse = vin(20);
-
+D = Parameters.D;
+isig1 = Parameters.isig1;
+iu1 = Parameters.iu1;
+isig2 = Parameters.isig2;
+iu2 = Parameters.iu2;
+N = Parameters.n1 + Parameters.n2;
+prob = Parameters.prob;
+tauavg = Parameters.tauavg;
+mgain = Parameters.mgain;
+taum = Parameters.taum;
+nrise = Parameters.nrise;
+taun = Parameters.taun;
+sigain = Parameters.sigain;
+tausi = Parameters.tausi;
+tautheta=Parameters.tautheta;
+noisesigma=Parameters.noisesig;
+dt = Parameters.dt;
+tmax = Parameters.tmax;
+istate = Parameters.istate;
+conmat = Options.conmat;
+doablate = Options.Doablate;
+t2ablat = Parameters.t2ablat;
+N2k_w1p = Parameters.N2k_w1p;
+doraster = Options.doraster;
 
 set(0,'defaultaxesfontsize',20);
 set(0,'defaulttextfontsize',20);
 set(0,'defaultlinelinewidth',1.5);
 set(0,'defaultlinemarkersize',10);
 
-nplots = 4;
+nplots = 9;
 
-fig = figure('Position',[500 500 1500 700]);
- 
-% % % plot 1 - network spike trace
+tstart = dt;
+tend = tmax;
+
+tw = tstart/dt:tend/dt;
+
+fig = figure('Position',[800 500 1500 1200]);
 
 ax1 = subplot(nplots,1,1);
 hold on
-plot(t/1000,(spikes./tauavg)*1000);
-% plot std and 2std
-astd = std((spikes./tauavg)*1000);
-tmean = mean((spikes./tauavg)*1000);
-%plot(t/1000,zeros(length(t),1)+tmean+2*astd,'color',[0.6 0.6 0.6])
-%plot(t/1000,zeros(length(t),1)+tmean,'color','k')
-%plot(t/1000,zeros(length(t),1)+2,'color',[0.6 0.6 0.6])
+plot(t(tw)/1000,(spikes(tw)./tauavg)*1000)
 title('Network Activity')
 
-disp('First plot done, starting raster calculations')
-
-% % % plot 2 - raster
+%%%%%%%%%%%%%%%%% plot 2 - raster %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ax2 = subplot(nplots,1,2); hold on;
 
@@ -69,7 +63,7 @@ if doraster == 2
 
     laggyraster = laggyraster .* raster;
 
-    mxspks = max(max(laggyraster))
+    mxspks = max(max(laggyraster));
 
     disp('Done calculating raster, now plotting it')
     % % % % % % % %      % % % % % % %
@@ -111,22 +105,41 @@ end
     
 ylim([1 N])
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 title('Raster Plot')
 
-% % % % % % % % % % % % % % % % % % 
-% synaptic depression
-
 if 1
-    ax3 = subplot(nplots,1,3);
-    plot(t/1000,mean(y,2))
-    title(['Mean synaptic depression (y) of network'])
+ax3 = subplot(nplots,1,3);
+plot(t(tw)/1000,mean(y(tw,:),2))
+title(['Mean synaptic depression (y) (n=' mat2str(rr) ')'])
 else
-    ax3 = subplot(nplots,1,3);
-    plot(t/1000,y(:,rr))
-    title(['One random neuron`s synaptic depression (y) (n=' mat2str(rr) ')'])
+ax3 = subplot(nplots,1,3);
+plot(t(tw)/1000,y(tw,rr))
+title(['One random neuron`s synaptic depression (y) (n=' mat2str(rr) ')'])
 end
 
-linkaxes([ax1 ax2 ax3],'x')
+ax4 = subplot(nplots,1,4);
+plot(t(tw)/1000,sij(tw,rr))
+title(['One random neuron`s synaptic current output (s) (n=' mat2str(rr) ')'])
+
+ax5 = subplot(nplots,1,5);
+plot(t(tw)/1000,m(tw,rr))
+title(['One random neuron`s (m) (n=' mat2str(rr) ')'])
+
+ax6 = subplot(nplots,1,6);
+plot(t(tw)/1000,n(tw,rr))
+title(['One random neuron`s (n) (n=' mat2str(rr) ')'])
+
+ax7 = subplot(nplots,1,7);
+plot(t(tw)/1000,sijhistory(tw))
+title(['One random neuron`s synaptic current input (n=' mat2str(rr) ')'])
+
+ax8 = subplot(nplots,1,8);
+plot(t(tw)/1000,Ihistory(tw))
+title(['One random neuron`s total applied current (I+delta*syncurrent*syndepression) (n=' mat2str(rr) ')'])
+
+linkaxes([ax1 ax2 ax3 ax4 ax5 ax6 ax7 ax8],'x')
 
 subplot(nplots,1,nplots);
 hold on
@@ -141,17 +154,9 @@ annotation('textbox',[.1 .08 .1 .1],'String',str,'FitBoxToText','on');
 str = ['nrise = ' mat2str(nrise) '. taun = ' mat2str(taun) ...
        '. tautheta = ' mat2str(tautheta) '. noisesigma = ' mat2str(noisesigma)...
        '. istate = ' mat2str(istate) '. conmat = ' mat2str(conmat) '. doablate = ' mat2str(doablate)...
-       '. t2ablat = ' mat2str(t2ablat) '. numN2kill_wonepulse = ' mat2str(numN2kill_wonepulse)];
+       '. t2ablat = ' mat2str(t2ablat) '. numN2kill_wonepulse = ' mat2str(N2k_w1p)];
 annotation('textbox',[.1 .03 .1 .1],'String',str,'FitBoxToText','on');
 
 axis off
 
-% lala = length(dir('output/*.png'))+1;
-
-% saveas(fig,['output/dataset' mat2str(lala) '.png'])
-
-% save(['output/dataset' mat2str(lala) '.mat'])
-% 
-% figure
-% plot(t/1000,sij(:,rr))
-% title(['One random neuron`s synaptic current output (s) (n=' mat2str(rr) ')'])
+%saveas(fig,['dataset' mat2str(length(dir('*.png'))+1) '.png'])

@@ -1,30 +1,29 @@
-function DBPlot_v3(dt,tmax,t,y,m,n,sij,spikes,raster,vin,istate)
+function plot2(Parameters,Options,t,y,m,n,sij,spikes,raster,rr,Ihistory,sijhistory)
 
-disp('Entering plotting function')
-
-doraster = 1; % 2 colord, 1 no color, 0 no raster
-
-D = vin(1);
-isig1 = vin(2);
-iu1 = vin(3);
-isig2 = vin(4);
-iu2 = vin(5);
-N = vin(6);
-prob = vin(7);
-tauavg = vin(8);
-mgain = vin(9);
-taum = vin(10);
-nrise = vin(11);
-taun = vin(12);
-sigain = vin(13);
-tausi = vin(14);
-tautheta=vin(15);
-noisesigma=vin(16);
-conmat = vin(17);
-doablate = vin(18);
-t2ablat = vin(19);
-numN2kill_wonepulse = vin(20);
-
+D = Parameters.D;
+isig1 = Parameters.isig1;
+iu1 = Parameters.iu1;
+isig2 = Parameters.isig2;
+iu2 = Parameters.iu2;
+N = Parameters.n1 + Parameters.n2;
+prob = Parameters.prob;
+tauavg = Parameters.tauavg;
+mgain = Parameters.mgain;
+taum = Parameters.taum;
+nrise = Parameters.nrise;
+taun = Parameters.taun;
+sigain = Parameters.sigain;
+tausi = Parameters.tausi;
+tautheta=Parameters.tautheta;
+noisesigma=Parameters.noisesig;
+dt = Parameters.dt;
+tmax = Parameters.tmax;
+istate = Parameters.istate;
+conmat = Options.conmat;
+doablate = Options.Doablate;
+t2ablat = Parameters.t2ablat;
+N2k_w1p = Parameters.N2k_w1p;
+doraster = Options.doraster;
 
 set(0,'defaultaxesfontsize',20);
 set(0,'defaulttextfontsize',20);
@@ -141,17 +140,7 @@ annotation('textbox',[.1 .08 .1 .1],'String',str,'FitBoxToText','on');
 str = ['nrise = ' mat2str(nrise) '. taun = ' mat2str(taun) ...
        '. tautheta = ' mat2str(tautheta) '. noisesigma = ' mat2str(noisesigma)...
        '. istate = ' mat2str(istate) '. conmat = ' mat2str(conmat) '. doablate = ' mat2str(doablate)...
-       '. t2ablat = ' mat2str(t2ablat) '. numN2kill_wonepulse = ' mat2str(numN2kill_wonepulse)];
+       '. t2ablat = ' mat2str(t2ablat) '. N2k_w1p = ' mat2str(N2k_w1p)];
 annotation('textbox',[.1 .03 .1 .1],'String',str,'FitBoxToText','on');
 
 axis off
-
-% lala = length(dir('output/*.png'))+1;
-
-% saveas(fig,['output/dataset' mat2str(lala) '.png'])
-
-% save(['output/dataset' mat2str(lala) '.mat'])
-% 
-% figure
-% plot(t/1000,sij(:,rr))
-% title(['One random neuron`s synaptic current output (s) (n=' mat2str(rr) ')'])
