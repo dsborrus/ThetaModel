@@ -169,6 +169,10 @@ switch conmat
     case 4 %directed clique
         A = tril(ones(N), -1);
         A = A';
+        
+    case 5 %clustered scale free
+        
+        
 end
 
 %% more pre-sim stuff

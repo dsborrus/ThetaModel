@@ -42,9 +42,12 @@ plot(t/1000,(spikes./tauavg)*1000);
 % plot std and 2std
 astd = std((spikes./tauavg)*1000);
 tmean = mean((spikes./tauavg)*1000);
-%plot(t/1000,zeros(length(t),1)+tmean+2*astd,'color',[0.6 0.6 0.6])
-%plot(t/1000,zeros(length(t),1)+tmean,'color','k')
-%plot(t/1000,zeros(length(t),1)+2,'color',[0.6 0.6 0.6])
+plot(t/1000,zeros(length(t),1)+tmean+2*astd,'color',[0.6 0.6 0.6])
+plot(t/1000,zeros(length(t),1)+tmean,'color','k')
+plot(t/1000,zeros(length(t),1)+2,'color','r')
+if doablate == 1
+    plot(t2ablat:t2ablat:tmax/1000,zeros(length(t2ablat:t2ablat:tmax/1000),1)+10,'ro')
+end
 title('Network Activity')
 
 disp('First plot done, starting raster calculations')

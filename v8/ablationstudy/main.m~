@@ -1,3 +1,5 @@
+% Main script to run other simulation - ablation studies
+
 % main script to run function
 % showcase version, just for show!
 
@@ -5,10 +7,29 @@ clear; close all; clc; tic;
 
 addpath('..')
 
-%% Set parameters 
+%% conmat params
+Parameters.tmax     = 2e4;     % maximum time of simulation
+Options.conmat      = 1;
+    % case 1 - ER
+Parameters.prob     = 0.8;     % prob of connection
+    % case 2 - small world
+Parameters.sw_M     = 3;       % small world - number of Ns on each side
+Parameters.sw_p     = 0.3;     % small world - probability of "short cut" 
+    % case 3 - scale-free
+Parameters.sf_mo    = 30;      % scale free - size of seed
+Parameters.sf_m     = 25;      % sacle free - average degree (use mo=m or m<mo)
+
+%% ablation params
+
+% ablation params %
+
+Options.Doablate    = 0;
+Parameters.t2ablat  = 10;      % When to ablate neurons (every XXX seconds)
+Parameters.N2k_w1p  = 5;       % number of neurons to kill with one pulse
+
+%% Other parameters 
 
 % System params %
-Parameters.tmax     = 2e4;     % maximum time of simulation
 Parameters.dt       = 0.2;     % time step
 
 % Neurons params %
@@ -36,23 +57,7 @@ Parameters.n1       = 100;     % number of neurons in the first population
 Parameters.n2       = 0;       % number of neurons in the second population
 Parameters.D        = 0.03;    % Strength of networkness
 Parameters.tauavg   = 1e2;     % Relaxation of network excitement
-Parameters.istate   = 4;
-Options.conmat      = 1;
-    % case 1 - ER
-Parameters.prob     = 0.8;     % prob of connection
-    % case 2 - small world
-Parameters.sw_M     = 3;       % number of Ns on each side
-Parameters.sw_p     = 0.3;     % probability of "short cut" 
-    % case 3 - scale-free
-Parameters.sf_mo    = 30;      % size of seed
-Parameters.sf_m     = 25;      % average degree (use mo=m or m<mo)
-    % case 4 - directed
-
-% ablation params %
-
-Options.Doablate    = 0;
-Parameters.t2ablat  = 10;      % When to ablate neurons (every XXX seconds)
-Parameters.N2k_w1p  = 5;       % number of neurons to kill with one pulse
+Parameters.istate   = 1;
 
 % Script params %
 
