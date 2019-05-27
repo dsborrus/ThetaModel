@@ -130,50 +130,7 @@ end
 
 %%  make connectivity matrix
 disp('Making connectivity matrix')
-switch conmat
-    case 1 %E-R network
-        A=(rand(N,N)<prob);
-        for i=1:N, A(i,i)=0; end %makes sure no neuron is connected to itself
-    case 2 %small world 
-        A = gallery('circul', N);
-
-        val = zeros(1,N);
-        val(2:sw_M+1) = 1;
-        val(N-sw_M+1:N) = 1;
-        A = val(A);
-
-        for i=1:sw_X
-            row = randi(N);
-            col = randi(N);
-            a = find(A(row,:));
-            A(row,a(randi(length(a)))) = 0;
-            if row ~= col
-                A(row, col) = 1;
-                A(col, row) = 1;
-            end
-        end
-    case 3 %scale free 
-        % Generates a scale-free directed adjacency matrix using Barabasi and Albert algorithm
-        A = BAgraph_dir(N,sf_mo,sf_m);
-        
-        [r,c] = find(A== 1);
-        
-        for in = 1:length(r)
-            if rand<=0.5
-               holder = A(r(in),c(in));
-               A(r(in),c(in)) = A(c(in),r(in));
-               A(c(in),r(in)) = holder;
-            end
-        end
-        
-    case 4 %directed clique
-        A = tril(ones(N), -1);
-        A = A';
-        
-    case 5 %clustered scale free
-        
-        
-end
+A = MakeNetwork(Parameters,Options);
 
 %% more pre-sim stuff
 % strength of connections (total excitability of network
@@ -184,19 +141,6 @@ delta = D * N/sum(sum(A));
 %initializing ablation scheme (if doing it)
 killlist = randperm(100);
 k_indx = 0;
-
-%% connmatrix visualization
-if doAplot
-% figure
-% G = digraph(A);
-% H = plot(G);
-% layout(H,'force3')
-% title('Network connectivity', 'FontSize', 15)
-
-figure
-spy(A)
-title('Adjacency matrix', 'FontSize', 15)
-end
 
 %% gif graphics stuff (and waitbar) 
 wb = waitbar(0,'Simulating Simulation');
@@ -338,6 +282,7 @@ save('lastconditions.mat','lc')
 %% generate outputs
 outputs = [];
 outputs.spikes = spikes;
+outputs.A = A;
 
 
 %% ODE functions
@@ -364,5 +309,6 @@ outputs.spikes = spikes;
         noiseout = sigma * sqrt(deltat) * randn(NumNeurons,1);
         
     end
+
 
 end
