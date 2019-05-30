@@ -336,7 +336,7 @@ end
 
 %% Zoom in and plot some ablation traces
 
-if 1
+if 0
     disp('Zooming in and plotting ablation traces')
     window = 100;
     windowfrontbuffer = 100;
