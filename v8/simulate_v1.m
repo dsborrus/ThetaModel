@@ -49,7 +49,7 @@ tauavg   = Parameters.tauavg;  % Relaxation of network excitement
 istate   = Parameters.istate;  % initial state to use
 conmat   = Options.conmat;     % network architecture to use
     % case 1 - ER
-prob     = Parameters.prob;    % prob of connection
+prob     = Parameters.er_prob;    % prob of connection
     % case 2 - small world
 sw_M     = Parameters.sw_M;    % number of Ns on each side
 sw_p     = Parameters.sw_p;    % probability of "short cut" 
@@ -214,8 +214,10 @@ for j = 1:tnum-1
     Isummed = I + ( (delta*y(j,:).*si(j,:)) * A); 
     
     % Record this
-    Ihistory(j) = Isummed(rr);
-    sihistory(j) = si(j,:) * A(:,rr);
+    if Options.doplot1
+        Ihistory(j) = Isummed(rr);
+        sihistory(j) = si(j,:) * A(:,rr);
+    end
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed,tautheta)...
@@ -240,7 +242,9 @@ for j = 1:tnum-1
         ss = ss+length(a);
         
         % catalouge for raster plot
-        raster(j,a) = 1;
+        if Options.doplot1 || Options.doplot2
+            raster(j,a) = 1;
+        end
         
     end
     
@@ -280,9 +284,11 @@ lc.N = N;
 save('lastconditions.mat','lc')
 
 %% generate outputs
-outputs = [];
 outputs.spikes = spikes;
 outputs.A = A;
+outputs.t = t;
+
+disp('Done with simulate_v1')
 
 
 %% ODE functions

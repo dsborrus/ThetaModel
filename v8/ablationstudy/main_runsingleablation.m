@@ -8,25 +8,25 @@ clear; close all; clc; tic; rng(1000);
 addpath('..')
 
 %% conmat params
-Parameters.tmax     = 5e4;     % maximum time of simulation
-Options.conmat      = 5;
+Parameters.tmax     = 3e4;     % maximum time of simulation
+Options.conmat      = 1;
     % case 1 - ER
-Parameters.prob     = 0.8;     % prob of connection
+Parameters.er_prob  = 0.2;     % prob of connection
     % case 2 - small world
 Parameters.sw_M     = 7;       % small world - number of Ns on each side
-Parameters.sw_p     = 0.4;     % small world - probability of "short cut" 
+Parameters.sw_p     = 0.05;     % small world - probability of "short cut" 
     % case 3 - scale-free
-Parameters.sf_mo    = 50;      % scale free - size of seed
-Parameters.sf_m     = 25;      % sacle free - average degree (use mo=m or m<mo)
-Parameters.sf_d     = 0.30;     % d = chance that a wiring will be reciprical
+Parameters.sf_mo    = 30;      % scale free - size of seed
+Parameters.sf_m     = 30;      % sacle free - average degree (use mo=m or m<mo)
+Parameters.sf_d     = 1.30;     % d = chance that a wiring will be reciprical
 Options.startstruct.s= 0;      % starting structure (0 - clique)(1 - ER)
 Options.startstruct.p=.6;     % p of ER network, if making ER 
     % case 4 - premade scale free
 Parameters.A2load = 'saved600neuronscalefree.mat';
-    % case 5 - Klemm and Eguilez ( 2002) scalefree, small world
-Parameters.ke_mo = 4;          % scale free - size of seed
-Parameters.ke_mu = .2;         % The chance that a wiring will wire to a non active node
-Parameters.ke_d = 0.2;     % d = chance that a wiring will NOT be reciprical
+    % case 5 - Klemm and Eguilez ( 2002b) scalefree, small world
+Parameters.ke_mo = 25;          % scale free - size of seed
+Parameters.ke_mu = .5;         % The chance that a wiring will wire to a non active node
+Parameters.ke_d = 0.0;         % d = chance that a wiring will NOT be reciprical
     
 
 %% ablation params
@@ -77,6 +77,6 @@ Options.doplot2       = 1;
 Options.dogifplot     = 0;
 
 %% Call simulation
-Outsput = simulate_v1(Parameters, Options);
+Output = simulate_v1(Parameters, Options);
 
 toc

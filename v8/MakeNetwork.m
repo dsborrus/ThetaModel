@@ -3,6 +3,8 @@ function [A] = MakeNetwork(Parameters,Options)
 
 N = Parameters.n1 + Parameters.n2;
 
+prob = Parameters.er_prob;
+
 sw_p = Parameters.sw_p;
 sw_M = Parameters.sw_M;
 
@@ -14,7 +16,12 @@ ke_mo = Parameters.ke_mo;
 ke_mu = Parameters.ke_mu;
 ke_d = Parameters.ke_d;
 
-
+% check if network already exists,
+if isfield(Parameters,'A')
+    disp('I see Parameters.A exists, therefore we will load that loaded network')
+    disp('Not remaking a network!!! Note to user! Parameters.conmat is being ignored!')
+    A = Parameters.A;
+else
 
 switch Options.conmat
     case 1 %E-R network
@@ -24,7 +31,7 @@ switch Options.conmat
         
     case 2 %small world
         
-        A = makesmallworld(N,sw_p, sw_M,Options);
+        A = makesmallworld(N,sw_p, sw_M);
         
     case 3 %scale free
         
@@ -42,6 +49,8 @@ switch Options.conmat
         
         A = makeKEscalefree(N,ke_mo,ke_mu,ke_d,Options);
         
+end
+
 end
 
 %% connmatrix visualization %
@@ -291,7 +300,7 @@ end
         % rangom node with probability mu, then remove one active node.
         
         for i = ke_mo + 1 : N
-            waitbar(i*0.5/N,'connect remaining nodes to active nodes')
+            waitbar(i/N)
             for j = find(Active_Nodes)'
                 Chance = rand;
                 % mu is the chance edges are added to non-active nodes
@@ -388,8 +397,10 @@ end
                 end
             end
         end
-        
+    close(wb)    
     end
+
+    
 %% other network
 end
 

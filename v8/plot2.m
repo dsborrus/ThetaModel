@@ -6,7 +6,7 @@ iu1 = Parameters.iu1;
 isig2 = Parameters.isig2;
 iu2 = Parameters.iu2;
 N = Parameters.n1 + Parameters.n2;
-prob = Parameters.prob;
+er_prob = Parameters.er_prob;
 tauavg = Parameters.tauavg;
 mgain = Parameters.mgain;
 taum = Parameters.taum;
@@ -135,7 +135,7 @@ hold on
 
 str = ['D = ' mat2str(D) '. isig1 = ' mat2str(isig1) '. iu1 = ' mat2str(iu1) ...
     '. isig2 = ' mat2str(isig2) '. iu2 = ' mat2str(iu2) ...
-    '. N = ' mat2str(N) '. prob = ' mat2str(prob) '. tauavg = ' mat2str(tauavg) ...
+    '. N = ' mat2str(N) '. prob = ' mat2str(er_prob) '. tauavg = ' mat2str(tauavg) ...
     '. mgain = ' mat2str(mgain) '. taum = ' mat2str(taum) ...
     '. sigain = ' mat2str(sigain) '. tausi = ' mat2str(tausi)];
 annotation('textbox',[.1 .08 .1 .1],'String',str,'FitBoxToText','on');
