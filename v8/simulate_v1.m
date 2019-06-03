@@ -141,6 +141,7 @@ delta = D * N/sum(sum(A));
 %initializing ablation scheme (if doing it)
 killlist = randperm(100);
 k_indx = 0;
+getnoisy = true(N,1);
 
 %% gif graphics stuff (and waitbar) 
 wb = waitbar(0,'Simulating Simulation');
@@ -207,6 +208,8 @@ for j = 1:tnum-1
             deadN = killlist(k_indx);
             A(deadN, :) = 0;
             A(:, deadN) = 0;
+            % update get noisy, dead neurons dont get noise
+            getnoisy(deadN) = false;
         end
     end
     
@@ -221,7 +224,7 @@ for j = 1:tnum-1
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed,tautheta)...
-                   + noise(dt,N,noisesig)';
+                   + noise(dt,N,noisesig,getnoisy)';
     m(j+1,:) = m(j,:) + dt * mODE(m(j,:),taum);
     n(j+1,:) = n(j,:) + dt * nODE(n(j,:),m(j,:),nrise,taun);
     si(j+1,:)   = si(j,:)   + dt * siODE(si(j,:),tausi);
@@ -287,6 +290,9 @@ save('lastconditions.mat','lc')
 outputs.spikes = spikes;
 outputs.A = A;
 outputs.t = t;
+outputs.y = y;
+outputs.si = si;
+output.killlist = killlist;
 
 disp('Done with simulate_v1')
 
@@ -310,9 +316,13 @@ disp('Done with simulate_v1')
         dsi = (siss-si)/tausi;
     end
 
-    function noiseout = noise(deltat,NumNeurons,sigma)
-    
-        noiseout = sigma * sqrt(deltat) * randn(NumNeurons,1);
+    function noiseout = noise(deltat,NumNeurons,sigma,getnoisy)
+        
+        if any(getnoisy==false)
+            noiseout = sigma * sqrt(deltat) * randn(NumNeurons,1).*getnoisy;
+        else
+            noiseout = sigma * sqrt(deltat) * randn(NumNeurons,1);
+        end
         
     end
 

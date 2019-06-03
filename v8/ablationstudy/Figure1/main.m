@@ -25,7 +25,7 @@ Parameters.sw_p     = 0.05;     % small world - probability of "short cut"
     % case 3 - scale-free
 Parameters.sf_mo    = 30;      % scale free - size of seed
 Parameters.sf_m     = 30;      % sacle free - average degree (use mo=m or m<mo)
-Parameters.sf_d     = 1.30;     % d = chance that a wiring will be reciprical
+Parameters.sf_d     = 1;     % d = chance that a wiring will be reciprical
 Options.startstruct.s= 0;      % starting structure (0 - clique)(1 - ER)
 Options.startstruct.p=.6;     % p of ER network, if making ER 
     % case 4 - premade scale free
@@ -41,7 +41,7 @@ Parameters.ke_d = 0.0;         % d = chance that a wiring will NOT be reciprical
 % ablation params %
 
 Options.Doablate    = 1;
-Parameters.t2ablat  = 200;     % When to ablate neurons (every XXX seconds)
+Parameters.t2ablat  = 250;     % When to ablate neurons (every XXX seconds)
 Parameters.N2k_w1p  = 5;       % number of neurons to kill with one pulse
 
 % Other parameters 
@@ -99,11 +99,11 @@ counter = 0;    % keeps track of number of networks
 
 disp('making or loading networks')
 
-% ER w/ prob 2
-if 0
-    str1 = 'ER_p20';
+% ER w/ prob 014
+if 1
+    str1 = 'ER_p14';
     Options.conmat      = 1;
-    Parameters.er_prob  = 0.2;
+    Parameters.er_prob  = 0.14;
     F1 = FigureArms(Parameters,Options,str1);
     F1.MakeGraph;
     counter = counter+1;
@@ -113,7 +113,7 @@ else
 end
 
 % small world with M 7 and p 0.1
-if 0
+if 1
     str2 = 'sw_M7_p10';
     Options.conmat      = 2;
     Parameters.sw_M     = 7;
@@ -127,7 +127,7 @@ else
 end
 
 % small world with M 7 and p 0.4
-if 0
+if 1
     str3 = 'sw_M7_p40';
     Options.conmat      = 2;
     Parameters.sw_M     = 7;
@@ -141,11 +141,11 @@ else
 end
 
 % scale free with M & Mo 30, d=1, and start is clique
-if 0
-    str4 = 'sf_mmo30_d100_ssclique';
+if 1
+    str4 = 'sf_mmo7_d100_ssclique';
     Options.conmat      = 3;
-    Parameters.sf_mo    = 30; 
-    Parameters.sf_m     = 30;    
+    Parameters.sf_mo    = 7; 
+    Parameters.sf_m     = 7;    
     Parameters.sf_d     = 1.00;
     Options.startstruct.s= 0;
     Options.startstruct.p=.6;
@@ -157,15 +157,15 @@ else
     load('BackUpNetworks/F4.mat','F4')
 end
 
-% scale free with M 40 & Mo 20, d=0.3, and start is ER with p.5
-if 0
-    str5 = 'sf_m40_mo20_d030_ssERp050';
+% scale free with M 7 & Mo 14, d=0.0, and start is ER with p.5
+if 1
+    str5 = 'sf_m7_mo14_d000_ssERp050';
     Options.conmat      = 3;
-    Parameters.sf_mo    = 40; 
-    Parameters.sf_m     = 20;    
-    Parameters.sf_d     = 0.3;
+    Parameters.sf_mo    = 14; 
+    Parameters.sf_m     = 7;    
+    Parameters.sf_d     = 0.0;
     Options.startstruct.s= 1;
-    Options.startstruct.p=.5;
+    Options.startstruct.p=.50;
     F5 = FigureArms(Parameters,Options,str5);
     F5.MakeGraph;
     counter = counter+1;
@@ -174,15 +174,16 @@ else
     load('BackUpNetworks/F5.mat','F5')
 end
 
-% scale-free, small-world with Mo25, mu=.20, d=0.00, and start is clique
-if 0
-    str6 = 'ke_mo25_mu020_d000_ssclique';
+% scale-free, small-world with Mo7, mu=.50, d=0.00, and start is ER prob
+% 0.14
+if 1
+    str6 = 'ke_mo7_mu050_d000_ssERp014';
     Options.conmat   = 5;
-    Parameters.ke_mo = 25;          % scale free - size of seed
-    Parameters.ke_mu = .20;         % The chance that a wiring will wire to a non active node
+    Parameters.ke_mo = 7;          % scale free - size of seed
+    Parameters.ke_mu = .50;         % The chance that a wiring will wire to a non active node
     Parameters.ke_d = 0.0; 
-    Options.startstruct.s= 0;
-    Options.startstruct.p=.5;
+    Options.startstruct.s= 1;
+    Options.startstruct.p=0.14;
     F6 = FigureArms(Parameters,Options,str6);
     F6.MakeGraph;
     counter = counter+1;
@@ -205,14 +206,14 @@ if 0
     counter = counter+1;
     save('BackUpNetworks/F7.mat','F7')
 else
-    load('BackUpNetworks/F7.mat','F7')
+    %load('BackUpNetworks/F7.mat','F7')
 end
 
 disp('Done making or loading networks')
 
 %% Analyse new or loaded networks
 
-if 0
+if 1
     disp('Analysing networks')
     F1.AnalyseGraph(1,1);
     F2.AnalyseGraph(0,0);
@@ -220,7 +221,7 @@ if 0
     F4.AnalyseGraph(2,2);
     F5.AnalyseGraph(2,2);
     F6.AnalyseGraph(2,2);
-    F7.AnalyseGraph(2,2);
+    %F7.AnalyseGraph(2,2);
     disp('Done analysing networks')
 else
     disp('Skipping network connectivity analysis')
@@ -228,50 +229,50 @@ end
 
 %% Simulate networks
 
-if 0
+if 1
 
     disp('Simulating networks, without ablation')
 
-    if 0
+    if 1
         loadlastsim = 0;
         F1.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F1.mat')
+        save('BackUpNetworks/F1.mat','F1')
     end
 
-    if 0
+    if 1
         loadlastsim = 0;
         F2.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F2.mat')
+        save('BackUpNetworks/F2.mat','F2')
     end
 
-    if 0
+    if 1
         loadlastsim = 0;
         F3.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F3.mat')
+        save('BackUpNetworks/F3.mat','F3')
     end
 
-    if 0
+    if 1
         loadlastsim = 0;
         F4.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F4.mat')
+        save('BackUpNetworks/F4.mat','F4')
     end
 
-    if 0
+    if 1
         loadlastsim = 0;
         F5.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F5.mat')
+        save('BackUpNetworks/F5.mat','F5')
     end
 
-    if 0
+    if 1
         loadlastsim = 0;
         F6.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F6.mat')
+        save('BackUpNetworks/F6.mat','F6')
     end
 
     if 0
         loadlastsim = 0;
         F7.simplsimNetwork(loadlastsim)
-        save('BackUpNetworks/F7.mat')
+        save('BackUpNetworks/F7.mat','F7')
     end
 
     disp('Networks have been simulated simply (or have been loaded from saves) and plotted')
@@ -280,7 +281,7 @@ else
 end
 
 %% Simulate and ablate network
-if 0
+if 1
 
     disp('Simulating networks, WITH ablation')
 
@@ -288,45 +289,45 @@ if 0
     % about the graphic output. But if we changed settings/parameters, we
     % should rerun the sim!!
     if 1
-        loadlastsim = 1;
+        loadlastsim = 0;
         F1.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F1.mat')
+        save('BackUpNetworks/F1.mat','F1')
     end
 
     if 1
-        loadlastsim = 1;
+        loadlastsim = 0;
         F2.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F2.mat')
+        save('BackUpNetworks/F2.mat','F2')
     end
 
     if 1
         loadlastsim = 0;
         F3.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F3.mat')
+        save('BackUpNetworks/F3.mat','F3')
     end
 
     if 1
         loadlastsim = 0;
         F4.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F4.mat')
+        save('BackUpNetworks/F4.mat','F4')
     end
 
     if 1
         loadlastsim = 0;
         F5.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F5.mat')
+        save('BackUpNetworks/F5.mat','5')
     end
 
     if 1
         loadlastsim = 0;
         F6.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F6.mat')
+        save('BackUpNetworks/F6.mat','F6')
     end
 
-    if 1
+    if 0
         loadlastsim = 0;
         F7.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F7.mat')
+        save('BackUpNetworks/F7.mat','F7')
     end
 
     disp('Networks have been ablated (or have been loaded from saves) and plotted')
@@ -336,19 +337,19 @@ end
 
 %% Zoom in and plot some ablation traces
 
-if 0
+if 1
     disp('Zooming in and plotting ablation traces')
-    window = 100;
-    windowfrontbuffer = 100;
+    window = 60;
+    windowfrontbuffer = 150;
     
-    for chunknumber = [2 4 5]
+    for chunknumber = [2 4 6 8]
     F1.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F2.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F3.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F4.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F5.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F6.plotchunksofablation(chunknumber,window,windowfrontbuffer)
-    F7.plotchunksofablation(chunknumber,window,windowfrontbuffer)
+    %F7.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     end
     
 end

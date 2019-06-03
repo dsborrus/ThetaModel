@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2017.5.23)  30 MAY 2019 15:29
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2017.5.23)  3 JUN 2019 10:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -745,238 +745,133 @@ LaTeX Font Info:    ... okay on input line 53.
 Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.14}).
 
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 82.
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 84.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 82.
+LaTeX Font Info:    Try loading font information for U+msa on input line 84.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 82.
+LaTeX Font Info:    Try loading font information for U+msb on input line 84.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-File: ../AdjacencyMatrixFigures/ER_p20.png Graphic file (type QTm)
+File: ../AdjacencyMatrixFigures/ER_p14.png Graphic file (type QTm)
 
-<use  "../AdjacencyMatrixFigures/ER_p20.png" >
+<use  "../AdjacencyMatrixFigures/ER_p14.png" >
 File: ../AdjacencyMatrixFigures/sw_M7_p10.png Graphic file (type QTm)
 
 <use  "../AdjacencyMatrixFigures/sw_M7_p10.png" >
 File: ../AdjacencyMatrixFigures/sw_M7_p40.png Graphic file (type QTm)
 
 <use  "../AdjacencyMatrixFigures/sw_M7_p40.png" >
-File: ../AdjacencyMatrixFigures/sf_mmo30_d100_ssclique.png Graphic file (type Q
-Tm)
+File: ../AdjacencyMatrixFigures/sf_mmo7_d100_ssclique.png Graphic file (type QT
+m)
 
-<use  "../AdjacencyMatrixFigures/sf_mmo30_d100_ssclique.png" >
-File: ../AdjacencyMatrixFigures/sf_m40_mo20_d030_ssERp050.png Graphic file (typ
-e QTm)
+<use  "../AdjacencyMatrixFigures/sf_mmo7_d100_ssclique.png" >
+File: ../AdjacencyMatrixFigures/sf_m7_mo14_d000_ssERp050.png Graphic file (type
+ QTm)
 
-<use  "../AdjacencyMatrixFigures/sf_m40_mo20_d030_ssERp050.png" >
-File: ../AdjacencyMatrixFigures/ke_mo25_mu020_d000_ssclique.png Graphic file (t
-ype QTm)
+<use  "../AdjacencyMatrixFigures/sf_m7_mo14_d000_ssERp050.png" >
+File: ../AdjacencyMatrixFigures/ke_mo7_mu050_d000_ssERp014.png Graphic file (ty
+pe QTm)
 
-<use  "../AdjacencyMatrixFigures/ke_mo25_mu020_d000_ssclique.png" >
-File: ../AdjacencyMatrixFigures/ke_mo50_mu040_d080_ssERp050.png Graphic file (t
-ype QTm)
+<use  "../AdjacencyMatrixFigures/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../KinData/ER_p14.png Graphic file (type QTm)
 
-<use  "../AdjacencyMatrixFigures/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../KinData/ER_p20.png Graphic file (type QTm)
-
-<use  "../KinData/ER_p20.png" >
+<use  "../KinData/ER_p14.png" >
 File: ../KinData/sw_M7_p10.png Graphic file (type QTm)
  <use  "../KinData/sw_M7_p10.png" >
 File: ../KinData/sw_M7_p40.png Graphic file (type QTm)
 
 <use  "../KinData/sw_M7_p40.png" >
-File: ../KinData/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
+File: ../KinData/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
 
-<use  "../KinData/sf_mmo30_d100_ssclique.png" >
-File: ../KinData/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm)
+<use  "../KinData/sf_mmo7_d100_ssclique.png" >
+File: ../KinData/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
 
-<use  "../KinData/sf_m40_mo20_d030_ssERp050.png" >
-File: ../KinData/ke_mo25_mu020_d000_ssclique.png Graphic file (type QTm)
+<use  "../KinData/sf_m7_mo14_d000_ssERp050.png" >
+File: ../KinData/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QTm)
 
-<use  "../KinData/ke_mo25_mu020_d000_ssclique.png" >
-File: ../KinData/ke_mo50_mu040_d080_ssERp050.png Graphic file (type QTm)
+<use  "../KinData/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../KoutData/ER_p14.png Graphic file (type QTm)
 
-<use  "../KinData/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../KoutData/ER_p20.png Graphic file (type QTm)
-
-<use  "../KoutData/ER_p20.png" >
+<use  "../KoutData/ER_p14.png" >
 File: ../KoutData/sw_M7_p10.png Graphic file (type QTm)
  <use  "../KoutData/sw_M7_p10.png" >
 File: ../KoutData/sw_M7_p40.png Graphic file (type QTm)
 
 <use  "../KoutData/sw_M7_p40.png" >
-File: ../KoutData/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
+File: ../KoutData/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
 
-<use  "../KoutData/sf_mmo30_d100_ssclique.png" >
-File: ../KoutData/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm)
+<use  "../KoutData/sf_mmo7_d100_ssclique.png" >
+File: ../KoutData/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
 
-<use  "../KoutData/sf_m40_mo20_d030_ssERp050.png" >
-File: ../KoutData/ke_mo25_mu020_d000_ssclique.png Graphic file (type QTm)
+<use  "../KoutData/sf_m7_mo14_d000_ssERp050.png" >
+File: ../KoutData/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QTm)
 
-<use  "../KoutData/ke_mo25_mu020_d000_ssclique.png" >
-File: ../KoutData/ke_mo50_mu040_d080_ssERp050.png Graphic file (type QTm)
+<use  "../KoutData/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../IntactTraces/ER_p14.png Graphic file (type QTm)
 
-<use  "../KoutData/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../IntactTraces/ER_p20.png Graphic file (type QTm)
-
-<use  "../IntactTraces/ER_p20.png" >
+<use  "../IntactTraces/ER_p14.png" >
 File: ../IntactTraces/sw_M7_p10.png Graphic file (type QTm)
  <use  "../IntactTraces/sw_M7_p10.png" >
 File: ../IntactTraces/sw_M7_p40.png Graphic file (type QTm)
 
 <use  "../IntactTraces/sw_M7_p40.png" >
-File: ../IntactTraces/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
+File: ../IntactTraces/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
 
-<use  "../IntactTraces/sf_mmo30_d100_ssclique.png" >
-File: ../IntactTraces/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm)
+<use  "../IntactTraces/sf_mmo7_d100_ssclique.png" >
+File: ../IntactTraces/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
 
-<use  "../IntactTraces/sf_m40_mo20_d030_ssERp050.png" >
-File: ../IntactTraces/ke_mo25_mu020_d000_ssclique.png Graphic file (type QTm)
+<use  "../IntactTraces/sf_m7_mo14_d000_ssERp050.png" >
+File: ../IntactTraces/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QTm)
 
-<use  "../IntactTraces/ke_mo25_mu020_d000_ssclique.png" >
-File: ../IntactTraces/ke_mo50_mu040_d080_ssERp050.png Graphic file (type QTm)
-
-<use  "../IntactTraces/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../AblateTraces/ER_p20.png Graphic file (type QTm)
-
-<use  "../AblateTraces/ER_p20.png" >
-File: ../AblateTraces/sw_M7_p10.png Graphic file (type QTm)
- <use  "../AblateTraces/sw_M7_p10.png" >
-File: ../AblateTraces/sw_M7_p40.png Graphic file (type QTm)
-
-<use  "../AblateTraces/sw_M7_p40.png" >
-File: ../AblateTraces/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
-
-<use  "../AblateTraces/sf_mmo30_d100_ssclique.png" >
-File: ../AblateTraces/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm)
-
-<use  "../AblateTraces/sf_m40_mo20_d030_ssERp050.png" >
-File: ../AblateTraces/ke_mo25_mu020_d000_ssclique.png Graphic file (type QTm)
-
-<use  "../AblateTraces/ke_mo25_mu020_d000_ssclique.png" >
-File: ../AblateTraces/ke_mo50_mu040_d080_ssERp050.png Graphic file (type QTm)
-
-<use  "../AblateTraces/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../10percent_ablated/ER_p20.png Graphic file (type QTm)
-
-<use  "../10percent_ablated/ER_p20.png" >
-File: ../10percent_ablated/sw_M7_p10.png Graphic file (type QTm)
-
-<use  "../10percent_ablated/sw_M7_p10.png" >
-File: ../10percent_ablated/sw_M7_p40.png Graphic file (type QTm)
-
-<use  "../10percent_ablated/sw_M7_p40.png" >
-File: ../10percent_ablated/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
-
-<use  "../10percent_ablated/sf_mmo30_d100_ssclique.png" >
-File: ../10percent_ablated/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm
-)
-
-<use  "../10percent_ablated/sf_m40_mo20_d030_ssERp050.png" >
-File: ../10percent_ablated/ke_mo25_mu020_d000_ssclique.png Graphic file (type Q
-Tm)
-
-<use  "../10percent_ablated/ke_mo25_mu020_d000_ssclique.png" >
-File: ../10percent_ablated/ke_mo50_mu040_d080_ssERp050.png Graphic file (type Q
-Tm)
-
-<use  "../10percent_ablated/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../20percent_ablated/ER_p20.png Graphic file (type QTm)
-
-<use  "../20percent_ablated/ER_p20.png" >
-File: ../20percent_ablated/sw_M7_p10.png Graphic file (type QTm)
-
-<use  "../20percent_ablated/sw_M7_p10.png" >
-File: ../20percent_ablated/sw_M7_p40.png Graphic file (type QTm)
-
-<use  "../20percent_ablated/sw_M7_p40.png" >
-File: ../20percent_ablated/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
-
-<use  "../20percent_ablated/sf_mmo30_d100_ssclique.png" >
-File: ../20percent_ablated/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm
-)
-
-<use  "../20percent_ablated/sf_m40_mo20_d030_ssERp050.png" >
-File: ../20percent_ablated/ke_mo25_mu020_d000_ssclique.png Graphic file (type Q
-Tm)
-
-<use  "../20percent_ablated/ke_mo25_mu020_d000_ssclique.png" >
-File: ../20percent_ablated/ke_mo50_mu040_d080_ssERp050.png Graphic file (type Q
-Tm)
-
-<use  "../20percent_ablated/ke_mo50_mu040_d080_ssERp050.png" >
-File: ../25percent_ablated/ER_p20.png Graphic file (type QTm)
-
-<use  "../25percent_ablated/ER_p20.png" >
-File: ../25percent_ablated/sw_M7_p10.png Graphic file (type QTm)
-
-<use  "../25percent_ablated/sw_M7_p10.png" >
-File: ../25percent_ablated/sw_M7_p40.png Graphic file (type QTm)
-
-<use  "../25percent_ablated/sw_M7_p40.png" >
-File: ../25percent_ablated/sf_mmo30_d100_ssclique.png Graphic file (type QTm)
-
-<use  "../25percent_ablated/sf_mmo30_d100_ssclique.png" >
-File: ../25percent_ablated/sf_m40_mo20_d030_ssERp050.png Graphic file (type QTm
-)
-
-<use  "../25percent_ablated/sf_m40_mo20_d030_ssERp050.png" >
-File: ../25percent_ablated/ke_mo25_mu020_d000_ssclique.png Graphic file (type Q
-Tm)
-
-<use  "../25percent_ablated/ke_mo25_mu020_d000_ssclique.png" >
-File: ../25percent_ablated/ke_mo50_mu040_d080_ssERp050.png Graphic file (type Q
-Tm)
-
-<use  "../25percent_ablated/ke_mo50_mu040_d080_ssERp050.png" >
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 312.
+<use  "../IntactTraces/ke_mo7_mu050_d000_ssERp014.png" >
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 358.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 312.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 358.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 312
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 358
 .
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 312
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 358
 .
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 312.
+(Font)              <12> on input line 358.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 312.
+(Font)              <8> on input line 358.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 312.
+(Font)              <6> on input line 358.
  [1
 
 ] (./MainTex.aux) ) 
 Here is how much of TeX's memory you used:
- 23820 strings out of 493005
- 623679 string characters out of 6134596
- 813181 words of memory out of 5000000
- 27320 multiletter control sequences out of 15000+600000
- 43156 words of font info for 51 fonts, out of 8000000 for 9000
+ 23803 strings out of 493005
+ 622496 string characters out of 6134596
+ 804181 words of memory out of 5000000
+ 27307 multiletter control sequences out of 15000+600000
+ 43164 words of font info for 52 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  64i,7n,111p,729b,677s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on MainTex.xdv (1 page, 46132 bytes).
+Output written on MainTex.xdv (1 page, 34892 bytes).

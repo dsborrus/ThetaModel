@@ -3,19 +3,22 @@ function [A] = MakeNetwork(Parameters,Options)
 
 N = Parameters.n1 + Parameters.n2;
 
-prob = Parameters.er_prob;
-
-sw_p = Parameters.sw_p;
-sw_M = Parameters.sw_M;
-
-sf_mo = Parameters.sf_mo;
-sf_m = Parameters.sf_m;
-sf_d = Parameters.sf_d;
-
-ke_mo = Parameters.ke_mo;
-ke_mu = Parameters.ke_mu;
-ke_d = Parameters.ke_d;
-
+% assign variables
+switch Options.conmat
+    case 1
+        prob = Parameters.er_prob;
+    case 2
+        sw_p = Parameters.sw_p;
+        sw_M = Parameters.sw_M;
+    case 3
+        sf_mo = Parameters.sf_mo;
+        sf_m = Parameters.sf_m;
+        sf_d = Parameters.sf_d;
+    case 5
+        ke_mo = Parameters.ke_mo;
+        ke_mu = Parameters.ke_mu;
+        ke_d = Parameters.ke_d;
+end
 % check if network already exists,
 if isfield(Parameters,'A')
     disp('I see Parameters.A exists, therefore we will load that loaded network')
@@ -212,7 +215,7 @@ end
                             % nodes adjacent to i, exluding j
                             hpre = find(A(:,i)==0);
                             hpre(hpre==i) = [];
-                            hpre(hpre==j) = [];
+                            %hpre(hpre==j) = [];
                             h = hpre(randperm(length(hpre),1));
                             
                             b2 = sum(A(h,:)) / E;

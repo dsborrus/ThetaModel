@@ -8,7 +8,7 @@ addpath('..')
 %% Set parameters 
 
 % System params %
-Parameters.tmax     = 2e4;     % maximum time of simulation
+Parameters.tmax     = 20e4;     % maximum time of simulation
 Parameters.dt       = 0.2;     % time step
 
 % Neurons params %
@@ -39,7 +39,7 @@ Parameters.tauavg   = 1e2;     % Relaxation of network excitement
 Parameters.istate   = 3;
 Options.conmat      = 1;
     % case 1 - ER
-Parameters.er_prob     = 0.8;     % prob of connection
+Parameters.er_prob     = 0.14;     % prob of connection
     % case 2 - small world
 Parameters.sw_M     = 3;       % number of Ns on each side
 Parameters.sw_p     = 0.3;     % probability of "short cut" 
@@ -57,9 +57,9 @@ Parameters.ke_d = 0.0;         % d = chance that a wiring will NOT be reciprical
 
 % ablation params %
 
-Options.Doablate    = 0;
-Parameters.t2ablat  = 10;      % When to ablate neurons (every XXX seconds)
-Parameters.N2k_w1p  = 5;       % number of neurons to kill with one pulse
+Options.Doablate    = 1;
+Parameters.t2ablat  = 100;      % When to ablate neurons (every XXX seconds)
+Parameters.N2k_w1p  = 30;       % number of neurons to kill with one pulse
 
 % Script params %
 

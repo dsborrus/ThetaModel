@@ -87,6 +87,10 @@ classdef FigureArms < handle
             pkin = histcounts(kin,max(kin)-min(kin)+1)/(N);
             pkout = histcounts(kout,max(kout)-min(kout)+1)/(N);
             
+            % also find the mean in/out degree
+            meankin = mean(kin);
+            meankout = mean(kout);
+            
 %             [in_p,in_k_pre] = histcounts(kin);
 %             [out_p,out_k_pre] = histcounts(kout);
 %             
@@ -104,6 +108,7 @@ classdef FigureArms < handle
             poif = @(k,lambda) ( (lambda.^k)*(exp(-lambda)) )./factorial(k);
             powf = @(k,kmin,gamma) (gamma-1)*kmin^(gamma-1)*k.^(-gamma);
             
+            
             f = figure;
             if extraplot_in == 0
                 plot((min(kin):max(kin)), pkin, 'o','markersize',15,'markerfacecolor','b'); hold on;
@@ -114,7 +119,15 @@ classdef FigureArms < handle
             elseif extraplot_in == 2
                 loglog((min(kin):max(kin)), pkin, 'o','markersize',15,'markerfacecolor','b'); hold on;
                 k = (min(kin)-5:max(kin)+5);
+                k = min(xlim):max(xlim);
                 loglog(k,powf(k,min(kin),3),'linewidth',3)
+            end
+            theCA = get(gca);
+            ylim([theCA.YLim(1) theCA.YLim(2)])
+            if extraplot_in == 2
+                plot([meankin meankin],[theCA.YLim(1) 10^(log10(theCA.YLim(1)) + (0.2*( log10(theCA.YLim(2)) - log10(theCA.YLim(1)) ) ))],'r','linewidth',2)
+            else
+                plot([meankin meankin],[theCA.YLim(1) (theCA.YLim(2)-theCA.YLim(1))*.20],'r','linewidth',2)
             end
             set(gca,'fontsize',23)
             saveas(f,['KinData/' obj.str '.png'])
@@ -131,7 +144,15 @@ classdef FigureArms < handle
             elseif extraplot_out == 2
                 loglog((min(kout):max(kout)), pkout, 'o','markersize',15,'markerfacecolor','b'); hold on;
                 k = (min(kout)-5:max(kout)+5);
+                k = min(xlim):max(xlim);
                 loglog(k,powf(k,min(kout),3),'linewidth',3)
+            end
+            theCA = get(gca);
+            ylim([theCA.YLim(1) theCA.YLim(2)])
+            if extraplot_out == 2
+                plot([meankout meankout],[theCA.YLim(1) 10^(log10(theCA.YLim(1)) + (0.2*( log10(theCA.YLim(2)) - log10(theCA.YLim(1)) ) ))],'r','linewidth',2)
+            else
+                plot([meankout meankout],[theCA.YLim(1) (theCA.YLim(2)-theCA.YLim(1))*.20],'r','linewidth',2)
             end
             set(gca,'fontsize',23)
             saveas(f,['KoutData/' obj.str '.png'])
@@ -217,7 +238,7 @@ classdef FigureArms < handle
             % loadoldsim == 0 (default) means we rerun sim
            
             % overwriting tmax!!!!!! Just because :/
-            obj.Parameters.tmax = 1500000; %(in ms)
+            obj.Parameters.tmax = 2250000; %(in ms)
             
             % overwriting ablation params as well!!!
             obj.Parameters.t2ablat  = 250;     % When to ablate neurons (every XXX seconds)
@@ -290,6 +311,9 @@ classdef FigureArms < handle
             if window > obj.Parameters.t2ablat
                 error('Your window (in s) is longer than the total ablation window')
             end
+            if window+windowfrontbuffer > obj.Parameters.t2ablat
+                error('Your window and/or windowfrontbuffer are too large (larger than t2ablat')
+            end
             
             t2ablat = obj.Parameters.t2ablat;     % When to ablate neurons (every XXX seconds)
             dt = obj.Parameters.dt;
@@ -321,9 +345,12 @@ classdef FigureArms < handle
                 case 4
                     ylim([0 15])
                     saveas(f,['20percent_ablated/' obj.str '.png'])
-                case 5
+                case 6
                     ylim([0 15])
-                    saveas(f,['25percent_ablated/' obj.str '.png'])
+                    saveas(f,['30percent_ablated/' obj.str '.png'])
+                case 8
+                    ylim([0 15])
+                    saveas(f,['40percent_ablated/' obj.str '.png'])
             end
                     
             close all
