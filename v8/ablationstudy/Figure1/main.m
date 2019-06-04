@@ -29,7 +29,7 @@ Parameters.sf_d     = 1;     % d = chance that a wiring will be reciprical
 Options.startstruct.s= 0;      % starting structure (0 - clique)(1 - ER)
 Options.startstruct.p=.6;     % p of ER network, if making ER 
     % case 4 - premade scale free
-Parameters.A2load = 'saved600neuronscalefree.mat';
+%Parameters.A2load = 'saved600neuronscalefree.mat';
     % case 5 - Klemm and Eguilez ( 2002b) scalefree, small world
 Parameters.ke_mo = 25;          % scale free - size of seed
 Parameters.ke_mu = .5;         % The chance that a wiring will wire to a non active node
@@ -47,7 +47,7 @@ Parameters.N2k_w1p  = 5;       % number of neurons to kill with one pulse
 % Other parameters 
 
 % System params %
-Parameters.dt       = 0.2;     % time step
+Parameters.dt       = 0.25;     % time step
 
 % Neurons params %
 
@@ -82,6 +82,7 @@ Options.doAplot       = 0;
 Options.doplot1       = 0; Options.doraster = 1; %(0-none,1-yes,2-colors)
 Options.doplot2       = 0;
 Options.dogifplot     = 0;
+Options.trackstatevariablesmeans = 1;
 
 %% Body
 
@@ -100,7 +101,7 @@ counter = 0;    % keeps track of number of networks
 disp('making or loading networks')
 
 % ER w/ prob 014
-if 1
+if 0
     str1 = 'ER_p14';
     Options.conmat      = 1;
     Parameters.er_prob  = 0.14;
@@ -113,7 +114,7 @@ else
 end
 
 % small world with M 7 and p 0.1
-if 1
+if 0
     str2 = 'sw_M7_p10';
     Options.conmat      = 2;
     Parameters.sw_M     = 7;
@@ -127,7 +128,7 @@ else
 end
 
 % small world with M 7 and p 0.4
-if 1
+if 0
     str3 = 'sw_M7_p40';
     Options.conmat      = 2;
     Parameters.sw_M     = 7;
@@ -141,7 +142,7 @@ else
 end
 
 % scale free with M & Mo 30, d=1, and start is clique
-if 1
+if 0
     str4 = 'sf_mmo7_d100_ssclique';
     Options.conmat      = 3;
     Parameters.sf_mo    = 7; 
@@ -158,7 +159,7 @@ else
 end
 
 % scale free with M 7 & Mo 14, d=0.0, and start is ER with p.5
-if 1
+if 0
     str5 = 'sf_m7_mo14_d000_ssERp050';
     Options.conmat      = 3;
     Parameters.sf_mo    = 14; 
@@ -176,7 +177,7 @@ end
 
 % scale-free, small-world with Mo7, mu=.50, d=0.00, and start is ER prob
 % 0.14
-if 1
+if 0
     str6 = 'ke_mo7_mu050_d000_ssERp014';
     Options.conmat   = 5;
     Parameters.ke_mo = 7;          % scale free - size of seed
@@ -192,7 +193,7 @@ else
     load('BackUpNetworks/F6.mat','F6')
 end
 
-% scale-free, small-world with Mo50, mu=.40, d=0.80, and start is ER p.5
+% scale-free small-world with Mo50, mu=.40, d=0.80, and start is ER p.5
 if 0
     str7 = 'ke_mo50_mu040_d080_ssERp050';
     Options.conmat   = 5;
@@ -213,7 +214,7 @@ disp('Done making or loading networks')
 
 %% Analyse new or loaded networks
 
-if 1
+if 0
     disp('Analysing networks')
     F1.AnalyseGraph(1,1);
     F2.AnalyseGraph(0,0);
@@ -229,44 +230,50 @@ end
 
 %% Simulate networks
 
-if 1
+if 0
 
     disp('Simulating networks, without ablation')
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F1.simplsimNetwork(loadlastsim)
         save('BackUpNetworks/F1.mat','F1')
+        disp('Simmed network 1')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F2.simplsimNetwork(loadlastsim)
         save('BackUpNetworks/F2.mat','F2')
+        disp('Simmed network 2')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F3.simplsimNetwork(loadlastsim)
         save('BackUpNetworks/F3.mat','F3')
+        disp('Simmed network 3')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F4.simplsimNetwork(loadlastsim)
         save('BackUpNetworks/F4.mat','F4')
+        disp('Simmed network 4')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F5.simplsimNetwork(loadlastsim)
         save('BackUpNetworks/F5.mat','F5')
+        disp('Simmed network 5')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F6.simplsimNetwork(loadlastsim)
         save('BackUpNetworks/F6.mat','F6')
+        disp('Simmed network 6')
     end
 
     if 0
@@ -281,7 +288,7 @@ else
 end
 
 %% Simulate and ablate network
-if 1
+if 0
 
     disp('Simulating networks, WITH ablation')
 
@@ -289,45 +296,52 @@ if 1
     % about the graphic output. But if we changed settings/parameters, we
     % should rerun the sim!!
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F1.simublateNetwork(loadlastsim)
         save('BackUpNetworks/F1.mat','F1')
+        disp('Ablated network 1')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F2.simublateNetwork(loadlastsim)
         save('BackUpNetworks/F2.mat','F2')
+        disp('Ablated network 2')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F3.simublateNetwork(loadlastsim)
         save('BackUpNetworks/F3.mat','F3')
+        disp('Ablated network 3')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F4.simublateNetwork(loadlastsim)
         save('BackUpNetworks/F4.mat','F4')
+        disp('Ablated network 4')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F5.simublateNetwork(loadlastsim)
-        save('BackUpNetworks/F5.mat','5')
+        save('BackUpNetworks/F5.mat','F5')
+        disp('Ablated network 5')
     end
 
     if 1
-        loadlastsim = 0;
+        loadlastsim = 1;
         F6.simublateNetwork(loadlastsim)
         save('BackUpNetworks/F6.mat','F6')
+        disp('Ablated network 6')
     end
 
     if 0
         loadlastsim = 0;
         F7.simublateNetwork(loadlastsim)
         save('BackUpNetworks/F7.mat','F7')
+        disp('Ablated network 7')
     end
 
     disp('Networks have been ablated (or have been loaded from saves) and plotted')
@@ -337,12 +351,12 @@ end
 
 %% Zoom in and plot some ablation traces
 
-if 1
+if 0
     disp('Zooming in and plotting ablation traces')
     window = 60;
-    windowfrontbuffer = 150;
+    windowfrontbuffer = 200;
     
-    for chunknumber = [2 4 6 8]
+    for chunknumber = [1 2 3 4]
     F1.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F2.plotchunksofablation(chunknumber,window,windowfrontbuffer)
     F3.plotchunksofablation(chunknumber,window,windowfrontbuffer)
@@ -354,7 +368,19 @@ if 1
     
 end
 
-% latex stuff
+%% Rhythm summary statistics
+
+if 0
+   
+    disp('Comapring rhythm breakdown')
+    
+    Fs = [F1;F2;F3;F4;F5;F6];
+    
+    F1.AblationRhythmSummary(Fs);
+    
+end
+
+%% latex stuff
 
 fileID = fopen('tex_v2/defs.tex','w');
 fprintf (fileID,['\\def \\nNetworks{' num2str(counter) '}\n']);
@@ -364,9 +390,56 @@ fprintf (fileID,['\\def \\strthree{' F3.str '}\n']);
 fprintf (fileID,['\\def \\strfour{' F4.str '}\n']);
 fprintf (fileID,['\\def \\strfive{' F5.str '}\n']);
 fprintf (fileID,['\\def \\strsix{' F6.str '}\n']);
-fprintf (fileID,['\\def \\strseven{' F7.str '}\n']);
+%fprintf (fileID,['\\def \\strseven{' F7.str '}\n']);
 fprintf (fileID,['\\def \\neuronkill{' mat2str(F1.Parameters.N2k_w1p) '}\n']);
 
 % system('pdflatex tex_v2/MainTex.tex')
 
-toc(t3t)
+%% State variable dynamics
+
+if 1
+    disp('State variable dynamics')
+    
+    if 0
+    % make sure chunks is a row vector!!
+    chunks = [0 3];
+    vars2comp = {'f','s'};
+    figindex = 1;
+    
+    F1.DrawStateTraces(chunks,vars2comp,figindex)
+    F2.DrawStateTraces(chunks,vars2comp,figindex)
+    F3.DrawStateTraces(chunks,vars2comp,figindex)
+    F4.DrawStateTraces(chunks,vars2comp,figindex)
+    F5.DrawStateTraces(chunks,vars2comp,figindex)
+    F6.DrawStateTraces(chunks,vars2comp,figindex)
+    end
+    
+    if 0
+    chunks = [0 3];
+    vars2comp = {'y','s'};
+    figindex = 2;
+    
+    F1.DrawStateTraces(chunks,vars2comp,figindex)
+    F2.DrawStateTraces(chunks,vars2comp,figindex)
+    F3.DrawStateTraces(chunks,vars2comp,figindex)
+    F4.DrawStateTraces(chunks,vars2comp,figindex)
+    F5.DrawStateTraces(chunks,vars2comp,figindex)
+    F6.DrawStateTraces(chunks,vars2comp,figindex)
+    end
+    
+    if 1
+    chunks = [0 3];
+    vars2comp = {'y','f'};
+    figindex = 3;
+    
+    F1.DrawStateTraces(chunks,vars2comp,figindex)
+    F2.DrawStateTraces(chunks,vars2comp,figindex)
+    F3.DrawStateTraces(chunks,vars2comp,figindex)
+    F4.DrawStateTraces(chunks,vars2comp,figindex)
+    F5.DrawStateTraces(chunks,vars2comp,figindex)
+    F6.DrawStateTraces(chunks,vars2comp,figindex)
+    end 
+end
+
+%% Network Statistics during ablation
+

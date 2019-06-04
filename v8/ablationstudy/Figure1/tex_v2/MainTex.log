@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2017.5.23)  3 JUN 2019 10:06
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2017.5.23)  4 JUN 2019 11:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -727,35 +727,35 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsfbf' in version `sans'
 (./defs.tex) (./MainTex.aux)
 \openout1 = `MainTex.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
  ABD: EveryShipout initializing macros
 Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.14}).
 
-LaTeX Font Info:    Try loading font information for OT1+lmss on input line 84.
+LaTeX Font Info:    Try loading font information for OT1+lmss on input line 86.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 84.
+LaTeX Font Info:    Try loading font information for U+msa on input line 86.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 84.
+LaTeX Font Info:    Try loading font information for U+msb on input line 86.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -832,46 +832,214 @@ File: ../IntactTraces/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
 File: ../IntactTraces/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QTm)
 
 <use  "../IntactTraces/ke_mo7_mu050_d000_ssERp014.png" >
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 358.
+File: ../AblateTraces/ER_p14.png Graphic file (type QTm)
+
+<use  "../AblateTraces/ER_p14.png" >
+File: ../AblateTraces/sw_M7_p10.png Graphic file (type QTm)
+ <use  "../AblateTraces/sw_M7_p10.png" >
+File: ../AblateTraces/sw_M7_p40.png Graphic file (type QTm)
+
+<use  "../AblateTraces/sw_M7_p40.png" >
+File: ../AblateTraces/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
+
+<use  "../AblateTraces/sf_mmo7_d100_ssclique.png" >
+File: ../AblateTraces/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
+
+<use  "../AblateTraces/sf_m7_mo14_d000_ssERp050.png" >
+File: ../AblateTraces/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QTm)
+
+<use  "../AblateTraces/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../10percent_ablated/ER_p14.png Graphic file (type QTm)
+
+<use  "../10percent_ablated/ER_p14.png" >
+File: ../10percent_ablated/sw_M7_p10.png Graphic file (type QTm)
+
+<use  "../10percent_ablated/sw_M7_p10.png" >
+File: ../10percent_ablated/sw_M7_p40.png Graphic file (type QTm)
+
+<use  "../10percent_ablated/sw_M7_p40.png" >
+File: ../10percent_ablated/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
+
+<use  "../10percent_ablated/sf_mmo7_d100_ssclique.png" >
+File: ../10percent_ablated/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
+
+
+<use  "../10percent_ablated/sf_m7_mo14_d000_ssERp050.png" >
+File: ../10percent_ablated/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QT
+m)
+
+<use  "../10percent_ablated/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../20percent_ablated/ER_p14.png Graphic file (type QTm)
+
+<use  "../20percent_ablated/ER_p14.png" >
+File: ../20percent_ablated/sw_M7_p10.png Graphic file (type QTm)
+
+<use  "../20percent_ablated/sw_M7_p10.png" >
+File: ../20percent_ablated/sw_M7_p40.png Graphic file (type QTm)
+
+<use  "../20percent_ablated/sw_M7_p40.png" >
+File: ../20percent_ablated/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
+
+<use  "../20percent_ablated/sf_mmo7_d100_ssclique.png" >
+File: ../20percent_ablated/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
+
+
+<use  "../20percent_ablated/sf_m7_mo14_d000_ssERp050.png" >
+File: ../20percent_ablated/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QT
+m)
+
+<use  "../20percent_ablated/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../30percent_ablated/ER_p14.png Graphic file (type QTm)
+
+<use  "../30percent_ablated/ER_p14.png" >
+File: ../30percent_ablated/sw_M7_p10.png Graphic file (type QTm)
+
+<use  "../30percent_ablated/sw_M7_p10.png" >
+File: ../30percent_ablated/sw_M7_p40.png Graphic file (type QTm)
+
+<use  "../30percent_ablated/sw_M7_p40.png" >
+File: ../30percent_ablated/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
+
+<use  "../30percent_ablated/sf_mmo7_d100_ssclique.png" >
+File: ../30percent_ablated/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
+
+
+<use  "../30percent_ablated/sf_m7_mo14_d000_ssERp050.png" >
+File: ../30percent_ablated/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QT
+m)
+
+<use  "../30percent_ablated/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../40percent_ablated/ER_p14.png Graphic file (type QTm)
+
+<use  "../40percent_ablated/ER_p14.png" >
+File: ../40percent_ablated/sw_M7_p10.png Graphic file (type QTm)
+
+<use  "../40percent_ablated/sw_M7_p10.png" >
+File: ../40percent_ablated/sw_M7_p40.png Graphic file (type QTm)
+
+<use  "../40percent_ablated/sw_M7_p40.png" >
+File: ../40percent_ablated/sf_mmo7_d100_ssclique.png Graphic file (type QTm)
+
+<use  "../40percent_ablated/sf_mmo7_d100_ssclique.png" >
+File: ../40percent_ablated/sf_m7_mo14_d000_ssERp050.png Graphic file (type QTm)
+
+
+<use  "../40percent_ablated/sf_m7_mo14_d000_ssERp050.png" >
+File: ../40percent_ablated/ke_mo7_mu050_d000_ssERp014.png Graphic file (type QT
+m)
+
+<use  "../40percent_ablated/ke_mo7_mu050_d000_ssERp014.png" >
+File: ../AblationSummary/amp.png Graphic file (type QTm)
+
+<use  "../AblationSummary/amp.png" >
+File: ../AblationSummary/area.png Graphic file (type QTm)
+ <use  "../AblationSummary/area.png" >
+File: ../AblationSummary/per.png Graphic file (type QTm)
+
+<use  "../AblationSummary/per.png" >
+File: ../StateVariableDynamics/ER_p14_indx1.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/ER_p14_indx1.png" >
+File: ../StateVariableDynamics/sw_M7_p10_indx1.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/sw_M7_p10_indx1.png" >
+File: ../StateVariableDynamics/sw_M7_p40_indx1.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/sw_M7_p40_indx1.png" >
+File: ../StateVariableDynamics/sf_mmo7_d100_ssclique_indx1.png Graphic file (ty
+pe QTm)
+
+<use  "../StateVariableDynamics/sf_mmo7_d100_ssclique_indx1.png" >
+File: ../StateVariableDynamics/sf_m7_mo14_d000_ssERp050_indx1.png Graphic file 
+(type QTm)
+
+<use  "../StateVariableDynamics/sf_m7_mo14_d000_ssERp050_indx1.png" >
+File: ../StateVariableDynamics/ke_mo7_mu050_d000_ssERp014_indx1.png Graphic fil
+e (type QTm)
+
+<use  "../StateVariableDynamics/ke_mo7_mu050_d000_ssERp014_indx1.png" >
+File: ../StateVariableDynamics/ER_p14_indx2.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/ER_p14_indx2.png" >
+File: ../StateVariableDynamics/sw_M7_p10_indx2.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/sw_M7_p10_indx2.png" >
+File: ../StateVariableDynamics/sw_M7_p40_indx2.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/sw_M7_p40_indx2.png" >
+File: ../StateVariableDynamics/sf_mmo7_d100_ssclique_indx2.png Graphic file (ty
+pe QTm)
+
+<use  "../StateVariableDynamics/sf_mmo7_d100_ssclique_indx2.png" >
+File: ../StateVariableDynamics/sf_m7_mo14_d000_ssERp050_indx2.png Graphic file 
+(type QTm)
+
+<use  "../StateVariableDynamics/sf_m7_mo14_d000_ssERp050_indx2.png" >
+File: ../StateVariableDynamics/ke_mo7_mu050_d000_ssERp014_indx2.png Graphic fil
+e (type QTm)
+
+<use  "../StateVariableDynamics/ke_mo7_mu050_d000_ssERp014_indx2.png" >
+File: ../StateVariableDynamics/ER_p14_indx3.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/ER_p14_indx3.png" >
+File: ../StateVariableDynamics/sw_M7_p10_indx3.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/sw_M7_p10_indx3.png" >
+File: ../StateVariableDynamics/sw_M7_p40_indx3.png Graphic file (type QTm)
+
+<use  "../StateVariableDynamics/sw_M7_p40_indx3.png" >
+File: ../StateVariableDynamics/sf_mmo7_d100_ssclique_indx3.png Graphic file (ty
+pe QTm)
+
+<use  "../StateVariableDynamics/sf_mmo7_d100_ssclique_indx3.png" >
+File: ../StateVariableDynamics/sf_m7_mo14_d000_ssERp050_indx3.png Graphic file 
+(type QTm)
+
+<use  "../StateVariableDynamics/sf_m7_mo14_d000_ssERp050_indx3.png" >
+File: ../StateVariableDynamics/ke_mo7_mu050_d000_ssERp014_indx3.png Graphic fil
+e (type QTm)
+
+<use  "../StateVariableDynamics/ke_mo7_mu050_d000_ssERp014_indx3.png" >
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 492.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 358.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 492.
 
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 358
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 492
 .
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 358
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 492
 .
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 358.
+(Font)              <12> on input line 492.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 358.
+(Font)              <8> on input line 492.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 358.
+(Font)              <6> on input line 492.
  [1
 
 ] (./MainTex.aux) ) 
 Here is how much of TeX's memory you used:
- 23803 strings out of 493005
- 622496 string characters out of 6134596
- 804181 words of memory out of 5000000
- 27307 multiletter control sequences out of 15000+600000
+ 23913 strings out of 493005
+ 626112 string characters out of 6134596
+ 837553 words of memory out of 5000000
+ 27368 multiletter control sequences out of 15000+600000
  43164 words of font info for 52 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  64i,7n,111p,729b,677s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on MainTex.xdv (1 page, 34892 bytes).
+Output written on MainTex.xdv (1 page, 74824 bytes).

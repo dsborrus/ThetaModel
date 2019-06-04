@@ -9,8 +9,12 @@ classdef FigureArms < handle
         A
         Aexists
         
+        simplet
+        ablatet
         outsimple
         outablate
+        
+        
     end
     
     methods
@@ -173,8 +177,9 @@ classdef FigureArms < handle
             % loadoldsim == 0 (default) means we rerun sim
            
             % overwriting tmax!!!!!! Just because :/
-            obj.Parameters.tmax = 100000;
+            obj.Parameters.tmax = 60000;
             obj.Options.Doablate    = 0;
+            obj.Options.trackstatevariablesmeans=0;
 
             if obj.Aexists==0
                 error('must build network first (run MakeGraph)')
@@ -200,6 +205,9 @@ classdef FigureArms < handle
                     out = obj.outsimple;
                 end
             end
+            
+            obj.simplet = obj.Parameters.dt:obj.Parameters.dt:obj.Parameters.tmax;
+            t = obj.simplet;
                 
 
             % plot
@@ -211,8 +219,8 @@ classdef FigureArms < handle
             tw = tstart/dt:tend/dt;
 
             f = figure; hold on;
-            plot(out.t(tw)/1000,(out.spikes(tw)./tauavg)*1000)
-            xlim([out.t(tw(1))/1000 out.t(tw(end))/1000])
+            plot(t(tw)/1000,(out.spikes(tw)./tauavg)*1000,'linewidth',2)
+            xlim([t(tw(1))/1000 t(tw(end))/1000])
             ylim([0 20])
             %title('Network Activity (intact)')
             xlabel('Time (s)')
@@ -238,14 +246,18 @@ classdef FigureArms < handle
             % loadoldsim == 0 (default) means we rerun sim
            
             % overwriting tmax!!!!!! Just because :/
-            obj.Parameters.tmax = 2250000; %(in ms)
+            obj.Parameters.tmax = 1500000; %(in ms)
+            %obj.Parameters.tmax = 20000; %(in ms)
             
             % overwriting ablation params as well!!!
-            obj.Parameters.t2ablat  = 250;     % When to ablate neurons (every XXX seconds)
-            obj.Parameters.N2k_w1p  = 5;       % number of neurons to kill with one pulse
+            obj.Parameters.t2ablat  = 300;     % When to ablate neurons (every XXX seconds)
+            obj.Parameters.N2k_w1p  = 10;       % number of neurons to kill with one pulse
             
             % remember to ablate
             obj.Options.Doablate = 1;
+            
+            % track state variables
+            obj.Options.trackstatevariablesmeans=1;
 
             if obj.Aexists==0
                 error('must build network first (run MakeGraph)')
@@ -271,6 +283,9 @@ classdef FigureArms < handle
                     out = obj.outablate;
                 end
             end
+            
+            obj.ablatet = obj.Parameters.dt:obj.Parameters.dt:obj.Parameters.tmax;
+            t = obj.ablatet;
                 
 
             % plot
@@ -282,8 +297,8 @@ classdef FigureArms < handle
             tw = tstart/dt:tend/dt;
 
             f = figure; hold on;
-            plot(out.t(tw)/1000,(out.spikes(tw)./tauavg)*1000)
-            xlim([out.t(tw(1))/1000 out.t(tw(end))/1000])
+            plot(t(tw)/1000,(out.spikes(tw)./tauavg)*1000)
+            xlim([t(tw(1))/1000 t(tw(end))/1000])
             ylim([0 20])
             plot(obj.Parameters.t2ablat:obj.Parameters.t2ablat:obj.Parameters.tmax/1000,18,'r.','markersize',30)
             %title('Network Activity (intact)')
@@ -328,8 +343,8 @@ classdef FigureArms < handle
             tw = tstart_j:tend_j;
             
             f = figure; hold on;
-            plot(obj.outablate.t(tw)/1000,(obj.outablate.spikes(tw)./tauavg)*1000,'linewidth',2)
-            xlim([obj.outablate.t(tw(1))/1000 obj.outablate.t(tw(end))/1000])
+            plot(obj.ablatet(tw)/1000,(obj.outablate.spikes(tw)./tauavg)*1000,'linewidth',2)
+            xlim([obj.ablatet(tw(1))/1000 obj.ablatet(tw(end))/1000])
             %ylim([0 20])
             %plot(obj.Parameters.t2ablat:obj.Parameters.t2ablat:obj.Parameters.tmax/1000,18,'r.','markersize',30)
             %title('Network Activity (intact)')
@@ -339,22 +354,283 @@ classdef FigureArms < handle
             
             % hardcoding in what folder to save to
             switch chunknumber
-                case 2
+                case 1
                     ylim([0 15])
                     saveas(f,['10percent_ablated/' obj.str '.png'])
-                case 4
+                case 2
                     ylim([0 15])
                     saveas(f,['20percent_ablated/' obj.str '.png'])
-                case 6
+                case 3
                     ylim([0 15])
                     saveas(f,['30percent_ablated/' obj.str '.png'])
-                case 8
+                case 4
                     ylim([0 15])
                     saveas(f,['40percent_ablated/' obj.str '.png'])
             end
                     
             close all
             
+            
+        end
+        
+        function AblationRhythmSummary(obj,Fs)
+            % This function creates a figure comparing all the summary
+            % statistics of rhythm breakdown
+            
+            % obj is of course the first F1
+            % but then Fs is an column array of all the networks to compare
+            % it to (including F1) ([F1; F2; F3; ... F4])
+            
+            if isempty(obj.outablate)
+                error('You need to simulate the ablation experiment first')
+            end
+            
+            N2k_w1p = obj.Parameters.N2k_w1p;
+            t2ablat = obj.Parameters.t2ablat;
+            tmax    = obj.Parameters.tmax;
+            dt      = obj.Parameters.dt;
+            
+            % calculate maximum percentage killed
+            MaxAblated = N2k_w1p * (floor(tmax/1000/t2ablat) - 1);
+            
+            if MaxAblated <= 0 
+                disp('Something is wrong with tmax or other ablation params')
+                disp('Maybe you ran a normal sim after running an ablation sim?')
+                disp('Try replotting ablation sim, without resimming')
+                error('See error message above')
+            end
+                
+            Chunks = 0:N2k_w1p:MaxAblated;
+            
+            NormChunk = Chunks./(obj.Parameters.n1+obj.Parameters.n2);
+            
+            frontwin = 20; % arbitrarily picking here, a front window of 20 
+            % seconds for analysis
+           
+            f1 = figure; hold on;
+            f2 = figure; hold on;
+            f3 = figure; hold on;
+            
+            % loop through simulation
+            for i = 1:length(Fs)
+                
+                F = Fs(i);
+                fullspks = (F.outablate.spikes./obj.Parameters.tauavg)*1000;
+                
+                brstthresh1 = mean(fullspks(frontwin*1000/dt:t2ablat*1000/dt));
+                brstthresh2 = mean(fullspks(frontwin*1000/dt:t2ablat*1000/dt))*0.8;
+                %brstthresh3 = mean(fullspks(frontwin*1000/dt:t2ablat*1000/dt))+2*std(fullspks(frontwin*1000/dt:t2ablat*1000/dt));
+                
+                
+                meanamps = [];
+                meanarea = [];
+                meanperiod = [];
+                
+                varamps = [];
+                vararea = [];
+                varperiod =[];
+                
+                % loop through chunks
+                for j = 0:length(Chunks)-1
+                    
+                    tstart_s = (j*t2ablat) + frontwin;
+                    tstart_j = tstart_s*1000/dt;
+
+                    tend_s = (j*t2ablat) + t2ablat;
+                    tend_j = tend_s*1000/dt;
+
+                    tw = tstart_j:tend_j;
+                    
+                    spks = fullspks(tw);
+                    microt = F.ablatet(tw);
+                    
+                    amps  = [];
+                    area  = [];   
+                    burstt = [];
+                    
+                    up = false;
+                    % loop through spike points
+                    for k = 2:length(spks)
+                        
+                        % only triggered when moving above 1st threshold
+                        % and down
+                        if spks(k) > brstthresh1 && up == false
+                            up = true;
+                            amps(end+1) = spks(k);
+                            burstt(end+1) = k;
+                        end
+                        
+                        % only triggered when above and positive slope
+                        if up == true && spks(k) > amps(end)
+                            amps(end) = spks(k);
+                            burstt(end) = k;
+                        end
+                        
+                        % only triggered when already 
+                        if spks(k) < brstthresh2 && up == true
+                            up = false;
+                            endt = k;
+                            area(end+1) = sum(spks(burstt(end):endt))*(dt/1000);
+                        end
+                            
+                            
+                        
+                        
+                        
+                    end
+                    
+                    % testing room %
+%                     ftest = figure;
+%                     plot(microt/1000,spks); hold on;
+%                     plot(microt/1000,brstthresh1*ones(length(microt),1));
+%                     plot(microt/1000,brstthresh2*ones(length(microt),1));
+%                     plot(20+startt*dt/1000,brstthresh1,'x')
+                    %plot(microt/1000,brstthresh3*ones(length(microt),1));
+                    
+                    meanamps(end+1) = mean(amps);varamps(end+1) = std(amps);
+                    meanarea(end+1) = mean(area);vararea(end+1) = std(area);
+                    meanperiod(end+1)=mean(diff(burstt*dt/1000));varperiod(end+1)=std(diff(burstt*dt/1000));
+
+                end
+                
+                figure(f1);
+                errorbar(Chunks,meanamps,varamps,'o-','markersize',15);
+                figure(f2);
+                errorbar(Chunks,meanarea,vararea,'o-','markersize',15);
+                figure(f3);
+                errorbar(Chunks,meanperiod,varperiod,'o-','markersize',15);
+                 
+            end
+            
+            
+            % last figure stuff!!!
+            figure(f1);
+            title('Mean amplitude of burst')
+            xlabel('Network Destroyed (in %)')
+            ylabel('Amplitude')
+            legend('ER','SW','SW noisy','SF van','SF curr','S&S van')
+            set(gca,'fontsize',20)
+            %set(gcf, 'Position',  [100, 100, 2000, 900])
+            saveas(f1,['AblationSummary/amp.png'])
+            
+            figure(f2);
+            title('Mean area of burst')
+            xlabel('Network Destroyed (in %)')
+            ylabel('Area')
+            legend('ER','SW','SW noisy','SF van','SF curr','S&S van')
+            set(gca,'fontsize',20)
+            %set(gcf, 'Position',  [100, 100, 2000, 900])
+            saveas(f2,['AblationSummary/area.png'])
+            
+            figure(f3);
+            title('Mean period of rhythm')
+            xlabel('Network Destroyed (in %)')
+            ylabel('Period (in s)')
+            legend('ER','SW','SW noisy','SF van','SF curr','S&S van')
+            set(gca,'fontsize',20)
+            %set(gcf, 'Position',  [100, 100, 2000, 900])
+            saveas(f3,['AblationSummary/per.png'])
+            
+            close all
+                
+            
+        end
+        
+        function DrawStateTraces(obj,chunks,vars2comp,figindex)
+            % this function creates the figures showing how the state
+            % variables are changing
+            
+            % chunks is an array (ex: [0 2]) of which chunks to analyse
+            % array length must be maxchunks>0
+            % vars2comp is a length 2 vector with the variables we wish to
+            % compare, input as strings. Possible inputs are f,fdot,s,sdot,y,ydot.
+            % figindex lets me and latex know how many comparison there
+            % are. For just one row of figures, figindex=1, if we want
+            % more, fig index can get adjusted
+            
+            if obj.Options.Doablate ~= 1
+                error(['Make sure you run ablation sim before this one, it' ...
+                'can even just be replotted, not re-simulated'])
+            end
+                
+            
+            if length(vars2comp)~=2
+                error
+            end
+            
+            dt = obj.Parameters.dt;
+            tmax = obj.Parameters.tmax;
+            t2ablat = obj.Parameters.t2ablat;
+            
+            vars = zeros(tmax/dt,2);
+            
+            for i = 1:2
+                if strcmp(vars2comp(i),'s')
+                    vars(:,i) = obj.outablate.meansi;
+                elseif strcmp(vars2comp(i),'sdot')
+                    vars(2:end,i) = diff(obj.outablate.meansi)./diff(obj.ablatet*dt)';
+                elseif strcmp(vars2comp(i),'y')
+                    vars(:,i) = obj.outablate.meany;
+                elseif strcmp(vars2comp(i),'ydot')
+                    vars(2:end,i) = diff(obj.outablate.meany)./diff(obj.ablatet*dt)';  
+                elseif strcmp(vars2comp(i),'f')
+                    vars(:,i) = (obj.outablate.spikes./obj.Parameters.tauavg)*1000;
+                elseif strcmp(vars2comp(i),'fdot')
+                    vars(2:end,i) = diff((obj.outablate.spikes./obj.Parameters.tauavg)*1000)./diff(obj.ablatet*dt)';
+                else
+                    error('You f-ed up')
+                end
+            end
+            
+            frontwindow = t2ablat-45; % in seconds
+            
+            f = figure; hold on;
+%             ylim([0.2 1])
+%             xlim([0 0.4])
+            xlabel(vars2comp(1))
+            ylabel(vars2comp(2))
+            set(gca,'fontsize',23');
+            
+            % just for video v
+            colors = [0,0,1;
+                      0,0,0;
+                      0,0,0;
+                      1,0,1];
+            % just for video ^
+            
+            for c = chunks
+                t1pre = (c*t2ablat) + frontwindow;
+                t1 = t1pre*1000/dt;
+                t2pre = ((c+1)*t2ablat);
+                t2 = t2pre*1000/dt;
+                
+                v1 = vars(t1:t2,1);
+                v2 = vars(t1:t2,2);
+                
+                % animation stuff
+%                 h = animatedline;
+%                 for k = 1:35:length(v1)
+%                     addpoints(h,v1(k),v2(k))
+%                     drawnow
+%                 end
+%                 clearpoints(h)
+                
+                plot(v1,v2,'color',colors(c+1,:),'DisplayName',[mat2str(c) '0% ablated'])
+                drawnow
+                
+                
+            end
+            
+            legend('off')
+            legend('show');
+            set(get(gca,'YLabel'),'Rotation',0);
+            
+            saveas(f,['StateVariableDynamics/' obj.str '_indx' mat2str(figindex) '.png'])
+            close all
+            
+        end
+        
+        function NetworkStatisticsDuringAblation(obj)
             
         end
         

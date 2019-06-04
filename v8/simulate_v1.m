@@ -86,9 +86,19 @@ n     = zeros(tnum,N);
 
 % initialize auxiallry outputs
 spikes = NaN(tnum,1); spikes(1)=0; % initialize the spike array
-raster = NaN(tnum,N); % initialize the raster plot
+if Options.doplot1 || Options.doplot2
+    raster = NaN(tnum,N); % initialize the raster plot
+end
+if Options.doplot1
 Ihistory = NaN(tnum,1);
 sihistory = NaN(tnum,1);
+end
+if Options.trackstatevariablesmeans
+    meany = zeros(tnum,1);
+    meansi = zeros(tnum,1);
+end
+
+
 % random neuron to track
 rr = randi(n1);
 
@@ -126,6 +136,11 @@ switch istate
         else
         error('cant use last conditions, number of neurons changed')
         end
+end
+
+if Options.trackstatevariablesmeans
+    meany(1) = mean(y(1,:));
+    meansi(1) = mean(si(1,:));
 end
 
 %%  make connectivity matrix
@@ -253,6 +268,11 @@ for j = 1:tnum-1
     
     spikes(j+1) = spikes(j)+ss/N+dt*(-spikes(j)/tauavg);
     
+    if Options.trackstatevariablesmeans
+        meany(j+1) = mean(y(j+1,:));
+        meansi(j+1) = mean(si(j+1,:));
+    end
+    
     
     %%% giffing %%%%
     if mod(j-1,20*gifresolution) == 0 && dogifplot
@@ -287,12 +307,15 @@ lc.N = N;
 save('lastconditions.mat','lc')
 
 %% generate outputs
+
+if Options.trackstatevariablesmeans
+    outputs.meany = meany;
+    outputs.meansi = meansi;
+end
+
 outputs.spikes = spikes;
 outputs.A = A;
-outputs.t = t;
-outputs.y = y;
-outputs.si = si;
-output.killlist = killlist;
+outputs.killlist = killlist;
 
 disp('Done with simulate_v1')
 

@@ -1,4 +1,4 @@
-\documentclass[12pt,letterpaper]{standalone}	% Required - Tells LaTeX how to display the document.
+\documentclass[12pt]{standalone}	% Required - Tells LaTeX how to display the document.
 
 \title{BlankDocumentTemplate}
 \date{Dec 6 2018}
@@ -32,6 +32,7 @@
 
 	% Miscellaneous
 	\usepackage{xspace}
+	%\usepackage{animate}
 
 	% Unique for this document
 	% Fonts
@@ -53,6 +54,7 @@
 \begin{document}
 \fontfamily{lmss}\selectfont % enable sans-sarif font
 \sansmath % enable sans-sarif math font
+
 
 \begin{tikzpicture}
 
@@ -97,13 +99,6 @@
 	\node at (\leftitlexshift,\tikzdownbuff)   {K-in Degree Distribution};
 	\node at (\leftitlexshift,2*\tikzdownbuff) {K-out Degree Distribution};
 	\node at (\leftitlexshift,3*\tikzdownbuff) {Network Activity (unablated)};
-	\node at (\leftitlexshift,4.9*\tikzdownbuff) {Network Activity (ablating)};
-	\node at (\leftitlexshift,5.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
-	\node at (\leftitlexshift,5.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
-	\node at (\leftitlexshift,6*\tikzdownbuff) {10\% of network remaining};
-	\node at (\leftitlexshift,7*\tikzdownbuff) {20\% of network remaining};
-	\node at (\leftitlexshift,8*\tikzdownbuff) {30\% of network remaining};
-
 
 %% Adjacency Matrix	
 
@@ -131,8 +126,6 @@
 
 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strseven.png}
 	% \node at (\tikzstatic+6*\tikzbuff,0) [] {\pgfuseimage{img}};
-	
-% % % %
 
 %% K in degree
 
@@ -157,8 +150,6 @@
 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strseven.png}
 	% \node at (\tikzstatic+6*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% % % %
-
 %% K out degree
 
 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strone.png}
@@ -181,8 +172,6 @@
 
 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strseven.png}
 	% \node at (\tikzstatic+6*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
-	
-%% %% %%
 
 %% Intact Traces
 
@@ -207,8 +196,6 @@
 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strseven.png}
 	% \node at (\tikzstatic+6*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-%% %% %%
-
 %% Chapter 2 titles - Ablations: Rhythm Degredation Examples
 
 	\node at (\tikzstatic+2.5*\tikzbuff,4*\tikzdownbuff+0.8) {\LARGE Ablations: Rhythm Degradation Examples};
@@ -228,131 +215,278 @@
 	\node at (\tikzstatic+4*\tikzbuff,4*\tikzdownbuff-2) {$\strfive$};
 	\node at (\tikzstatic+5*\tikzbuff,4*\tikzdownbuff-2) {$\strsix$};
 
-% %% Ablation Traces (Full)
+	\node at (\leftitlexshift,4.9*\tikzdownbuff) {Network Activity (ablating)};
+	\node at (\leftitlexshift,5.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	\node at (\leftitlexshift,5.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,6*\tikzdownbuff) {10\% of network remaining};
+	\node at (\leftitlexshift,7*\tikzdownbuff) {20\% of network remaining};
+	\node at (\leftitlexshift,8*\tikzdownbuff) {30\% of network remaining};
+	\node at (\leftitlexshift,9*\tikzdownbuff) {40\% of network remaining};	
 
-%     \pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strone.png}
-% 	\node at (\tikzstatic+0*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+%% Ablation Traces (Full)
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strtwo.png}
-% 	\node at (\tikzstatic+1*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strthree.png}
-% 	\node at (\tikzstatic+2*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strfour.png}
-% 	\node at (\tikzstatic+3*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strfive.png}
-% 	\node at (\tikzstatic+4*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strsix.png}
-% 	\node at (\tikzstatic+5*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	%\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strseven.png}
-% 	%\node at (\tikzstatic+6*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% %% %% %%
+	%\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strseven.png}
+	%\node at (\tikzstatic+6*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% %% 10% Network ablated
+%% 10% Network ablated
 
-%     \pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strone.png}
-% 	\node at (\tikzstatic+0*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strtwo.png}
-% 	\node at (\tikzstatic+1*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strthree.png}
-% 	\node at (\tikzstatic+2*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strfour.png}
-% 	\node at (\tikzstatic+3*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strfive.png}
-% 	\node at (\tikzstatic+4*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strsix.png}
-% 	\node at (\tikzstatic+5*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strseven.png}
-% 	% \node at (\tikzstatic+6*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% %% %% %%
+%% 20% Network ablated
 
-% %% 20% Network ablated
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-%     \pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strone.png}
-% 	\node at (\tikzstatic+0*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strtwo.png}
-% 	\node at (\tikzstatic+1*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strthree.png}
-% 	\node at (\tikzstatic+2*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strfour.png}
-% 	\node at (\tikzstatic+3*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strfive.png}
-% 	\node at (\tikzstatic+4*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strsix.png}
-% 	\node at (\tikzstatic+5*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strseven.png}
-% 	% \node at (\tikzstatic+6*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+%% 30% Network ablated
 
-% %% %% %%
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% %% 30% Network ablated
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-%     \pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strone.png}
-% 	\node at (\tikzstatic+0*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strtwo.png}
-% 	\node at (\tikzstatic+1*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strthree.png}
-% 	\node at (\tikzstatic+2*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfour.png}
-% 	\node at (\tikzstatic+3*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfive.png}
-% 	\node at (\tikzstatic+4*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};	
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strsix.png}
-% 	\node at (\tikzstatic+5*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+%% 40% Network ablated
 
-% 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
-% 	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};	
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% %% %% %%
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% %% 40% Network ablated
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-%     \pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strone.png}
-% 	\node at (\tikzstatic+0*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strtwo.png}
-% 	\node at (\tikzstatic+1*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strthree.png}
-% 	\node at (\tikzstatic+2*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfour.png}
-% 	\node at (\tikzstatic+3*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};			
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfive.png}
-% 	\node at (\tikzstatic+4*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+%% Chapter 3 titles - Ablations: Rhythm Degredation Summary
 
-% 	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strsix.png}
-% 	\node at (\tikzstatic+5*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+	\node at (\tikzstatic+2.5*\tikzbuff,10*\tikzdownbuff+0.8) {\LARGE Ablations: Rhythm Degradation Summary};
 
-% 	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
-% 	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};			
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-1) {\large ER};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world (noisy)};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% % \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-2) {$\strone$};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-2) {$\strtwo$};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-2) {$\strthree$};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-2) {$\strfour$};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-2) {$\strfive$};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-2) {$\strsix$};
+
+	% \node at (\leftitlexshift,11.9*\tikzdownbuff) {Network Activity (ablating)};
+	% \node at (\leftitlexshift,11.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	% \node at (\leftitlexshift,11.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,11*\tikzdownbuff) {Summary Statistics};
+
+%% Ablation Summary figure
+
+	\pgfdeclareimage[width=\Agraphwidth cm + 4cm]{img}{../AblationSummary/amp.png}
+	\node at (\tikzstatic+1*\tikzbuff,11*\tikzdownbuff+0.25) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm + 4cm]{img}{../AblationSummary/area.png}
+	\node at (\tikzstatic+2.5*\tikzbuff,11*\tikzdownbuff+0.25) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm + 4cm]{img}{../AblationSummary/per.png}
+	\node at (\tikzstatic+4*\tikzbuff,11*\tikzdownbuff+0.25) [] {\pgfuseimage{img}};		
+
+%% Chapter 4 titles - State Variables and Ablated Networks
+
+	\node at (\tikzstatic+2.5*\tikzbuff,13*\tikzdownbuff+0.8) {\LARGE State Variables and Ablated Networks};
+
+	\node at (\tikzstatic+0*\tikzbuff,13*\tikzdownbuff-1) {\large ER};
+	\node at (\tikzstatic+1*\tikzbuff,13*\tikzdownbuff-1) {\large Small-world};
+	\node at (\tikzstatic+2*\tikzbuff,13*\tikzdownbuff-1) {\large Small-world (noisy)};
+	\node at (\tikzstatic+3*\tikzbuff,13*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	\node at (\tikzstatic+4*\tikzbuff,13*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	\node at (\tikzstatic+5*\tikzbuff,13*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	\node at (\tikzstatic+0*\tikzbuff,13*\tikzdownbuff-2) {$\strone$};
+	\node at (\tikzstatic+1*\tikzbuff,13*\tikzdownbuff-2) {$\strtwo$};
+	\node at (\tikzstatic+2*\tikzbuff,13*\tikzdownbuff-2) {$\strthree$};
+	\node at (\tikzstatic+3*\tikzbuff,13*\tikzdownbuff-2) {$\strfour$};
+	\node at (\tikzstatic+4*\tikzbuff,13*\tikzdownbuff-2) {$\strfive$};
+	\node at (\tikzstatic+5*\tikzbuff,13*\tikzdownbuff-2) {$\strsix$};
+
+	% \node at (\leftitlexshift,11.9*\tikzdownbuff) {Network Activity (ablating)};
+	% \node at (\leftitlexshift,11.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	% \node at (\leftitlexshift,11.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,14*\tikzdownbuff) {Conductance vs. Firing rate};
+	\node at (\leftitlexshift,15*\tikzdownbuff) {Conductance vs. Depression};
+	\node at (\leftitlexshift,16*\tikzdownbuff) {Firing Rate vs. Depression};
+
+%% First state variable figures - si vs f
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strone_indx1.png}
+	\node at (\tikzstatic+0*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strtwo_indx1.png}
+	\node at (\tikzstatic+1*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strthree_indx1.png}
+	\node at (\tikzstatic+2*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfour_indx1.png}
+	\node at (\tikzstatic+3*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfive_indx1.png}
+	\node at (\tikzstatic+4*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strsix_indx1.png}
+	\node at (\tikzstatic+5*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};					
+
+%% Second state variable figures - y vs s
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strone_indx2.png}
+	\node at (\tikzstatic+0*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strtwo_indx2.png}
+	\node at (\tikzstatic+1*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strthree_indx2.png}
+	\node at (\tikzstatic+2*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfour_indx2.png}
+	\node at (\tikzstatic+3*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfive_indx2.png}
+	\node at (\tikzstatic+4*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strsix_indx2.png}
+	\node at (\tikzstatic+5*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};	
+
+%% Third state variable figures - fdot vs f
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strone_indx3.png}
+	\node at (\tikzstatic+0*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strtwo_indx3.png}
+	\node at (\tikzstatic+1*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strthree_indx3.png}
+	\node at (\tikzstatic+2*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfour_indx3.png}
+	\node at (\tikzstatic+3*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfive_indx3.png}
+	\node at (\tikzstatic+4*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strsix_indx3.png}
+	\node at (\tikzstatic+5*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};		
+
+%% Chapter 5 titles - Network Statistics and Ablations
+
+	\node at (\tikzstatic+2.5*\tikzbuff,17*\tikzdownbuff+0.8) {\LARGE Network Statistics and Ablations};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-1) {\large ER};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world (noisy)};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% % \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-2) {$\strone$};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-2) {$\strtwo$};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-2) {$\strthree$};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-2) {$\strfour$};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-2) {$\strfive$};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-2) {$\strsix$};
+
+	% \node at (\leftitlexshift,11.9*\tikzdownbuff) {Network Activity (ablating)};
+	% \node at (\leftitlexshift,11.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	% \node at (\leftitlexshift,11.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,11*\tikzdownbuff) {Summary Statistics};		
 
 \end{tikzpicture}
-
 
 
 \end{document}
