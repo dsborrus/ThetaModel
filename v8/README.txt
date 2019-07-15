@@ -2,7 +2,7 @@ Hello and welcome to the DB GCS RS theta model
 
 This should be version 8. You can tell because the folder (directory) is 'ThetaModel/v8' . Is this correct?
 
-In this directory (...v8/) there should be:
+In this directory (v8/) there should be:
 
 4 .m files
 several folders
