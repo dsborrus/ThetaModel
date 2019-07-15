@@ -8,7 +8,7 @@ addpath('..')
 %% Set parameters 
 
 % System params %
-Parameters.tmax     = 20e4;     % maximum time of simulation
+Parameters.tmax     = 1e2;     % maximum time of simulation
 Parameters.dt       = 0.2;     % time step
 
 % Neurons params %
@@ -63,12 +63,13 @@ Parameters.N2k_w1p  = 30;       % number of neurons to kill with one pulse
 
 % Script params %
 
-Options.doAplot       = 1;
+Options.doAplot       = 0;
 Options.doplot1       = 0; Options.doraster = 1; %(0-none,1-yes,2-colors)
-Options.doplot2       = 1;
+Options.doplot2       = 0;
 Options.dogifplot     = 0;
+Options.trackstatevariablesmeans =0;
 
 %% Call simulation
-simulate_v1(Parameters, Options);
+O = simulate_v1(Parameters, Options);
 
 toc

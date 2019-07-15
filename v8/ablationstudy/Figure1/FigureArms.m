@@ -630,7 +630,62 @@ classdef FigureArms < handle
             
         end
         
-        function NetworkStatisticsDuringAblation(obj)
+        function NetworkStatisticsDuringAblation(obj,Fs)
+            % this function plots network breakdown statistics
+            % Fs is an array of FigureArms to compare
+            
+            if obj.Options.Doablate ~= 1
+            error(['Make sure you run ablation sim before this one, it' ...
+            'can even just be replotted, not re-simulated'])
+            end
+            
+            f = figure; hold on;
+            xlabel('Fraction of network ablated (in %)')
+            ylabel('mean shortest path')
+            
+            for F = Fs(1:end)
+            
+                % reassign params
+                KL = F.outablate.killlist;
+                dt = F.Parameters.dt;
+                tmax = F.Parameters.tmax;
+                t2ablat = F.Parameters.t2ablat;
+                N2k_w1p = F.Parameters.N2k_w1p;
+                A = F.Parameters.A;
+
+                % how many ablations are there going to be?
+                Nablats = tmax/(t2ablat*1000);
+
+                % intiialize x-axis
+                xaxis = 0:N2k_w1p:Nablats*N2k_w1p;
+
+                % initialize output for statistics
+                meand = zeros(Nablats,1);
+                meand_a = zeros(Nablats,1);
+
+                for i = 1:Nablats+1
+
+                    % intialize the matrix that wil be changed on every loop
+                    Adapting = A;
+
+                    KLsm = KL(1:(i-1)*N2k_w1p+N2k_w1p);
+
+                    Adapting(KLsm,:) = [];
+                    Adapting(:,KLsm) = [];
+
+                    [meand(i),meand_a(i)] = graphshortD(Adapting);
+                    
+
+                end
+                
+                %plot(xaxis,meand_a,'--x')
+                plot(xaxis,meand,'-x')
+                
+                
+            end
+            
+            % save plot
+            legend('ER','SW','SW noisy','SF van','SF curr','S&S van')
             
         end
         

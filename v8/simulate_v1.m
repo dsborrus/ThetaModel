@@ -291,7 +291,7 @@ if doplot1
 end
 
 if doplot2
-    plot2(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory)
+    plot2(Parameters,Options,t,y,m,n,si,spikes,raster)
 end
 
 close(wb)

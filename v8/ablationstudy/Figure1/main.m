@@ -397,10 +397,10 @@ fprintf (fileID,['\\def \\neuronkill{' mat2str(F1.Parameters.N2k_w1p) '}\n']);
 
 %% State variable dynamics
 
-if 1
+if 0
     disp('State variable dynamics')
     
-    if 0
+    if 1
     % make sure chunks is a row vector!!
     chunks = [0 3];
     vars2comp = {'f','s'};
@@ -414,7 +414,7 @@ if 1
     F6.DrawStateTraces(chunks,vars2comp,figindex)
     end
     
-    if 0
+    if 1
     chunks = [0 3];
     vars2comp = {'y','s'};
     figindex = 2;
@@ -443,3 +443,13 @@ end
 
 %% Network Statistics during ablation
 
+if 1
+
+    disp('Calculating network statistics')
+    % I believe we want a row vector here
+    Fs = [F1,F2,F3,F4,F5,F6];
+    F1.NetworkStatisticsDuringAblation(Fs);
+    
+    
+    
+end

@@ -1,4 +1,4 @@
-function plot2(Parameters,Options,t,y,m,n,sij,spikes,raster,rr,Ihistory,sijhistory)
+function plot2(Parameters,Options,t,y,m,n,sij,spikes,raster)
 
 D = Parameters.D;
 isig1 = Parameters.isig1;
