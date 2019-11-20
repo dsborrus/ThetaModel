@@ -232,10 +232,8 @@ for j = 1:tnum-1
     Isummed = I + ( (delta*y(j,:).*si(j,:)) * A); 
     
     % Record this
-    if Options.doplot1
-        Ihistory(j) = Isummed(rr);
-        sihistory(j) = si(j,:) * A(:,rr);
-    end
+    Ihistory(j) = Isummed(rr);
+    sihistory(j) = si(j,:) * A(:,rr);
 
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed,tautheta)...
@@ -260,9 +258,9 @@ for j = 1:tnum-1
         ss = ss+length(a);
         
         % catalouge for raster plot
-        if Options.doplot1 || Options.doplot2
+        %if Options.doplot1 || Options.doplot2
             raster(j,a) = 1;
-        end
+        %end
         
     end
     
@@ -292,6 +290,16 @@ end
 
 if doplot2
     plot2(Parameters,Options,t,y,m,n,si,spikes,raster)
+end
+
+if ~isfield(Options,'doplot3_pretty'); Options.doplot3_pretty = 0; end; %default
+if Options.doplot3_pretty
+    plot3_pretty(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory)
+end
+
+if ~isfield(Options,'doplot4_pretty'); Options.doplot4_pretty = 0; end; %default
+if Options.doplot4_pretty
+    plot4_pretty(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory)
 end
 
 close(wb)
