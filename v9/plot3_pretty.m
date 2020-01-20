@@ -68,6 +68,7 @@ xlabel('Time (s)')
 title(['Example neuron`s total applied current (I+delta*syncurrent*syndepression)'])
 xlim([5 35])
 
+linkaxes([ax1 ax2 ax3 ax4 ax5 ax6 ax7 ax8],'x')
 
 saveas(gcf,'zoomin.png')
 

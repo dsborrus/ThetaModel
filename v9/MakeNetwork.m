@@ -1,5 +1,6 @@
 function [A] = MakeNetwork(Parameters,Options)
 %MAKENETWORK
+disp(['Making network. simtime (s) = ' mat2str(round(toc,2)) ])
 
 N = Parameters.n1 + Parameters.n2;
 
@@ -52,11 +53,20 @@ switch Options.conmat
         
         A = makeKEscalefree(N,ke_mo,ke_mu,ke_d,Options);
         
+    case 6 % GH lattice
+        
+        A = GHLattice(Parameters.n1+Parameters.n2,Parameters.s);
+        
 end
 
 end
 
 %% connmatrix visualization %
+% check if option exists,
+if ~isfield(Options,'doAplot')
+    Options.doAplot = 0;
+end
+
 if Options.doAplot
     figure
     try
@@ -69,6 +79,8 @@ if Options.doAplot
     spy(A)
     title('Adjacency matrix', 'FontSize', 15)
 end
+
+disp(['Done network making. simtime (s) = ' mat2str(round(toc,2)) ])
 
 %% Connectivity Matrix functions %%
 
@@ -403,7 +415,58 @@ end
     close(wb)    
     end
 
-    
-%% other network
+%% GH Lattice
+
+    function A = GHLattice(N,s)
+        % a is the baby matrix
+        a = zeros(N);
+        % first we define the total grid size (sqrt(N))
+        gridMAX = sqrt(N);  if floor(gridMAX)~=gridMAX; 
+                            error('N must have an integer square root'); 
+                            end
+        
+        % getting the array which houses the positions of the nodes ready
+        xpos = zeros(gridMAX,gridMAX,2);
+
+        xpos = repmat([1:gridMAX],[gridMAX,1]);
+        ypos = xpos';
+        
+        for myn = 1:N
+            
+            myx = xpos(myn); myy = ypos(myn);
+            
+            for othern = 1:N
+                if myn ~= othern
+                    
+                    otherx = xpos(othern); othery = ypos(othern);
+                    
+                    dx = abs(myx-otherx); dy = abs(myy-othery);
+                    
+                    d = sqrt(dx^2 + dy^2);
+                    prob = exp(-d^2/(2*s^2));
+                    
+                    if prob>rand
+                        % connection
+                        a(myn,othern) = 1;
+                    end
+                    
+                end
+            end
+        end
+        
+       
+        A = a;
+        
+        givestats = 1;
+        if givestats
+            3
+            meankin = mean(sum(a));
+            meankout = mean(sum(a,2));
+            
+        end
+        
+    end
+
+
 end
 

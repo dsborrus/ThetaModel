@@ -86,13 +86,9 @@ n     = zeros(tnum,N);
 
 % initialize auxiallry outputs
 spikes = NaN(tnum,1); spikes(1)=0; % initialize the spike array
-if Options.doplot1 || Options.doplot2
-    raster = NaN(tnum,N); % initialize the raster plot
-end
-if Options.doplot1
+raster = NaN(tnum,N); % initialize the raster plot
 Ihistory = NaN(tnum,1);
 sihistory = NaN(tnum,1);
-end
 if Options.trackstatevariablesmeans
     meany = zeros(tnum,1);
     meansi = zeros(tnum,1);
@@ -104,6 +100,8 @@ rr = randi(n1);
 
 % initialize I vector recall, it should be length of n1+n2
 I = [ iu1+isig1*randn(1,n1) iu2+isig2*randn(1,n2) ];
+
+disp([ mat2str(sum(I>0)) ' out of ' mat2str(length(I)) ' neurons are tonic'])
 
 %% Set initial values for theta and y
 switch istate
@@ -151,7 +149,9 @@ A = MakeNetwork(Parameters,Options);
 % strength of connections (total excitability of network
 % divided by the number of neurons (minus 1) and divided by probability
 % of connections)
-delta = D * N/sum(sum(A));
+%delta = D/N/sum(sum(A));
+meanInDegree = mean(sum(A));
+delta = D/meanInDegree;
 
 %initializing ablation scheme (if doing it)
 killlist = randperm(100);
@@ -238,9 +238,13 @@ for j = 1:tnum-1
     % Calculate ODEs next step (Euler's method)
     theta(j+1,:) = theta(j,:) + dt * thetaODE(theta(j,:),Isummed,tautheta)...
                    + noise(dt,N,noisesig,getnoisy)';
-    m(j+1,:) = m(j,:) + dt * mODE(m(j,:),taum);
+    m(j+1,:) = m(j,:) + dt * mODE(m(j,:),taum); 
     n(j+1,:) = n(j,:) + dt * nODE(n(j,:),m(j,:),nrise,taun);
     si(j+1,:)   = si(j,:)   + dt * siODE(si(j,:),tausi);
+    
+%     % turning off synaptic depression for tonic neurons
+%     m(j+1,n1+1:end) = 0;
+%     n(j+1,n1+1:end) = 0;
     
     y(j+1,:) = 1 - n(j+1,:);
     
@@ -302,6 +306,11 @@ if Options.doplot4_pretty
     plot4_pretty(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory)
 end
 
+if ~isfield(Options,'zoomplot'); Options.zoomplot = 0; end; %default
+if Options.zoomplot
+    zoomon1neuronplot(Parameters,Options,t,y,m,n,si,spikes,raster,rr,Ihistory,sihistory,theta)
+end
+
 close(wb)
 
 %% save last conditions
@@ -328,6 +337,7 @@ outputs.killlist = killlist;
 outputs.raster = raster;
 outputs.t = t;
 outputs.thappy = t/1000;
+outputs.theta = theta;
 
 disp('Done with simulate_v1')
 

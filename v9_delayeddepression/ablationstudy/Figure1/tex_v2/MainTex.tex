@@ -1,0 +1,492 @@
+\documentclass[12pt]{standalone}	% Required - Tells LaTeX how to display the document.
+
+\title{BlankDocumentTemplate}
+\date{Dec 6 2018}
+\author{Daniel Borrus}
+
+%% Preamble %%
+
+	\usepackage{inputenc}	% Prepares LaTeX engine for non-ascii characters, such as UTF-8 characters. Important.
+
+	% Page Layout
+	%\usepackage[margin=0in,paperwidth=8cm,paperheight=10cm]{geometry}
+	% set page width
+	\usepackage{float} % Needed for creating figure “floats”
+
+	% Page Display
+	\usepackage{url} % Allows for url links
+	\usepackage{graphicx} % Allows for inputing figures
+	\usepackage[dvipsnames]{xcolor} % For pretty colors
+
+	% Math Typesetting
+	\usepackage{amsmath} % Provides useful equation formats
+	\usepackage{amssymb} % Provieds a ton of useful math symbols
+	\usepackage{mathtools} % Provides patches for amsmath
+
+	% TikZ/pgfPlots
+	\usepackage{tikz}
+	\usepackage{pgfplots}
+	\pgfplotsset{compat=1.14}
+	\usetikzlibrary{automata,arrows,positioning,calc}
+	\pgfplotsset{ every non boxed x axis/.append style={x axis line style=-}, every non boxed y axis/.append style={y axis line style=-}}
+
+	% Miscellaneous
+	\usepackage{xspace}
+	%\usepackage{animate}
+
+	% Unique for this document
+	% Fonts
+	\usepackage{lmodern} 
+	%\fontfamily{lmss}\selectfont
+	\usepackage{sansmath}
+
+	% Bring in matlab variables in tex file
+	\input{defs.tex}
+
+% \newcommand{\mysmallerfont}{\scriptsize \fontfamily{lmss}\selectfont}
+% \newcommand{\mysmallfont}{\small \fontfamily{lmss}\selectfont}
+% \newcommand{\mynormfont}{\fontfamily{lmss}\selectfont}
+% \newcommand{\mybigfont}{\large \fontfamily{lmss}\selectfont}
+
+% \newcommand{\mypagewidth}{17} %in cm?
+% \newcommand{\mypageheight}{10} % in cm?
+
+\begin{document}
+\fontfamily{lmss}\selectfont % enable sans-sarif font
+\sansmath % enable sans-sarif math font
+
+
+\begin{tikzpicture}
+
+	\newcommand{\tikzstatic}{0}
+	\newcommand{\tikzbuff}{8}
+
+	\newcommand{\tikzdownbuff}{-6}
+
+	\newcommand{\pgfstatic}{-1 in}
+	\newcommand{\pgfbuff}{3.15 in}
+
+	\newcommand{\Agraphwidth}{8}
+	\newcommand{\Aplotwidth}{7}
+	\newcommand{\Agraphheight}{5.5}
+
+
+%% Chapter 1 titles - Network Topology
+
+	\node at (\tikzstatic+2.5*\tikzbuff,7) {\LARGE Network Topology};
+
+	\node at (\tikzstatic+0*\tikzbuff,5) {\large ER};
+	\node at (\tikzstatic+1*\tikzbuff,5) {\large Small-world};
+	\node at (\tikzstatic+2*\tikzbuff,5) {\large Small-world (noisy)};
+	\node at (\tikzstatic+3*\tikzbuff,5) {\large Scale-free (vanilla)};
+	\node at (\tikzstatic+4*\tikzbuff,5) {\large Scale-free (corrupt)};
+	\node at (\tikzstatic+5*\tikzbuff,5) {\large Small \& scale (vanilla)};
+	% \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	\node at (\tikzstatic+0*\tikzbuff,4) {$\strone$};
+	\node at (\tikzstatic+1*\tikzbuff,4) {$\strtwo$};
+	\node at (\tikzstatic+2*\tikzbuff,4) {$\strthree$};
+	\node at (\tikzstatic+3*\tikzbuff,4) {$\strfour$};
+	\node at (\tikzstatic+4*\tikzbuff,4) {$\strfive$};
+	\node at (\tikzstatic+5*\tikzbuff,4) {$\strsix$};
+	% \node at (\tikzstatic+6*\tikzbuff,4) {$\strseven$};
+
+	\newcommand{\leftitlexshift}{-7.8}
+
+	\node at (\leftitlexshift,5)               {\large Network Name};
+	\node at (\leftitlexshift,4)               {Debugger's Notes};
+	\node at (\leftitlexshift,0)               {Adjacency Matrix};
+	\node at (\leftitlexshift,\tikzdownbuff)   {K-in Degree Distribution};
+	\node at (\leftitlexshift,2*\tikzdownbuff) {K-out Degree Distribution};
+	\node at (\leftitlexshift,3*\tikzdownbuff) {Network Activity (unablated)};
+
+%% Adjacency Matrix	
+
+
+	% Add png
+
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../AdjacencyMatrixFigures/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,0) [] {\pgfuseimage{img}};
+
+%% K in degree
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../KinData/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,\tikzdownbuff) [] {\pgfuseimage{img}};
+
+%% K out degree
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../KoutData/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,2*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+%% Intact Traces
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../IntactTraces/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,3*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+%% Chapter 2 titles - Ablations: Rhythm Degredation Examples
+
+	\node at (\tikzstatic+2.5*\tikzbuff,4*\tikzdownbuff+0.8) {\LARGE Ablations: Rhythm Degradation Examples};
+
+	\node at (\tikzstatic+0*\tikzbuff,4*\tikzdownbuff-1) {\large ER};
+	\node at (\tikzstatic+1*\tikzbuff,4*\tikzdownbuff-1) {\large Small-world};
+	\node at (\tikzstatic+2*\tikzbuff,4*\tikzdownbuff-1) {\large Small-world (noisy)};
+	\node at (\tikzstatic+3*\tikzbuff,4*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	\node at (\tikzstatic+4*\tikzbuff,4*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	\node at (\tikzstatic+5*\tikzbuff,4*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	\node at (\tikzstatic+0*\tikzbuff,4*\tikzdownbuff-2) {$\strone$};
+	\node at (\tikzstatic+1*\tikzbuff,4*\tikzdownbuff-2) {$\strtwo$};
+	\node at (\tikzstatic+2*\tikzbuff,4*\tikzdownbuff-2) {$\strthree$};
+	\node at (\tikzstatic+3*\tikzbuff,4*\tikzdownbuff-2) {$\strfour$};
+	\node at (\tikzstatic+4*\tikzbuff,4*\tikzdownbuff-2) {$\strfive$};
+	\node at (\tikzstatic+5*\tikzbuff,4*\tikzdownbuff-2) {$\strsix$};
+
+	\node at (\leftitlexshift,4.9*\tikzdownbuff) {Network Activity (ablating)};
+	\node at (\leftitlexshift,5.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	\node at (\leftitlexshift,5.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,6*\tikzdownbuff) {10\% of network remaining};
+	\node at (\leftitlexshift,7*\tikzdownbuff) {20\% of network remaining};
+	\node at (\leftitlexshift,8*\tikzdownbuff) {30\% of network remaining};
+	\node at (\leftitlexshift,9*\tikzdownbuff) {40\% of network remaining};	
+
+%% Ablation Traces (Full)
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	%\pgfdeclareimage[width=\Agraphwidth cm]{img}{../AblateTraces/\strseven.png}
+	%\node at (\tikzstatic+6*\tikzbuff,5*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+%% 10% Network ablated
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../10percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,6*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+%% 20% Network ablated
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../20percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,7*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+%% 30% Network ablated
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../30percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};	
+
+%% 40% Network ablated
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strone.png}
+	\node at (\tikzstatic+0*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strtwo.png}
+	\node at (\tikzstatic+1*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strthree.png}
+	\node at (\tikzstatic+2*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strfour.png}
+	\node at (\tikzstatic+3*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strfive.png}
+	\node at (\tikzstatic+4*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../40percent_ablated/\strsix.png}
+	\node at (\tikzstatic+5*\tikzbuff,9*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};			
+
+%% Chapter 3 titles - Ablations: Rhythm Degredation Summary
+
+	\node at (\tikzstatic+2.5*\tikzbuff,10*\tikzdownbuff+0.8) {\LARGE Ablations: Rhythm Degradation Summary};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-1) {\large ER};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world (noisy)};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% % \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-2) {$\strone$};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-2) {$\strtwo$};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-2) {$\strthree$};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-2) {$\strfour$};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-2) {$\strfive$};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-2) {$\strsix$};
+
+	% \node at (\leftitlexshift,11.9*\tikzdownbuff) {Network Activity (ablating)};
+	% \node at (\leftitlexshift,11.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	% \node at (\leftitlexshift,11.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,11*\tikzdownbuff) {Summary Statistics};
+
+%% Ablation Summary figure
+
+	\pgfdeclareimage[width=\Agraphwidth cm + 4cm]{img}{../AblationSummary/amp.png}
+	\node at (\tikzstatic+1*\tikzbuff,11*\tikzdownbuff+0.25) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm + 4cm]{img}{../AblationSummary/area.png}
+	\node at (\tikzstatic+2.5*\tikzbuff,11*\tikzdownbuff+0.25) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm + 4cm]{img}{../AblationSummary/per.png}
+	\node at (\tikzstatic+4*\tikzbuff,11*\tikzdownbuff+0.25) [] {\pgfuseimage{img}};		
+
+%% Chapter 4 titles - State Variables and Ablated Networks
+
+	\node at (\tikzstatic+2.5*\tikzbuff,13*\tikzdownbuff+0.8) {\LARGE State Variables and Ablated Networks};
+
+	\node at (\tikzstatic+0*\tikzbuff,13*\tikzdownbuff-1) {\large ER};
+	\node at (\tikzstatic+1*\tikzbuff,13*\tikzdownbuff-1) {\large Small-world};
+	\node at (\tikzstatic+2*\tikzbuff,13*\tikzdownbuff-1) {\large Small-world (noisy)};
+	\node at (\tikzstatic+3*\tikzbuff,13*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	\node at (\tikzstatic+4*\tikzbuff,13*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	\node at (\tikzstatic+5*\tikzbuff,13*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	\node at (\tikzstatic+0*\tikzbuff,13*\tikzdownbuff-2) {$\strone$};
+	\node at (\tikzstatic+1*\tikzbuff,13*\tikzdownbuff-2) {$\strtwo$};
+	\node at (\tikzstatic+2*\tikzbuff,13*\tikzdownbuff-2) {$\strthree$};
+	\node at (\tikzstatic+3*\tikzbuff,13*\tikzdownbuff-2) {$\strfour$};
+	\node at (\tikzstatic+4*\tikzbuff,13*\tikzdownbuff-2) {$\strfive$};
+	\node at (\tikzstatic+5*\tikzbuff,13*\tikzdownbuff-2) {$\strsix$};
+
+	% \node at (\leftitlexshift,11.9*\tikzdownbuff) {Network Activity (ablating)};
+	% \node at (\leftitlexshift,11.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	% \node at (\leftitlexshift,11.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,14*\tikzdownbuff) {Conductance vs. Firing rate};
+	\node at (\leftitlexshift,15*\tikzdownbuff) {Conductance vs. Depression};
+	\node at (\leftitlexshift,16*\tikzdownbuff) {Firing Rate vs. Depression};
+
+%% First state variable figures - si vs f
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strone_indx1.png}
+	\node at (\tikzstatic+0*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strtwo_indx1.png}
+	\node at (\tikzstatic+1*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strthree_indx1.png}
+	\node at (\tikzstatic+2*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfour_indx1.png}
+	\node at (\tikzstatic+3*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfive_indx1.png}
+	\node at (\tikzstatic+4*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strsix_indx1.png}
+	\node at (\tikzstatic+5*\tikzbuff,14*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	% \pgfdeclareimage[width=\Agraphwidth cm]{img}{../25percent_ablated/\strseven.png}
+	% \node at (\tikzstatic+6*\tikzbuff,8*\tikzdownbuff) [] {\pgfuseimage{img}};					
+
+%% Second state variable figures - y vs s
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strone_indx2.png}
+	\node at (\tikzstatic+0*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strtwo_indx2.png}
+	\node at (\tikzstatic+1*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strthree_indx2.png}
+	\node at (\tikzstatic+2*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfour_indx2.png}
+	\node at (\tikzstatic+3*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfive_indx2.png}
+	\node at (\tikzstatic+4*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strsix_indx2.png}
+	\node at (\tikzstatic+5*\tikzbuff,15*\tikzdownbuff) [] {\pgfuseimage{img}};	
+
+%% Third state variable figures - fdot vs f
+
+    \pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strone_indx3.png}
+	\node at (\tikzstatic+0*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strtwo_indx3.png}
+	\node at (\tikzstatic+1*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strthree_indx3.png}
+	\node at (\tikzstatic+2*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfour_indx3.png}
+	\node at (\tikzstatic+3*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strfive_indx3.png}
+	\node at (\tikzstatic+4*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};
+
+	\pgfdeclareimage[width=\Agraphwidth cm]{img}{../StateVariableDynamics/\strsix_indx3.png}
+	\node at (\tikzstatic+5*\tikzbuff,16*\tikzdownbuff) [] {\pgfuseimage{img}};		
+
+%% Chapter 5 titles - Network Statistics and Ablations
+
+	\node at (\tikzstatic+2.5*\tikzbuff,17*\tikzdownbuff+0.8) {\LARGE Network Statistics and Ablations};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-1) {\large ER};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-1) {\large Small-world (noisy)};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (vanilla)};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-1) {\large Scale-free (corrupt)};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-1) {\large Small \& scale (vanilla)};
+	% % \node at (\tikzstatic+6*\tikzbuff,5) {\large Small \& scale (corrupt)};
+
+	% \node at (\tikzstatic+0*\tikzbuff,10*\tikzdownbuff-2) {$\strone$};
+	% \node at (\tikzstatic+1*\tikzbuff,10*\tikzdownbuff-2) {$\strtwo$};
+	% \node at (\tikzstatic+2*\tikzbuff,10*\tikzdownbuff-2) {$\strthree$};
+	% \node at (\tikzstatic+3*\tikzbuff,10*\tikzdownbuff-2) {$\strfour$};
+	% \node at (\tikzstatic+4*\tikzbuff,10*\tikzdownbuff-2) {$\strfive$};
+	% \node at (\tikzstatic+5*\tikzbuff,10*\tikzdownbuff-2) {$\strsix$};
+
+	% \node at (\leftitlexshift,11.9*\tikzdownbuff) {Network Activity (ablating)};
+	% \node at (\leftitlexshift,11.0*\tikzdownbuff) {{\color{red} red dot} = ablation};
+	% \node at (\leftitlexshift,11.1*\tikzdownbuff) {\neuronkill \xspace neuron(s) every ablation};
+	\node at (\leftitlexshift,11*\tikzdownbuff) {Summary Statistics};		
+
+\end{tikzpicture}
+
+
+\end{document}
