@@ -22,13 +22,13 @@ Parameters.tautheta = 1;       % relaxation of neuron's theta
 Parameters.mgain    = 0.15;     % How much of a gain firing has on synaptic depression
 Parameters.taum     = 300;     % Char time for return to ss for m (synap depress)
     % synaptic depression 2
-Parameters.nrise    = 0.009;   % Rate of rise for synaptic depression based on n
-Parameters.taun     = 2000;    % Char time for return to ss for n (synap depress)
+Parameters.nrise    = 0.009;   % Rate of rise for synaptic depression based on nf
+Parameters.taun     = 750;    % Char time for return to ss for n (synap depress)
     % snynaptic conductance
 Parameters.sigain   = .5;       % How much of a gain firing has on synaptic conductance
 Parameters.tausi    = 30;      % Char time for return to ss for n (synap depress)
     % noise
-Parameters.noisesig = 0.011;   % Variance of noise
+Parameters.noisesig = 0.0110;   % Variance of noise
 
 % Network params %
 
@@ -36,7 +36,7 @@ Parameters.n1       = 400;     % number of neurons in the first population
 Parameters.n2       = 0;       % number of neurons in the second population
 Parameters.D        = 0.035;    % Strength of networkness
 Parameters.tauavg   = 1e2;     % Relaxation of network excitement
-Parameters.istate   = 3;
+Parameters.istate   = 4;
 Options.conmat      = 6;
     % case 1 - ER
 Parameters.er_prob     = 0.14;     % prob of connection
@@ -68,7 +68,7 @@ Parameters.N2k_w1p  = 30;       % number of neurons to kill with one pulse
 Options.doAplot       = 1;
 Options.doplot1       = 1; Options.doraster = 1; %(0-none,1-yes,2-colors)
 Options.doplot2       = 0;
-Options.doplot3_pretty= 1; Options.doplot4_pretty= 1;
+Options.doplot3_pretty= 0; Options.doplot4_pretty= 0;
 Options.zoomplot      = 1;
 Options.dogifplot     = 0;
 Options.trackstatevariablesmeans =0;
