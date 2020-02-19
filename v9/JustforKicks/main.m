@@ -8,7 +8,7 @@ addpath('..')
 %% Set parameters 
 
 % System params %
-Parameters.tmax     = 100e3;     % maximum time of simulation
+Parameters.tmax     = 10e3;     % maximum time of simulation
 Parameters.dt       = 0.2;     % time step
 
 % Neurons params %
