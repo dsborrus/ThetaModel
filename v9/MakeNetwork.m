@@ -459,9 +459,8 @@ disp(['Done network making. simtime (s) = ' mat2str(round(toc,2)) ])
         
         givestats = 1;
         if givestats
-            3
-            meankin = mean(sum(a));
-            meankout = mean(sum(a,2));
+            meankin = mean(sum(a))
+            meankout = mean(sum(a,2))
             
         end
         
