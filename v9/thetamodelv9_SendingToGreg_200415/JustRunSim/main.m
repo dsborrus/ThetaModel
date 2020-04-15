@@ -1,48 +1,48 @@
 % main script to run function
 % showcase version, just for show!
 
-clear; close all; clc; tic; %rng(191211);
+clear; close all; clc; tic; rng(191211);
 
 addpath('..')
 
 %% Set parameters 
 
 % System params %
-Parameters.tmax     = 40e3;     % maximum time of simulation
+Parameters.tmax     = 5e4;     % maximum time of simulation
 Parameters.dt       = 0.2;     % time step
 
 % Neurons params %
 
-Parameters.iu1      = -0.0025; % mean I parameter for first population
-Parameters.isig1    = 0.0024;     % std of I parameter for first population
-Parameters.iu2      = 0.0000;     % mean I parameter for second population#
-Parameters.isig2    = 0.0000;     % std of I parameter for second population
+Parameters.iu1      = -.0009; % mean I parameter for first population
+Parameters.isig1    = 1e-07;     % std of I parameter for first population
+Parameters.iu2      = 0.0;     % mean I parameter for second population#
+Parameters.isig2    = 0.0;     % std of I parameter for second population
 Parameters.tautheta = 1;       % relaxation of neuron's theta
     % synaptic depression 1
-Parameters.mgain    = 0.05;     % How much of a gain firing has on synaptic depression
+Parameters.mgain    = 0.2;     % How much of a gain firing has on synaptic depression
 Parameters.taum     = 300;     % Char time for return to ss for m (synap depress)
     % synaptic depression 2
-Parameters.nrise    = 0.009;   % Rate of rise for synaptic depression based on n
-Parameters.taun     = 1000;    % Char time for return to ss for n (synap depress)
+Parameters.nrise    = 0.011;   % Rate of rise for synaptic depression based on nf
+Parameters.taun     = 1300;    % Char time for return to ss for n (synap depress)
     % snynaptic conductance
-Parameters.sigain   = .5;       % How much of a gain firing has on synaptic conductance
-Parameters.tausi    = 70;      % Char time for return to ss for n (synap depress)
+Parameters.sigain   = 1;       % How much of a gain firing has on synaptic conductance
+Parameters.tausi    = 15;      % Char time for return to ss for n (synap depress)
     % noise
-Parameters.noisesig = .00;   % Variance of noise
+Parameters.noisesig = 0.009;   % Variance of noise
 
 % Network params %
 
 Parameters.n1       = 100;     % number of neurons in the first population
 Parameters.n2       = 0;       % number of neurons in the second population
-Parameters.D        = 0.05;    % Strength of networkness
+Parameters.D        = 0.03;    % Strength of networkness
 Parameters.tauavg   = 1e2;     % Relaxation of network excitement
-Parameters.istate   = 4;
+Parameters.istate   = 1;
 Options.conmat      = 1;
     % case 1 - ER
-Parameters.er_prob     = 0.14;     % prob of connection
+Parameters.er_prob     = 0.5;     % prob of connection
     % case 2 - small world
-Parameters.sw_M     = 7;       % number of Ns on each side
-Parameters.sw_p     = .5;     % probability of "short cut" 
+Parameters.sw_M     = 3;       % number of Ns on each side
+Parameters.sw_p     = 0.3;     % probability of "short cut" 
     % case 3 - scale-free
 Parameters.sf_mo    = 30;      % scale free - size of seed
 Parameters.sf_m     = 30;      % sacle free - average degree (use mo=m or m<mo)
@@ -54,6 +54,8 @@ Options.startstruct.p=.6;     % p of ER network, if making ER
 Parameters.ke_mo = 25;          % scale free - size of seed
 Parameters.ke_mu = .5;         % The chance that a wiring will wire to a non active node
 Parameters.ke_d = 0.0;         % d = chance that a wiring will NOT be reciprical
+    % case 6 - GH lattice
+Parameters.s = 0.9;
 
 % ablation params %
 
@@ -67,7 +69,7 @@ Options.doAplot       = 1;
 Options.doplot1       = 1; Options.doraster = 1; %(0-none,1-yes,2-colors)
 Options.doplot2       = 0;
 Options.doplot3_pretty= 0; Options.doplot4_pretty= 0;
-Options.zoomplot      = 1;
+Options.zoomplot      = 0;
 Options.dogifplot     = 0;
 Options.trackstatevariablesmeans =0;
 

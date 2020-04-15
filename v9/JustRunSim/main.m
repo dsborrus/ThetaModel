@@ -8,38 +8,38 @@ addpath('..')
 %% Set parameters 
 
 % System params %
-Parameters.tmax     = 10e3;     % maximum time of simulation
+Parameters.tmax     = 5e4;     % maximum time of simulation
 Parameters.dt       = 0.2;     % time step
 
 % Neurons params %
 
-Parameters.iu1      = -0.002; % mean I parameter for first population
-Parameters.isig1    = 0.0;     % std of I parameter for first population
+Parameters.iu1      = -.0009; % mean I parameter for first population
+Parameters.isig1    = 1e-07;     % std of I parameter for first population
 Parameters.iu2      = 0.0;     % mean I parameter for second population#
 Parameters.isig2    = 0.0;     % std of I parameter for second population
 Parameters.tautheta = 1;       % relaxation of neuron's theta
     % synaptic depression 1
-Parameters.mgain    = 0.15;     % How much of a gain firing has on synaptic depression
+Parameters.mgain    = 0.2;     % How much of a gain firing has on synaptic depression
 Parameters.taum     = 300;     % Char time for return to ss for m (synap depress)
     % synaptic depression 2
-Parameters.nrise    = 0.009;   % Rate of rise for synaptic depression based on nf
-Parameters.taun     = 750;    % Char time for return to ss for n (synap depress)
+Parameters.nrise    = 0.011;   % Rate of rise for synaptic depression based on nf
+Parameters.taun     = 1300;    % Char time for return to ss for n (synap depress)
     % snynaptic conductance
-Parameters.sigain   = .5;       % How much of a gain firing has on synaptic conductance
-Parameters.tausi    = 30;      % Char time for return to ss for n (synap depress)
+Parameters.sigain   = 1;       % How much of a gain firing has on synaptic conductance
+Parameters.tausi    = 15;      % Char time for return to ss for n (synap depress)
     % noise
-Parameters.noisesig = 0.0110;   % Variance of noise
+Parameters.noisesig = 0.009;   % Variance of noise
 
 % Network params %
 
-Parameters.n1       = 400;     % number of neurons in the first population
+Parameters.n1       = 100;     % number of neurons in the first population
 Parameters.n2       = 0;       % number of neurons in the second population
-Parameters.D        = 0.035;    % Strength of networkness
+Parameters.D        = 0.03;    % Strength of networkness
 Parameters.tauavg   = 1e2;     % Relaxation of network excitement
 Parameters.istate   = 4;
-Options.conmat      = 6;
+Options.conmat      = 1;
     % case 1 - ER
-Parameters.er_prob     = 0.14;     % prob of connection
+Parameters.er_prob     = 0.5;     % prob of connection
     % case 2 - small world
 Parameters.sw_M     = 3;       % number of Ns on each side
 Parameters.sw_p     = 0.3;     % probability of "short cut" 
